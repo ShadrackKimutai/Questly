@@ -119,28 +119,55 @@ Quizzes can be created in two ways:
 
 You can have multiple quiz files and select which one to use when starting a game.
 
-Example quiz configuration (`config/quizz/example.json`):
+#### Question Types
+
+| Type | `type` value | Description |
+|---|---|---|
+| Single choice | `"single"` (default) | One correct answer from 2–4 options |
+| Multiple choice | `"multiple"` | One or more correct answers from 2–4 options |
+| True / False | `"truefalse"` | Two-option true/false question |
+| Short answer | `"shortanswer"` | Players type a free-text answer matched against accepted answers |
+
+#### Example quiz (`config/quizz/example.json`)
 
 ```json
 {
   "subject": "Example Quiz",
   "questions": [
     {
-      "question": "What is the correct answer?",
-      "answers": ["No", "Yes", "No", "No"],
+      "question": "What is the capital of France?",
+      "type": "single",
+      "answers": ["Berlin", "Paris", "Madrid", "Rome"],
       "solutions": [1],
       "cooldown": 5,
       "time": 15
     },
     {
       "question": "Which of these are primary colors?",
+      "type": "multiple",
       "answers": ["Red", "Green", "Blue", "Yellow"],
       "solutions": [0, 2, 3],
       "cooldown": 5,
       "time": 20
     },
     {
+      "question": "The Earth is flat.",
+      "type": "truefalse",
+      "answers": ["True", "False"],
+      "solutions": [1],
+      "cooldown": 5,
+      "time": 10
+    },
+    {
+      "question": "What is the chemical symbol for water?",
+      "type": "shortanswer",
+      "textSolutions": ["H2O", "h2o"],
+      "cooldown": 5,
+      "time": 20
+    },
+    {
       "question": "What is the correct answer with an image?",
+      "type": "single",
       "answers": ["No", "Yes", "No", "No"],
       "media": {
         "type": "image",
@@ -154,18 +181,32 @@ Example quiz configuration (`config/quizz/example.json`):
 }
 ```
 
-Quiz Options:
+#### Question fields
 
-- `subject`: Title/topic of the quiz
-- `questions`: Array of question objects containing:
-  - `question`: The question text
-  - `answers`: Array of possible answers (2-4 options)
-  - `media`: Optional media object displayed with the question:
-    - `type`: `"image"`, `"video"`, or `"audio"`
-    - `url`: URL of the media
-  - `solutions`: Array of correct answer indices (0-based). Use multiple indices for multi-answer questions
-  - `cooldown`: Time in seconds before answers are revealed (3-15)
-  - `time`: Time in seconds allowed to answer (5-120)
+- `question`: The question text
+- `type`: Question type — `"single"` (default), `"multiple"`, `"truefalse"`, or `"shortanswer"`
+- `answers`: Array of 2–4 answer options (not used for `shortanswer`)
+- `solutions`: Array of correct answer indices, 0-based (not used for `shortanswer`)
+- `textSolutions`: Array of accepted text answers for `shortanswer` questions (case-insensitive matching)
+- `media` _(optional)_: Media displayed alongside the question
+  - `type`: `"image"`, `"video"`, or `"audio"`
+  - `url`: URL of the media
+- `cooldown`: Seconds before answers are revealed (3–15)
+- `time`: Seconds allowed to answer (5–120, or `-1` for no time limit)
+
+## 🌍 Supported Languages
+
+The interface is available in the following languages, selectable from the settings menu:
+
+| Language | Code |
+|---|---|
+| English | `en` |
+| German | `de` |
+| Spanish | `es` |
+| French | `fr` |
+| Italian | `it` |
+| Japanese | `ja` |
+| Swahili | `sw` |
 
 ## 🎮 How to Play
 
