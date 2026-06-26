@@ -1,0 +1,93 @@
+---
+
+###
+### Custom nginx vhost for Questly (Razzia) — SPA + WebSocket
+###
+
+vhost: |
+  server {
+      listen       __PORT____HTTP_PROTO____DEFAULT_VHOST__;
+      server_name  __VHOST_NAME__;
+
+      access_log   "__ACCESS_LOG__" combined;
+      error_log    "__ERROR_LOG__" warn;
+
+  __REDIRECT__
+  __SSL__
+
+      root  "__DOCUMENT_ROOT__";
+      index __INDEX__;
+
+      # SPA fallback routing
+      location / {
+          try_files $uri $uri/ /index.html;
+      }
+
+      # WebSocket proxy to socket server running on host port 3001
+      location /ws {
+          proxy_pass http://172.17.0.1:3001;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade    $http_upgrade;
+          proxy_set_header Connection "Upgrade";
+          proxy_set_header Host       $host;
+          proxy_read_timeout 3600s;
+          proxy_send_timeout 3600s;
+      }
+
+  __ALIASES__
+  __DENIES__
+  __SERVER_STATUS__
+      # Custom directives
+  __CUSTOM__
+  }
+
+###
+### vHost Type
+###
+vhost_type:
+  docroot: ""
+  rproxy: ""
+
+###
+### Features
+###
+features:
+
+  ssl: |
+    ssl_certificate           __SSL_PATH_CRT__;
+    ssl_certificate_key       __SSL_PATH_KEY__;
+    ssl_protocols             __SSL_PROTOCOLS__;
+    ssl_prefer_server_ciphers __SSL_HONOR_CIPHER_ORDER__;
+    ssl_ciphers               __SSL_CIPHERS__;
+
+  redirect: |
+    return 301 https://__VHOST_NAME__:__SSL_PORT__$request_uri;
+
+  php_fpm: ""
+
+  alias: |
+    location ~ __ALIAS__ {
+        root  __PATH__;
+    __XDOMAIN_REQ__
+    }
+
+  deny: |
+    location ~ __REGEX__ {
+        deny all;
+    }
+
+  server_status: |
+    location ~ __REGEX__ {
+        stub_status on;
+        access_log off;
+    }
+
+  xdomain_request: |
+    if ( $http_origin ~* (__REGEX__) ) {
+        add_header "Access-Control-Allow-Origin"   "$http_origin";
+        add_header 'Access-Control-Allow-Methods'  'HEAD, GET, POST, PUT, PATCH, DELETE, OPTIONS';
+        add_header 'Access-Control-Allow-Headers'  'Accept, Authorization, Content-Security-Policy, Content-Type, Location, Origin, X-Requested-With';
+        add_header 'Access-Control-Expose-Headers' 'Content-Security-Policy, Location';
+        add_header 'Access-Control-Max-Age' 0;
+        return 200;
+    }
