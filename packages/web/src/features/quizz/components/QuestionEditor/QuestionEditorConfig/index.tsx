@@ -6,7 +6,7 @@ import ConfigNumberInput from "@razzia/web/features/quizz/components/QuestionEdi
 import ConfigSection from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigSection"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
-import { CheckSquare, Clock, Square, Timer, ToggleLeft } from "lucide-react"
+import { CheckSquare, Clock, Keyboard, Square, Timer, ToggleLeft } from "lucide-react"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -18,6 +18,7 @@ const QUESTION_TYPES: { value: QuestionType; labelKey: string; icon: ReactNode }
   { value: "single", labelKey: "quizz:question.config.typeSingle", icon: <Square className="size-4" /> },
   { value: "multiple", labelKey: "quizz:question.config.typeMultiple", icon: <CheckSquare className="size-4" /> },
   { value: "truefalse", labelKey: "quizz:question.config.typeTrueFalse", icon: <ToggleLeft className="size-4" /> },
+  { value: "shortanswer", labelKey: "quizz:question.config.typeShortAnswer", icon: <Keyboard className="size-4" /> },
 ]
 
 const QuestionEditorConfig = () => {
@@ -38,9 +39,13 @@ const QuestionEditorConfig = () => {
 
   const handleTypeChange = (value: QuestionType) => {
     if (value === "truefalse") {
-      updateQuestion(currentIndex, { type: value, answers: TRUE_FALSE_ANSWERS, solutions: [0] })
+      updateQuestion(currentIndex, { type: value, answers: TRUE_FALSE_ANSWERS, solutions: [0], textSolutions: undefined })
+    } else if (value === "shortanswer") {
+      updateQuestion(currentIndex, { type: value, answers: [], solutions: [], textSolutions: [""] })
     } else if (questionType === "truefalse") {
-      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0] })
+      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0], textSolutions: undefined })
+    } else if (questionType === "shortanswer") {
+      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0], textSolutions: undefined })
     } else {
       updateQuestion(currentIndex, { type: value })
     }

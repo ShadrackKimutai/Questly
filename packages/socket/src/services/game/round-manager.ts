@@ -171,6 +171,7 @@ export class RoundManager {
 
     const totalType = this.playersAnswers.reduce(
       (acc: Record<number, number>, { answerId }) => {
+        if (typeof answerId === "string") return acc
         const ids = Array.isArray(answerId) ? answerId : [answerId]
         ids.forEach((id) => {
           acc[id] = (acc[id] || 0) + 1
@@ -190,6 +191,11 @@ export class RoundManager {
         const isCorrect = (() => {
           if (!playerAnswer) return false
           const { answerId } = playerAnswer
+          if (typeof answerId === "string") {
+            return (question.textSolutions ?? []).some(
+              (s) => s.toLowerCase().trim() === answerId.toLowerCase().trim(),
+            )
+          }
           if (Array.isArray(answerId)) {
             const sorted = (arr: number[]) => [...arr].sort((a, b) => a - b)
             return JSON.stringify(sorted(answerId)) === JSON.stringify(sorted(question.solutions))
@@ -323,6 +329,31 @@ export class RoundManager {
     socket
       .to(this.opts.gameId)
       .emit(EVENTS.GAME.PLAYER_ANSWER, this.playersAnswers.length)
+    this.opts.players.broadcastCount()
+
+    if (this.playersAnswers.length === this.opts.players.count()) {
+      this.opts.cooldown.abort()
+    }
+  }
+
+  textAnswer(socket: Socket, answerText: string): void {
+    const player = this.opts.players.findById(socket.id)
+    const question = this.opts.quizz.questions[this.currentQuestion]
+
+    if (!player) return
+    if (this.playersAnswers.find((a) => a.playerId === socket.id)) return
+
+    const points = (() => {
+      if (question.time === NO_TIME_LIMIT) {
+        return orderToPoint(this.playersAnswers.length, this.opts.players.count())
+      }
+      return timeToPoint(this.startTime, question.time)
+    })()
+
+    this.playersAnswers.push({ playerId: player.id, answerId: answerText, points })
+
+    this.opts.send(socket.id, STATUS.WAIT, { text: "game:waitingForAnswers" })
+    socket.to(this.opts.gameId).emit(EVENTS.GAME.PLAYER_ANSWER, this.playersAnswers.length)
     this.opts.players.broadcastCount()
 
     if (this.playersAnswers.length === this.opts.players.count()) {

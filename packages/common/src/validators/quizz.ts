@@ -11,16 +11,27 @@ export const questionMediaValidator = z.object({
 const questionValidator = z.object({
   question: z.string().min(1, "errors:quizz.questionEmpty"),
   media: questionMediaValidator.optional(),
-  answers: z
-    .array(z.string().min(1, "errors:quizz.answerEmpty"))
-    .min(2, "errors:quizz.tooFewAnswers")
-    .max(4, "errors:quizz.tooManyAnswers"),
+  answers: z.array(z.string().min(1, "errors:quizz.answerEmpty")),
   solutions: z
-    .union([z.number().int().min(0), z.array(z.number().int().min(0)).min(1)])
+    .union([z.number().int().min(0), z.array(z.number().int().min(0)).min(0)])
     .transform((v) => (Array.isArray(v) ? v : [v])),
+  textSolutions: z.array(z.string().min(1, "errors:quizz.answerEmpty")).optional(),
   cooldown: z.number().int().min(3).max(15),
   time: z.number().int().min(-1),
-  type: z.enum(["single", "multiple", "truefalse"]).optional(),
+  type: z.enum(["single", "multiple", "truefalse", "shortanswer"]).optional(),
+}).superRefine((data, ctx) => {
+  if (data.type === "shortanswer") {
+    if (!data.textSolutions || data.textSolutions.length === 0) {
+      ctx.addIssue({ code: "custom", message: "errors:quizz.noTextSolutions", path: ["textSolutions"] })
+    }
+  } else {
+    if (data.answers.length < 2) {
+      ctx.addIssue({ code: "custom", message: "errors:quizz.tooFewAnswers", path: ["answers"] })
+    }
+    if (data.answers.length > 4) {
+      ctx.addIssue({ code: "custom", message: "errors:quizz.tooManyAnswers", path: ["answers"] })
+    }
+  }
 })
 
 export const quizzValidator = z.object({

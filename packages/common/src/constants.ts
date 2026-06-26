@@ -21,6 +21,7 @@ export const EVENTS = {
     LEAVE: "player:leave",
     SELECTED_ANSWER: "player:selectedAnswer",
     SELECTED_ANSWERS: "player:selectedAnswers",
+    TEXT_ANSWER: "player:textAnswer",
   },
   MANAGER: {
     SUCCESS_RECONNECT: "manager:successReconnect",

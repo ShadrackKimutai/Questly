@@ -1,4 +1,4 @@
-import type { Question, QuizzWithId } from "@razzia/common/types/game"
+import type { Question, QuestionType, QuizzWithId } from "@razzia/common/types/game"
 import {
   createContext,
   useContext,
@@ -37,8 +37,15 @@ const defaultQuestion = (): QuestionWithId => ({
   type: "single",
 })
 
+const inferType = (q: Question): QuestionType => {
+  if (q.type) return q.type
+  if (q.textSolutions && q.textSolutions.length > 0) return "shortanswer"
+  if (q.solutions.length > 1) return "multiple"
+  return "single"
+}
+
 const toQuestionWithId = (q: Question): QuestionWithId => ({
-  type: q.solutions.length > 1 ? "multiple" : "single",
+  type: inferType(q),
   ...q,
   id: uuid(),
 })

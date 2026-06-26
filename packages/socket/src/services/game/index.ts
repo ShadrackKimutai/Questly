@@ -267,6 +267,10 @@ class Game {
     this.round.selectAnswers(socket, answerIds)
   }
 
+  textAnswer(socket: Socket, answerText: string) {
+    this.round.textAnswer(socket, answerText)
+  }
+
   nextRound(socket: Socket) {
     this.round.nextQuestion(socket)
   }

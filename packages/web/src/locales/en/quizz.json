@@ -1,5 +1,6 @@
 {
   "addAnswerPlaceholder": "Add an answer...",
+  "acceptedAnswers": "Accepted answers",
   "addQuestion": "Add question",
   "answersCountSuffix": " answers",
   "deleteQuestion": "Delete question",
@@ -17,7 +18,8 @@
       "questionType": "Question type",
       "typeSingle": "Single",
       "typeMultiple": "Multiple",
-      "typeTrueFalse": "True / False"
+      "typeTrueFalse": "True / False",
+      "typeShortAnswer": "Short Answer"
     },
     "deleteQuestion": "Delete question",
     "deleteQuestionConfirm": "Are you sure you want to delete this question?",

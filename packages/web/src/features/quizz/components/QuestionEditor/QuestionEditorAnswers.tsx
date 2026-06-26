@@ -42,6 +42,23 @@ const QuestionEditorAnswers = () => {
 
   const isMultiple = currentQuestion.type === "multiple"
   const isTrueFalse = currentQuestion.type === "truefalse"
+  const isShortAnswer = currentQuestion.type === "shortanswer"
+
+  const updateTextSolution = (index: number, value: string) => {
+    const next = [...(currentQuestion.textSolutions ?? [])]
+    next[index] = value
+    updateQuestion(currentIndex, { textSolutions: next })
+  }
+
+  const addTextSolution = () => {
+    const next = [...(currentQuestion.textSolutions ?? []), ""]
+    updateQuestion(currentIndex, { textSolutions: next })
+  }
+
+  const removeTextSolution = (index: number) => {
+    const next = (currentQuestion.textSolutions ?? []).filter((_, i) => i !== index)
+    updateQuestion(currentIndex, { textSolutions: next.length > 0 ? next : [""] })
+  }
 
   const toggleSolution = (index: number) => {
     if (!isMultiple) {
@@ -59,6 +76,52 @@ const QuestionEditorAnswers = () => {
     } else {
       updateQuestion(currentIndex, { solutions: [...current, index] })
     }
+  }
+
+  if (isShortAnswer) {
+    const textSolutions = currentQuestion.textSolutions ?? [""]
+
+    return (
+      <div className="z-10 flex flex-col gap-3">
+        <div className="flex items-center justify-between px-1">
+          <div className="rounded-lg bg-white px-2 py-1 text-sm font-semibold text-gray-500">
+            {t("quizz:acceptedAnswers")}
+          </div>
+          <button
+            type="button"
+            title="Add accepted answer"
+            onClick={addTextSolution}
+            className="flex size-7 items-center justify-center rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300"
+          >
+            <Plus className="size-4" />
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          {textSolutions.map((sol, i) => (
+            <div key={i} className="flex items-center gap-2 rounded-xl bg-green-600 px-4 py-3">
+              <Check className="size-4 shrink-0 text-white" />
+              <input
+                className="flex-1 bg-transparent font-semibold text-white placeholder-white/70 outline-none"
+                placeholder={t("quizz:addAnswerPlaceholder")}
+                value={sol}
+                onChange={(e) => updateTextSolution(i, e.target.value)}
+              />
+              {textSolutions.length > 1 && (
+                <button
+                  type="button"
+                  title="Remove"
+                  onClick={() => removeTextSolution(i)}
+                  className="flex size-5 shrink-0 items-center justify-center rounded text-white/70 hover:text-white"
+                >
+                  <Minus className="size-4" />
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    )
   }
 
   return (

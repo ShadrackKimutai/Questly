@@ -14,7 +14,7 @@ import {
   SFX,
 } from "@razzia/web/features/game/utils/constants"
 import clsx from "clsx"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import useSound from "use-sound"
 
@@ -28,11 +28,14 @@ const Answers = ({
   const { socket } = useSocket()
   const { player, gameId } = usePlayerStore()
   const isMultiple = type === "multiple"
+  const isShortAnswer = type === "shortanswer"
 
   const [cooldown, setCooldown] = useState(time)
   const [totalAnswer, setTotalAnswer] = useState(0)
   const [submitted, setSubmitted] = useState(false)
   const [selectedKeys, setSelectedKeys] = useState<number[]>([])
+  const [textInput, setTextInput] = useState("")
+  const inputRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
 
   const [sfxPop] = useSound(SFX.ANSWERS.SOUND, { volume: 0.1 })
@@ -57,14 +60,22 @@ const Answers = ({
   }
 
   const handleSubmit = () => {
-    if (!player || !gameId || submitted || selectedKeys.length === 0) return
+    if (!player || !gameId || submitted) return
 
-    if (isMultiple) {
+    if (isShortAnswer) {
+      if (!textInput.trim()) return
+      socket.emit(EVENTS.PLAYER.TEXT_ANSWER, {
+        gameId,
+        data: { answerText: textInput.trim() },
+      })
+    } else if (isMultiple) {
+      if (selectedKeys.length === 0) return
       socket.emit(EVENTS.PLAYER.SELECTED_ANSWERS, {
         gameId,
         data: { answerKeys: selectedKeys },
       })
     } else {
+      if (selectedKeys.length === 0) return
       socket.emit(EVENTS.PLAYER.SELECTED_ANSWER, {
         gameId,
         data: { answerKey: selectedKeys[0] },
@@ -100,8 +111,8 @@ const Answers = ({
   })
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto">
-      <div className="mx-auto inline-flex w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5 px-4 py-4">
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="mx-auto inline-flex min-h-0 w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5 overflow-y-auto px-4 py-4">
         <h2 className="text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
           {question}
         </h2>
@@ -115,7 +126,7 @@ const Answers = ({
         <QuestionMedia media={media} alt={question} />
       </div>
 
-      <div>
+      <div className="shrink-0">
         <div className="mx-auto mb-2 flex w-full max-w-7xl justify-between gap-1 px-2 text-base font-bold text-white md:text-xl">
           {time !== NO_TIME_LIMIT && (
             <div className="flex flex-col items-center rounded-lg bg-black/40 px-4 py-1 font-bold">
@@ -129,41 +140,74 @@ const Answers = ({
           </div>
         </div>
 
-        <div className="mx-auto mb-2 grid w-full max-w-7xl grid-cols-2 gap-1 px-2 font-bold text-white">
-          {answers.map((answer, key) => {
-            const isSelected = selectedKeys.includes(key)
-
-            return (
-              <AnswerButton
-                key={key}
-                className={clsx(
-                  ANSWERS_COLORS[key],
-                  submitted && "opacity-60 cursor-not-allowed",
-                )}
-                label={ANSWERS_LABELS[key]}
-                selected={isSelected}
-                showRadio={!isMultiple}
-                showCheckbox={isMultiple}
-                onClick={handleSelect(key)}
+        {isShortAnswer && player ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            <div className="mb-2 flex gap-2">
+              <input
+                ref={inputRef}
+                type="text"
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                 disabled={submitted}
-              >
-                {answer}
-              </AnswerButton>
-            )
-          })}
-        </div>
+                placeholder={t("game:typeYourAnswer")}
+                className="flex-1 rounded-2xl bg-white/20 px-4 py-3 text-base font-semibold text-white placeholder-white/60 outline-none backdrop-blur-sm focus:bg-white/30 disabled:opacity-60"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitted || !textInput.trim()}
+              className="bg-primary w-full rounded-2xl py-3 text-base font-bold text-white shadow-lg transition-opacity disabled:opacity-40 md:py-4 md:text-lg"
+            >
+              {t("game:submitAnswer")}
+            </button>
+          </div>
+        ) : isShortAnswer ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 text-white/80 font-semibold">
+              {t("game:waitingForAnswers")}
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="mx-auto mb-2 grid w-full max-w-7xl grid-cols-2 gap-1 px-2 font-bold text-white">
+              {answers.map((answer, key) => {
+                const isSelected = selectedKeys.includes(key)
 
-        <div className="mx-auto mb-3 w-full max-w-7xl px-2">
-          <button
-            type="button"
-            onClick={handleSubmit}
-            disabled={submitted || selectedKeys.length === 0}
-            className="bg-primary w-full rounded-2xl py-3 text-base font-bold text-white shadow-lg transition-opacity disabled:opacity-40 md:py-4 md:text-lg"
-          >
-            {t("game:submitAnswer")}
-            {isMultiple && selectedKeys.length > 0 && ` (${selectedKeys.length})`}
-          </button>
-        </div>
+                return (
+                  <AnswerButton
+                    key={key}
+                    className={clsx(
+                      ANSWERS_COLORS[key],
+                      submitted && "opacity-60 cursor-not-allowed",
+                    )}
+                    label={ANSWERS_LABELS[key]}
+                    selected={isSelected}
+                    showRadio={!isMultiple}
+                    showCheckbox={isMultiple}
+                    onClick={handleSelect(key)}
+                    disabled={submitted}
+                  >
+                    {answer}
+                  </AnswerButton>
+                )
+              })}
+            </div>
+
+            <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={submitted || selectedKeys.length === 0}
+                className="bg-primary w-full rounded-2xl py-3 text-base font-bold text-white shadow-lg transition-opacity disabled:opacity-40 md:py-4 md:text-lg"
+              >
+                {t("game:submitAnswer")}
+                {isMultiple && selectedKeys.length > 0 && ` (${selectedKeys.length})`}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
