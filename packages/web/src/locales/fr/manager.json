@@ -19,6 +19,7 @@
     "deleteConfirm": "Supprimer le résultat \"{{name}}\" ? Cette action est irréversible.",
     "deleted": "Résultat supprimé",
     "noAnswer": "Sans réponse",
+    "wrongAnswer": "Incorrect",
     "none": "Aucun résultat pour l'instant, terminez une partie pour voir les rapports",
     "paginationOf": " sur ",
     "stats": {

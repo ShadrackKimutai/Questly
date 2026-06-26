@@ -52,28 +52,58 @@ const MediaPreview = ({ media }: { media?: QuestionMedia }) => {
 }
 
 const ResultModalAnswers = () => {
-  const { questionResult, totalPlayers, answeredCount, getAnswerCount } =
-    useResultModal()
+  const {
+    questionResult,
+    totalPlayers,
+    answeredCount,
+    correctCount,
+    getAnswerCount,
+  } = useResultModal()
   const { t } = useTranslation()
 
   const noAnswerCount = totalPlayers - answeredCount
+  const isShortAnswer = questionResult.type === "shortanswer"
 
-  const rows: AnswerRow[] = [
-    ...questionResult.answers.map((label, ai) => ({
-      label,
-      count: getAnswerCount(ai),
-      isCorrect: questionResult.solutions.includes(ai),
-      color: ANSWERS_COLORS[ai % 4],
-      answerLabel: ANSWERS_LABELS[ai % 4],
-    })),
-    {
-      label: t("manager:result.noAnswer"),
-      count: noAnswerCount,
-      isCorrect: false,
-      color: null,
-      answerLabel: null,
-    },
-  ]
+  const rows: AnswerRow[] = isShortAnswer
+    ? [
+        {
+          label: questionResult.textSolutions?.join(" / ") ?? "",
+          count: correctCount,
+          isCorrect: true,
+          color: "bg-green-500",
+          answerLabel: "✓",
+        },
+        {
+          label: t("manager:result.wrongAnswer"),
+          count: answeredCount - correctCount,
+          isCorrect: false,
+          color: null,
+          answerLabel: null,
+        },
+        {
+          label: t("manager:result.noAnswer"),
+          count: noAnswerCount,
+          isCorrect: false,
+          color: null,
+          answerLabel: null,
+        },
+      ]
+    : [
+        ...questionResult.answers.map((label, ai) => ({
+          label,
+          count: getAnswerCount(ai),
+          isCorrect: questionResult.solutions.includes(ai),
+          color: ANSWERS_COLORS[ai % 4],
+          answerLabel: ANSWERS_LABELS[ai % 4],
+        })),
+        {
+          label: t("manager:result.noAnswer"),
+          count: noAnswerCount,
+          isCorrect: false,
+          color: null,
+          answerLabel: null,
+        },
+      ]
 
   return (
     <div className="flex flex-col border-b border-gray-100 md:flex-row">

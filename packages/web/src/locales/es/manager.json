@@ -19,6 +19,7 @@
     "deleteConfirm": "¿Eliminar el resultado de \"{{name}}\"? Esta acción no se puede deshacer.",
     "deleted": "Resultado eliminado",
     "noAnswer": "Sin respuesta",
+    "wrongAnswer": "Incorrecto",
     "none": "Aún no hay resultados, termina una partida para ver los informes aquí",
     "paginationOf": " de ",
     "stats": {

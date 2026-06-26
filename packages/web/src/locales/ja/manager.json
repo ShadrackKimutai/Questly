@@ -19,6 +19,7 @@
     "deleteConfirm": "「{{name}}」の結果を削除しますか？この操作は元に戻せません。",
     "deleted": "結果を削除しました",
     "noAnswer": "未回答",
+    "wrongAnswer": "不正解",
     "none": "まだ結果はありません。ゲームを終了するとここにレポートが表示されます",
     "paginationOf": " / ",
     "stats": {
