@@ -1,18 +1,18 @@
-import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
-import type { QuestionMediaType } from "@razzia/common/types/game"
-import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
-import QuestionMedia from "@razzia/web/components/QuestionMedia"
-import AnswerButton from "@razzia/web/features/game/components/AnswerButton"
+import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@questly/common/constants"
+import type { QuestionMediaType } from "@questly/common/types/game"
+import type { CommonStatusDataMap } from "@questly/common/types/game/status"
+import QuestionMedia from "@questly/web/components/QuestionMedia"
+import AnswerButton from "@questly/web/features/game/components/AnswerButton"
 import {
   useEvent,
   useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { usePlayerStore } from "@razzia/web/features/game/stores/player"
+} from "@questly/web/features/game/contexts/socket-context"
+import { usePlayerStore } from "@questly/web/features/game/stores/player"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
   SFX,
-} from "@razzia/web/features/game/utils/constants"
+} from "@questly/web/features/game/utils/constants"
 import clsx from "clsx"
 import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"

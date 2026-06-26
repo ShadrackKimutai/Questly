@@ -1,5 +1,5 @@
 {
-  "name": "@razzia/web",
+  "name": "@questly/web",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -19,8 +19,8 @@
     "@radix-ui/react-alert-dialog": "^1.1.16",
     "@radix-ui/react-select": "^2.3.0",
     "@radix-ui/react-switch": "^1.3.0",
-    "@razzia/common": "workspace:*",
-    "@razzia/socket": "workspace:*",
+    "@questly/common": "workspace:*",
+    "@questly/socket": "workspace:*",
     "@tailwindcss/vite": "^4.3.0",
     "@tanstack/react-router": "^1.170.15",
     "clsx": "^2.1.1",

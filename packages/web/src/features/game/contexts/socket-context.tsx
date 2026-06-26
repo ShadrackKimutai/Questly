@@ -1,7 +1,7 @@
 import type {
   ClientToServerEvents,
   ServerToClientEvents,
-} from "@razzia/common/types/game/socket"
+} from "@questly/common/types/game/socket"
 import React, {
   createContext,
   useCallback,

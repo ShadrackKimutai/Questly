@@ -1,5 +1,5 @@
-import type { PlayerStatusDataMap } from "@razzia/common/types/game/status"
-import Loader from "@razzia/web/components/Loader"
+import type { PlayerStatusDataMap } from "@questly/common/types/game/status"
+import Loader from "@questly/web/components/Loader"
 import { useTranslation } from "react-i18next"
 
 interface Props {

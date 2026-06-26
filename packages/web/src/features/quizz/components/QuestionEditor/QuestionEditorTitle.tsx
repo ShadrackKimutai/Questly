@@ -1,4 +1,4 @@
-import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
+import { useQuizzEditor } from "@questly/web/features/quizz/contexts/quizz-editor-context"
 import type { ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
 

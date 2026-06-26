@@ -1,14 +1,14 @@
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
-} from "@razzia/web/features/game/utils/constants"
-import { useResultModal } from "@razzia/web/features/manager/contexts/result-modal-context"
+} from "@questly/web/features/game/utils/constants"
+import { useResultModal } from "@questly/web/features/manager/contexts/result-modal-context"
 import clsx from "clsx"
 import { Check, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const ResultModalTable = () => {
-  const { questionResult, getPlayerPoints } = useResultModal()
+  const { questionResult, getPlayerPoints, isAnswerCorrect } = useResultModal()
   const { t } = useTranslation()
 
   return (
@@ -27,30 +27,51 @@ const ResultModalTable = () => {
       </thead>
       <tbody className="divide-y divide-gray-100">
         {questionResult.playerAnswers.map((pa, i) => {
-          const isCorrect =
-            pa.answerId !== null &&
-            questionResult.solutions.includes(pa.answerId)
-          const answerLabel =
-            pa.answerId !== null ? ANSWERS_LABELS[pa.answerId % 4] : null
+          const isCorrect = isAnswerCorrect(pa.answerId)
+
+          const answer =
+            typeof pa.answerId === "number"
+              ? {
+                  label: ANSWERS_LABELS[pa.answerId % 4],
+                  color: ANSWERS_COLORS[pa.answerId % 4],
+                  text: questionResult.answers[pa.answerId],
+                }
+              : Array.isArray(pa.answerId)
+                ? {
+                    label: pa.answerId
+                      .map((answerId) => ANSWERS_LABELS[answerId % 4])
+                      .join(", "),
+                    color: "bg-gray-700",
+                    text: pa.answerId
+                      .map((answerId) => questionResult.answers[answerId])
+                      .join(", "),
+                  }
+                : typeof pa.answerId === "string"
+                  ? {
+                      label: null,
+                      color: "bg-gray-700",
+                      text: pa.answerId,
+                    }
+                  : null
 
           return (
             <tr key={i} className="hover:bg-gray-50">
               <td className="px-5 py-2.5 font-medium">{pa.playerName}</td>
               <td className="px-4 py-2.5">
-                {pa.answerId !== null && answerLabel ? (
+                {answer ? (
                   <span
                     className={clsx(
                       "inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-white",
-                      ANSWERS_COLORS[pa.answerId % 4],
+                      answer.color,
                     )}
                   >
-                    <span className="font-bold">{answerLabel}</span>
-                    <span className="max-w-30 truncate">
-                      {questionResult.answers[pa.answerId]}
-                    </span>
+                    {answer.label && (
+                      <span className="font-bold">{answer.label}</span>
+                    )}
+                    <span className="max-w-30 truncate">{answer.text}</span>
                   </span>
                 ) : (
-                  <span className="text-xs text-gray-400">—</span>
+                  <span className="text-xs text-gray-400">-</span>
                 )}
               </td>
               <td className="px-4 py-2.5">

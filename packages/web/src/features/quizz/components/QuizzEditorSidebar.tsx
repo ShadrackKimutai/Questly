@@ -16,12 +16,12 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import Button from "@razzia/web/components/Button"
-import QuizzEditorCard from "@razzia/web/features/quizz/components/QuizzEditorCard"
+import Button from "@questly/web/components/Button"
+import QuizzEditorCard from "@questly/web/features/quizz/components/QuizzEditorCard"
 import {
   useQuizzEditor,
   type QuestionWithId,
-} from "@razzia/web/features/quizz/contexts/quizz-editor-context"
+} from "@questly/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
 import { Plus } from "lucide-react"
 import { useRef } from "react"

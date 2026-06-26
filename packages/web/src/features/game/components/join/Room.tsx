@@ -1,12 +1,12 @@
-import { EVENTS } from "@razzia/common/constants"
-import Button from "@razzia/web/components/Button"
-import Card from "@razzia/web/components/Card"
-import PinInput from "@razzia/web/components/PinInput"
+import { EVENTS } from "@questly/common/constants"
+import Button from "@questly/web/components/Button"
+import Card from "@questly/web/components/Card"
+import PinInput from "@questly/web/components/PinInput"
 import {
   useEvent,
   useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { usePlayerStore } from "@razzia/web/features/game/stores/player"
+} from "@questly/web/features/game/contexts/socket-context"
+import { usePlayerStore } from "@questly/web/features/game/stores/player"
 import { useSearch } from "@tanstack/react-router"
 import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"

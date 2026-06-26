@@ -1,4 +1,4 @@
-import Game from "@razzia/socket/services/game"
+import Game from "@questly/socket/services/game"
 import dayjs from "dayjs"
 
 interface EmptyGame {

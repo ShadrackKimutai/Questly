@@ -1,11 +1,11 @@
-import type { ManagerStatusDataMap } from "@razzia/common/types/game/status"
-import AnswerButton from "@razzia/web/features/game/components/AnswerButton"
+import type { ManagerStatusDataMap } from "@questly/common/types/game/status"
+import AnswerButton from "@questly/web/features/game/components/AnswerButton"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
   SFX,
-} from "@razzia/web/features/game/utils/constants"
-import { calculatePercentages } from "@razzia/web/features/game/utils/score"
+} from "@questly/web/features/game/utils/constants"
+import { calculatePercentages } from "@questly/web/features/game/utils/score"
 import clsx from "clsx"
 import { useEffect, useState } from "react"
 import useSound from "use-sound"

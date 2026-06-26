@@ -1,17 +1,17 @@
-import { EVENTS } from "@razzia/common/constants"
-import type { Player, Quizz } from "@razzia/common/types/game"
-import type { Server, Socket } from "@razzia/common/types/game/socket"
+import { EVENTS } from "@questly/common/constants"
+import type { Player, Quizz } from "@questly/common/types/game"
+import type { Server, Socket } from "@questly/common/types/game/socket"
 import {
   STATUS,
   type Status,
   type StatusDataMap,
-} from "@razzia/common/types/game/status"
-import { saveResult } from "@razzia/socket/services/config"
-import { CooldownTimer } from "@razzia/socket/services/game/cooldown-timer"
-import { PlayerManager } from "@razzia/socket/services/game/player-manager"
-import { RoundManager } from "@razzia/socket/services/game/round-manager"
-import Registry from "@razzia/socket/services/registry"
-import { createInviteCode } from "@razzia/socket/utils/game"
+} from "@questly/common/types/game/status"
+import { saveResult } from "@questly/socket/services/config"
+import { CooldownTimer } from "@questly/socket/services/game/cooldown-timer"
+import { PlayerManager } from "@questly/socket/services/game/player-manager"
+import { RoundManager } from "@questly/socket/services/game/round-manager"
+import Registry from "@questly/socket/services/registry"
+import { createInviteCode } from "@questly/socket/utils/game"
 import { v7 as uuid } from "uuid"
 
 const registry = Registry.getInstance()

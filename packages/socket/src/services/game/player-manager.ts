@@ -1,7 +1,7 @@
-import { EVENTS } from "@razzia/common/constants"
-import type { Player } from "@razzia/common/types/game"
-import type { Server, Socket } from "@razzia/common/types/game/socket"
-import { usernameValidator } from "@razzia/common/validators/auth"
+import { EVENTS } from "@questly/common/constants"
+import type { Player } from "@questly/common/types/game"
+import type { Server, Socket } from "@questly/common/types/game/socket"
+import { usernameValidator } from "@questly/common/validators/auth"
 
 export class PlayerManager {
   private readonly io: Server

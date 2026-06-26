@@ -1,12 +1,12 @@
-import { EVENTS } from "@razzia/common/constants"
+import { EVENTS } from "@questly/common/constants"
 import type {
   GameResult,
   GameUpdateQuestion,
   Player,
   QuizzWithId,
-} from "@razzia/common/types/game"
-import type { Status, StatusDataMap } from "@razzia/common/types/game/status"
-import type { ManagerConfig } from "@razzia/common/types/manager"
+} from "@questly/common/types/game"
+import type { Status, StatusDataMap } from "@questly/common/types/game/status"
+import type { ManagerConfig } from "@questly/common/types/manager"
 import { Server as ServerIO, Socket as SocketIO } from "socket.io"
 
 export type Server = ServerIO<ClientToServerEvents, ServerToClientEvents>

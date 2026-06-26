@@ -1,5 +1,5 @@
-import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
-import { usePlayerStore } from "@razzia/web/features/game/stores/player"
+import type { CommonStatusDataMap } from "@questly/common/types/game/status"
+import { usePlayerStore } from "@questly/web/features/game/stores/player"
 import { useTranslation } from "react-i18next"
 
 interface Props {

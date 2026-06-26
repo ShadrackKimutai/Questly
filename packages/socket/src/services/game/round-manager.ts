@@ -1,5 +1,5 @@
 // oxlint-disable typescript/no-unnecessary-condition
-import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
+import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@questly/common/constants"
 import type {
   Answer,
   GameResult,
@@ -7,17 +7,17 @@ import type {
   Question,
   QuestionResult,
   Quizz,
-} from "@razzia/common/types/game"
-import type { Server, Socket } from "@razzia/common/types/game/socket"
+} from "@questly/common/types/game"
+import type { Server, Socket } from "@questly/common/types/game/socket"
 import {
   type Status,
   STATUS,
   type StatusDataMap,
-} from "@razzia/common/types/game/status"
-import { CooldownTimer } from "@razzia/socket/services/game/cooldown-timer"
-import { PlayerManager } from "@razzia/socket/services/game/player-manager"
-import { orderToPoint, timeToPoint } from "@razzia/socket/utils/game"
-import sleep from "@razzia/socket/utils/sleep"
+} from "@questly/common/types/game/status"
+import { CooldownTimer } from "@questly/socket/services/game/cooldown-timer"
+import { PlayerManager } from "@questly/socket/services/game/player-manager"
+import { orderToPoint, timeToPoint } from "@questly/socket/utils/game"
+import sleep from "@questly/socket/utils/sleep"
 import { nanoid } from "nanoid"
 
 type BroadcastFn = <T extends Status>(

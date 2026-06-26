@@ -1,8 +1,8 @@
-import type { StatusDataMap } from "@razzia/common/types/game/status"
+import type { StatusDataMap } from "@questly/common/types/game/status"
 import {
   createStatus,
   type Status,
-} from "@razzia/web/features/game/utils/createStatus"
+} from "@questly/web/features/game/utils/createStatus"
 import { create } from "zustand"
 
 interface PlayerState {

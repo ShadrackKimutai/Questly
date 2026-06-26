@@ -1,7 +1,7 @@
-import QuestionEditor from "@razzia/web/features/quizz/components/QuestionEditor"
-import QuizzEditorHeader from "@razzia/web/features/quizz/components/QuizzEditorHeader"
-import QuizzEditorSidebar from "@razzia/web/features/quizz/components/QuizzEditorSidebar"
-import { QuizzEditorProvider } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
+import QuestionEditor from "@questly/web/features/quizz/components/QuestionEditor"
+import QuizzEditorHeader from "@questly/web/features/quizz/components/QuizzEditorHeader"
+import QuizzEditorSidebar from "@questly/web/features/quizz/components/QuizzEditorSidebar"
+import { QuizzEditorProvider } from "@questly/web/features/quizz/contexts/quizz-editor-context"
 import { createFileRoute } from "@tanstack/react-router"
 
 const QuizzEditorPage = () => (

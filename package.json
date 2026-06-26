@@ -1,5 +1,5 @@
 {
-  "name": "razzia",
+  "name": "questly",
   "version": "3.1.0",
   "scripts": {
     "dev": "dotenv -e .env -- pnpm -r --parallel dev",

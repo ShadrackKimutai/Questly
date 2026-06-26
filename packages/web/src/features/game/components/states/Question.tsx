@@ -1,6 +1,6 @@
-import { MEDIA_TYPES } from "@razzia/common/constants"
-import type { CommonStatusDataMap } from "@razzia/common/types/game/status"
-import { SFX } from "@razzia/web/features/game/utils/constants"
+import { MEDIA_TYPES } from "@questly/common/constants"
+import type { CommonStatusDataMap } from "@questly/common/types/game/status"
+import { SFX } from "@questly/web/features/game/utils/constants"
 import { useEffect } from "react"
 import useSound from "use-sound"
 

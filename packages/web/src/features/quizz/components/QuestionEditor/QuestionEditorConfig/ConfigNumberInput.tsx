@@ -1,4 +1,4 @@
-import Input from "@razzia/web/components/Input"
+import Input from "@questly/web/components/Input"
 import { useEffect, useState } from "react"
 
 interface Props {

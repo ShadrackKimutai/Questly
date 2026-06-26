@@ -1,6 +1,6 @@
-import type { Socket } from "@razzia/common/types/game/socket"
-import Game from "@razzia/socket/services/game"
-import Registry from "@razzia/socket/services/registry"
+import type { Socket } from "@questly/common/types/game/socket"
+import Game from "@questly/socket/services/game"
+import Registry from "@questly/socket/services/registry"
 import { nanoid } from "nanoid"
 
 export const withGame = (

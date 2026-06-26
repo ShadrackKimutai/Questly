@@ -1,7 +1,7 @@
-import { EVENTS } from "@razzia/common/constants"
-import type { SocketContext } from "@razzia/socket/handlers/types"
-import { getGameConfig } from "@razzia/socket/services/config"
-import manager, { emitConfig } from "@razzia/socket/services/manager"
+import { EVENTS } from "@questly/common/constants"
+import type { SocketContext } from "@questly/socket/handlers/types"
+import { getGameConfig } from "@questly/socket/services/config"
+import manager, { emitConfig } from "@questly/socket/services/manager"
 
 export const managerSocketHandlers = ({ socket }: SocketContext) => {
   socket.on(

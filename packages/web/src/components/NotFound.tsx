@@ -1,5 +1,5 @@
-import Background from "@razzia/web/components/Background"
-import Button from "@razzia/web/components/Button"
+import Background from "@questly/web/components/Background"
+import Button from "@questly/web/components/Button"
 import { useNavigate } from "@tanstack/react-router"
 import { useTranslation } from "react-i18next"
 

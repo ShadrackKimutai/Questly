@@ -1,13 +1,13 @@
-import { EVENTS } from "@razzia/common/constants"
-import { STATUS } from "@razzia/common/types/game/status"
-import Button from "@razzia/web/components/Button"
-import Card from "@razzia/web/components/Card"
-import Input from "@razzia/web/components/Input"
+import { EVENTS } from "@questly/common/constants"
+import { STATUS } from "@questly/common/types/game/status"
+import Button from "@questly/web/components/Button"
+import Card from "@questly/web/components/Card"
+import Input from "@questly/web/components/Input"
 import {
   useEvent,
   useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { usePlayerStore } from "@razzia/web/features/game/stores/player"
+} from "@questly/web/features/game/contexts/socket-context"
+import { usePlayerStore } from "@questly/web/features/game/stores/player"
 
 import { useNavigate } from "@tanstack/react-router"
 import { type KeyboardEvent, useState } from "react"

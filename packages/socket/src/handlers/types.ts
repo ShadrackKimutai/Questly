@@ -1,4 +1,4 @@
-import type { Server, Socket } from "@razzia/common/types/game/socket"
+import type { Server, Socket } from "@questly/common/types/game/socket"
 
 export interface SocketContext {
   io: Server

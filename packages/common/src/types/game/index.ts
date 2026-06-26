@@ -1,4 +1,4 @@
-import type { MEDIA_TYPES } from "@razzia/common/constants"
+import type { MEDIA_TYPES } from "@questly/common/constants"
 
 export interface Player {
   id: string

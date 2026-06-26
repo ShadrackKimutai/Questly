@@ -1,10 +1,10 @@
-import { EVENTS } from "@razzia/common/constants"
-import Loader from "@razzia/web/components/Loader"
+import { EVENTS } from "@questly/common/constants"
+import Loader from "@questly/web/components/Loader"
 import {
   useEvent,
   useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { useManagerStore } from "@razzia/web/features/game/stores/manager"
+} from "@questly/web/features/game/contexts/socket-context"
+import { useManagerStore } from "@questly/web/features/game/stores/manager"
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router"
 import { useEffect } from "react"
 

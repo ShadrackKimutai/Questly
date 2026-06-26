@@ -1,11 +1,11 @@
-import { EXAMPLE_QUIZZ } from "@razzia/common/constants"
+import { EXAMPLE_QUIZZ } from "@questly/common/constants"
 import type {
   GameResult,
   GameResultMeta,
   QuizzWithId,
-} from "@razzia/common/types/game"
-import { quizzValidator } from "@razzia/common/validators/quizz"
-import { normalizeFilename } from "@razzia/socket/utils/game"
+} from "@questly/common/types/game"
+import { quizzValidator } from "@questly/common/validators/quizz"
+import { normalizeFilename } from "@questly/socket/utils/game"
 import fs from "fs"
 import { resolve } from "path"
 

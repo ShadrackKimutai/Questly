@@ -1,8 +1,8 @@
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
-} from "@razzia/web/features/game/utils/constants"
-import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
+} from "@questly/web/features/game/utils/constants"
+import { useQuizzEditor } from "@questly/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
 import { Check, Minus, Plus } from "lucide-react"
 import { useTranslation } from "react-i18next"
