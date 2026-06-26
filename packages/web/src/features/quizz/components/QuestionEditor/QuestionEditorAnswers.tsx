@@ -41,6 +41,7 @@ const QuestionEditorAnswers = () => {
   }
 
   const isMultiple = currentQuestion.type === "multiple"
+  const isTrueFalse = currentQuestion.type === "truefalse"
 
   const toggleSolution = (index: number) => {
     if (!isMultiple) {
@@ -62,28 +63,34 @@ const QuestionEditorAnswers = () => {
 
   return (
     <div className="z-10 flex flex-col gap-3">
-      <div className="flex items-center justify-between px-1">
-        <div className="rounded-lg bg-white px-2 py-1 text-sm font-semibold text-gray-500">
-          {currentQuestion.answers.length}
-          {t("quizz:answersCountSuffix")}
+      {!isTrueFalse && (
+        <div className="flex items-center justify-between px-1">
+          <div className="rounded-lg bg-white px-2 py-1 text-sm font-semibold text-gray-500">
+            {currentQuestion.answers.length}
+            {t("quizz:answersCountSuffix")}
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              title="Remove answer"
+              onClick={removeAnswer}
+              disabled={currentQuestion.answers.length <= 2}
+              className="flex size-7 items-center justify-center rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-40"
+            >
+              <Minus className="size-4" />
+            </button>
+            <button
+              type="button"
+              title="Add answer"
+              onClick={addAnswer}
+              disabled={currentQuestion.answers.length >= 4}
+              className="flex size-7 items-center justify-center rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-40"
+            >
+              <Plus className="size-4" />
+            </button>
+          </div>
         </div>
-        <div className="flex gap-2">
-          <button
-            onClick={removeAnswer}
-            disabled={currentQuestion.answers.length <= 2}
-            className="flex size-7 items-center justify-center rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-40"
-          >
-            <Minus className="size-4" />
-          </button>
-          <button
-            onClick={addAnswer}
-            disabled={currentQuestion.answers.length >= 4}
-            className="flex size-7 items-center justify-center rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-40"
-          >
-            <Plus className="size-4" />
-          </button>
-        </div>
-      </div>
+      )}
 
       <div className="grid grid-cols-2 gap-3">
         {currentQuestion.answers.map((answer, i) => {
@@ -102,9 +109,10 @@ const QuestionEditorAnswers = () => {
               </span>
               <div className="flex flex-1 items-center justify-between gap-1.5 drop-shadow-md">
                 <input
-                  className="w-full bg-transparent font-semibold text-white placeholder-white/70 outline-none"
+                  className="w-full bg-transparent font-semibold text-white placeholder-white/70 outline-none read-only:cursor-default"
                   placeholder={t("quizz:addAnswerPlaceholder")}
                   value={answer}
+                  readOnly={isTrueFalse}
                   onChange={(e) => updateAnswer(i, e.target.value)}
                 />
                 <button

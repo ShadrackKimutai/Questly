@@ -100,8 +100,8 @@ const Answers = ({
   })
 
   return (
-    <div className="flex h-full flex-1 flex-col justify-between">
-      <div className="mx-auto inline-flex h-full w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5">
+    <div className="flex min-h-0 flex-1 flex-col justify-between overflow-y-auto">
+      <div className="mx-auto inline-flex w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5 px-4 py-4">
         <h2 className="text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
           {question}
         </h2>
@@ -116,20 +116,20 @@ const Answers = ({
       </div>
 
       <div>
-        <div className="mx-auto mb-4 flex w-full max-w-7xl justify-between gap-1 px-2 text-lg font-bold text-white md:text-xl">
+        <div className="mx-auto mb-2 flex w-full max-w-7xl justify-between gap-1 px-2 text-base font-bold text-white md:text-xl">
           {time !== NO_TIME_LIMIT && (
-            <div className="flex flex-col items-center rounded-lg bg-black/40 px-4 text-lg font-bold">
-              <span className="translate-y-1 text-sm">{t("game:hud.time")}</span>
+            <div className="flex flex-col items-center rounded-lg bg-black/40 px-4 py-1 font-bold">
+              <span className="text-xs">{t("game:hud.time")}</span>
               <span>{cooldown}</span>
             </div>
           )}
-          <div className="flex flex-col items-center rounded-lg bg-black/40 px-4 text-lg font-bold">
-            <span className="translate-y-1 text-sm">{t("game:hud.answers")}</span>
+          <div className="flex flex-col items-center rounded-lg bg-black/40 px-4 py-1 font-bold">
+            <span className="text-xs">{t("game:hud.answers")}</span>
             <span>{totalAnswer}/{totalPlayer}</span>
           </div>
         </div>
 
-        <div className="mx-auto mb-2 grid w-full max-w-7xl grid-cols-2 gap-1 px-2 text-lg font-bold text-white md:text-xl">
+        <div className="mx-auto mb-2 grid w-full max-w-7xl grid-cols-2 gap-1 px-2 font-bold text-white">
           {answers.map((answer, key) => {
             const isSelected = selectedKeys.includes(key)
 
@@ -153,12 +153,12 @@ const Answers = ({
           })}
         </div>
 
-        <div className="mx-auto mb-4 w-full max-w-7xl px-2">
+        <div className="mx-auto mb-3 w-full max-w-7xl px-2">
           <button
             type="button"
             onClick={handleSubmit}
             disabled={submitted || selectedKeys.length === 0}
-            className="bg-primary w-full rounded-2xl py-4 text-lg font-bold text-white shadow-lg transition-opacity disabled:opacity-40"
+            className="bg-primary w-full rounded-2xl py-3 text-base font-bold text-white shadow-lg transition-opacity disabled:opacity-40 md:py-4 md:text-lg"
           >
             {t("game:submitAnswer")}
             {isMultiple && selectedKeys.length > 0 && ` (${selectedKeys.length})`}

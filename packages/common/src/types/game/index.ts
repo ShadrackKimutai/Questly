@@ -24,7 +24,7 @@ export interface QuestionMedia {
   url: string
 }
 
-export type QuestionType = 'single' | 'multiple'
+export type QuestionType = 'single' | 'multiple' | 'truefalse'
 
 export interface Question {
   question: string

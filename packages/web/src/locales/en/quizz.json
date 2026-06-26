@@ -16,7 +16,8 @@
       "timings": "Timings",
       "questionType": "Question type",
       "typeSingle": "Single",
-      "typeMultiple": "Multiple"
+      "typeMultiple": "Multiple",
+      "typeTrueFalse": "True / False"
     },
     "deleteQuestion": "Delete question",
     "deleteQuestionConfirm": "Are you sure you want to delete this question?",

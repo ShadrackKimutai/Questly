@@ -26,7 +26,7 @@ const AnswerButton = ({
   return (
     <button
       className={clsx(
-        "relative flex items-center gap-3 rounded-2xl px-4 py-6 text-left transition-all",
+        "relative flex items-center gap-3 rounded-2xl px-4 py-3 text-left transition-all md:py-6",
         selected && "ring-4 ring-white ring-inset",
         className,
       )}

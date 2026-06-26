@@ -6,15 +6,18 @@ import ConfigNumberInput from "@razzia/web/features/quizz/components/QuestionEdi
 import ConfigSection from "@razzia/web/features/quizz/components/QuestionEditor/QuestionEditorConfig/ConfigSection"
 import { useQuizzEditor } from "@razzia/web/features/quizz/contexts/quizz-editor-context"
 import clsx from "clsx"
-import { CheckSquare, Clock, Square, Timer } from "lucide-react"
+import { CheckSquare, Clock, Square, Timer, ToggleLeft } from "lucide-react"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
 const DEFAULT_TIME = 20
 
+const TRUE_FALSE_ANSWERS = ["True", "False"]
+
 const QUESTION_TYPES: { value: QuestionType; labelKey: string; icon: ReactNode }[] = [
   { value: "single", labelKey: "quizz:question.config.typeSingle", icon: <Square className="size-4" /> },
   { value: "multiple", labelKey: "quizz:question.config.typeMultiple", icon: <CheckSquare className="size-4" /> },
+  { value: "truefalse", labelKey: "quizz:question.config.typeTrueFalse", icon: <ToggleLeft className="size-4" /> },
 ]
 
 const QuestionEditorConfig = () => {
@@ -33,15 +36,25 @@ const QuestionEditorConfig = () => {
     })
   }
 
+  const handleTypeChange = (value: QuestionType) => {
+    if (value === "truefalse") {
+      updateQuestion(currentIndex, { type: value, answers: TRUE_FALSE_ANSWERS, solutions: [0] })
+    } else if (questionType === "truefalse") {
+      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0] })
+    } else {
+      updateQuestion(currentIndex, { type: value })
+    }
+  }
+
   return (
     <aside className="z-10 m-3 flex w-68 shrink-0 flex-col gap-6 self-start overflow-auto rounded-xl bg-white p-4 shadow-sm">
       <ConfigSection title={t("quizz:question.config.questionType")}>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {QUESTION_TYPES.map(({ value, labelKey, icon }) => (
             <button
               key={value}
               type="button"
-              onClick={() => updateQuestion(currentIndex, { type: value })}
+              onClick={() => handleTypeChange(value)}
               className={clsx(
                 "flex flex-1 items-center justify-center gap-1.5 rounded-lg border-2 px-2 py-2 text-xs font-semibold transition-colors",
                 questionType === value
