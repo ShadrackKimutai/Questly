@@ -1,0 +1,22 @@
+{
+  "cancel": "Ghairi",
+  "confirm": "Thibitisha",
+  "connecting": "Inaunganisha...",
+  "delete": "Futa",
+  "exit": "Toka",
+  "language": {
+    "de": "Kijerumani",
+    "en": "Kiingereza",
+    "es": "Kihispania",
+    "fr": "Kifaransa",
+    "it": "Kiitaliano",
+    "ja": "Kijapani",
+    "sw": "Kiswahili"
+  },
+  "loading": "Inapakia...",
+  "next": "Inayofuata",
+  "save": "Hifadhi",
+  "seconds": "sek",
+  "skip": "Ruka",
+  "submit": "Wasilisha"
+}

@@ -1,0 +1,45 @@
+{
+  "auth": {
+    "invalidInviteCode": "Nambari ya mwaliko si sahihi",
+    "usernameTooLong": "Jina la mtumiaji haliwezi kuzidi herufi 20",
+    "usernameTooShort": "Jina la mtumiaji haliwezi kuwa chini ya herufi 4"
+  },
+  "game": {
+    "expired": "Mchezo umekwisha muda",
+    "kickedByManager": "Umefukuzwa na msimamizi",
+    "managerAlreadyConnected": "Msimamizi ameshaungana",
+    "managerDisconnected": "Msimamizi amekatika",
+    "noPlayersConnected": "Hakuna wachezaji waliounganishwa",
+    "notFound": "Mchezo haukupatikana",
+    "playerAlreadyConnected": "Mchezaji ameshaungana"
+  },
+  "manager": {
+    "failedToReadConfig": "Imeshindwa kusoma mipangilio ya mchezo",
+    "invalidPassword": "Nenosiri si sahihi",
+    "passwordNotConfigured": "Nenosiri la msimamizi halijawekwa"
+  },
+  "notFound": {
+    "back": "Rudi nyumbani",
+    "description": "Ukurasa unaotafuta haupo.",
+    "title": "Ukurasa haukupatikana"
+  },
+  "quizz": {
+    "answerEmpty": "Jibu haliwezi kuwa tupu",
+    "failedToDelete": "Imeshindwa kufuta maswali",
+    "failedToSave": "Maswali hayakamiliki, hakikisha maswali yote yana kichwa na jibu moja sahihi angalau",
+    "failedToUpdate": "Imeshindwa kusasisha maswali",
+    "invalidMediaUrl": "URL ya midia lazima iwe URL halali",
+    "noQuestions": "Maswali lazima yawe na swali moja angalau",
+    "noTextSolutions": "Swali la jibu fupi lazima liwe na jibu moja sahihi angalau",
+    "notFound": "Maswali hayakupatikana",
+    "questionEmpty": "Swali haliwezi kuwa tupu",
+    "subjectEmpty": "Mada haiwezi kuwa tupu",
+    "tooFewAnswers": "Swali lazima liwe na majibu 2 angalau",
+    "tooManyAnswers": "Swali haliwezi kuwa na majibu zaidi ya 4"
+  },
+  "route": {
+    "back": "Rudi nyumbani",
+    "description": "Hitilafu isiyotarajiwa imetokea. Tafadhali jaribu tena.",
+    "title": "Kitu kimekwenda vibaya"
+  }
+}

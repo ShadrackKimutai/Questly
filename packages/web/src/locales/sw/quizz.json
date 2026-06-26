@@ -1,0 +1,37 @@
+{
+  "addAnswerPlaceholder": "Ongeza jibu...",
+  "acceptedAnswers": "Majibu yanayokubaliwa",
+  "addQuestion": "Ongeza swali",
+  "answersCountSuffix": " majibu",
+  "deleteQuestion": "Futa swali",
+  "noQuestionYet": "Bado hakuna swali",
+  "question": {
+    "addMediaHint": "Ongeza picha, video au sauti kwa swali lako",
+    "config": {
+      "answerTime": "Muda wa kujibu",
+      "answerTimeHint": "Muda wachezaji wanaohitaji kujibu",
+      "noTimeLimit": "Bila kikomo cha muda",
+      "noTimeLimitHint": "Pointi zinatolewa kulingana na mpangilio wa majibu. Hakuna kikomo cha muda cha kujibu.",
+      "questionDisplay": "Onyesho la swali",
+      "questionDisplayHint": "Muda kabla majibu hayajatokea",
+      "timings": "Muda",
+      "questionType": "Aina ya swali",
+      "typeSingle": "Moja",
+      "typeMultiple": "Nyingi",
+      "typeTrueFalse": "Kweli / Uongo",
+      "typeShortAnswer": "Jibu Fupi"
+    },
+    "deleteQuestion": "Futa swali",
+    "deleteQuestionConfirm": "Je, una uhakika unataka kufuta swali hili?",
+    "media": {
+      "audio": "Sauti",
+      "image": "Picha",
+      "video": "Video"
+    },
+    "mediaUrlPlaceholder": "Ingiza URL...",
+    "placeholder": "Anza kuandika swali lako..."
+  },
+  "quizzSaved": "Maswali yamehifadhiwa",
+  "quizzUpdated": "Maswali yamefanyiwa mabadiliko",
+  "titleQuizzPlaceholder": "Kichwa cha maswali..."
+}

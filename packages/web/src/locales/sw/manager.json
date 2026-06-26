@@ -1,0 +1,45 @@
+{
+  "configurationsTitle": "Mipangilio",
+  "logout": "Toka",
+  "passwordPlaceholder": "Nenosiri",
+  "quizz": {
+    "create": "Unda Maswali",
+    "delete": "Futa maswali",
+    "deleteConfirm": "Je, una uhakika unataka kufuta \"{{name}}\"? Kitendo hiki hakiwezi kutenduliwa.",
+    "deleted": "Maswali yamefutwa",
+    "import": "Ingiza maswali kutoka JSON",
+    "none": "Bado hakuna maswali yaliyoundwa",
+    "notFound": "Maswali hayakupatikana",
+    "pleaseCreate": "Tafadhali unda maswali kwanza",
+    "pleaseSelect": "Tafadhali chagua maswali",
+    "startGame": "Anza mchezo"
+  },
+  "result": {
+    "delete": "Futa matokeo",
+    "deleteConfirm": "Futa matokeo ya \"{{name}}\"? Hii haiwezi kutenduliwa.",
+    "deleted": "Matokeo yamefutwa",
+    "noAnswer": "Bila jibu",
+    "wrongAnswer": "Lisilo sahihi",
+    "none": "Bado hakuna matokeo, maliza mchezo ili kuona ripoti hapa",
+    "paginationOf": " kati ya ",
+    "stats": {
+      "correctAnswers": "Majibu sahihi",
+      "playersAnswered": "Wachezaji waliojibu"
+    },
+    "table": {
+      "answered": "Alijibu",
+      "correct": " Sahihi",
+      "correctIncorrect": "Sahihi / Lisilo sahihi",
+      "incorrect": " Lisilo sahihi",
+      "player": "Mchezaji",
+      "points": "Pointi"
+    },
+    "playerCount": "wachezaji {{count}}",
+    "timeLimitSuffix": "s kikomo cha muda"
+  },
+  "tabs": {
+    "play": "Cheza",
+    "quizz": "Maswali",
+    "results": "Matokeo"
+  }
+}

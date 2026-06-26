@@ -1,0 +1,31 @@
+{
+  "correct": "Vizuri sana!",
+  "gamePinLabel": "Nambari ya Mchezo:",
+  "hud": {
+    "answers": "Majibu",
+    "time": "Muda"
+  },
+  "joinInstruction": "Jiunge na mchezo kwenye",
+  "leaderboard": "Ubao wa Viongozi",
+  "pinLabel": "Nambari ya PIN",
+  "playersJoined": "Wachezaji Waliojiunga: ",
+  "questionPrefix": "Swali #",
+  "rank": {
+    "1": "Nafasi ya 1",
+    "2": "Nafasi ya 2",
+    "3": "Nafasi ya 3",
+    "other": "Nafasi ya {{rank}}"
+  },
+  "rankSuffix": " nafasi",
+  "resultBehind": ", nyuma ya ",
+  "resultTop": "Ulimaliza ",
+  "startGame": "Anza Mchezo",
+  "usernamePlaceholder": "Jina la mtumiaji hapa",
+  "waitingForAnswers": "Inasubiri wachezaji kujibu",
+  "waitingForPlayers": "Inasubiri wachezaji",
+  "wrong": "Pole sana",
+  "selectAllThatApply": "Chagua yote yanayofaa",
+  "typeYourAnswer": "Andika jibu lako...",
+  "submitAnswers": "Wasilisha majibu",
+  "submitAnswer": "Wasilisha jibu"
+}
