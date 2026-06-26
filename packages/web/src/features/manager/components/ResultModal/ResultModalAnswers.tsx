@@ -1,10 +1,10 @@
-import { MEDIA_TYPES, NO_TIME_LIMIT } from "@razzia/common/constants"
-import type { QuestionMedia } from "@razzia/common/types/game"
+import { MEDIA_TYPES, NO_TIME_LIMIT } from "@questly/common/constants"
+import type { QuestionMedia } from "@questly/common/types/game"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
-} from "@razzia/web/features/game/utils/constants"
-import { useResultModal } from "@razzia/web/features/manager/contexts/result-modal-context"
+} from "@questly/web/features/game/utils/constants"
+import { useResultModal } from "@questly/web/features/manager/contexts/result-modal-context"
 import clsx from "clsx"
 import { Check, Clock, ImageOff, Music, Video, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -52,28 +52,58 @@ const MediaPreview = ({ media }: { media?: QuestionMedia }) => {
 }
 
 const ResultModalAnswers = () => {
-  const { questionResult, totalPlayers, answeredCount } = useResultModal()
+  const {
+    questionResult,
+    totalPlayers,
+    answeredCount,
+    correctCount,
+    getAnswerCount,
+  } = useResultModal()
   const { t } = useTranslation()
 
   const noAnswerCount = totalPlayers - answeredCount
+  const isShortAnswer = questionResult.type === "shortanswer"
 
-  const rows: AnswerRow[] = [
-    ...questionResult.answers.map((label, ai) => ({
-      label,
-      count: questionResult.playerAnswers.filter((pa) => pa.answerId === ai)
-        .length,
-      isCorrect: questionResult.solutions.includes(ai),
-      color: ANSWERS_COLORS[ai % 4],
-      answerLabel: ANSWERS_LABELS[ai % 4],
-    })),
-    {
-      label: t("manager:result.noAnswer"),
-      count: noAnswerCount,
-      isCorrect: false,
-      color: null,
-      answerLabel: null,
-    },
-  ]
+  const rows: AnswerRow[] = isShortAnswer
+    ? [
+        {
+          label: questionResult.textSolutions?.join(" / ") ?? "",
+          count: correctCount,
+          isCorrect: true,
+          color: "bg-green-500",
+          answerLabel: "✓",
+        },
+        {
+          label: t("manager:result.wrongAnswer"),
+          count: answeredCount - correctCount,
+          isCorrect: false,
+          color: null,
+          answerLabel: null,
+        },
+        {
+          label: t("manager:result.noAnswer"),
+          count: noAnswerCount,
+          isCorrect: false,
+          color: null,
+          answerLabel: null,
+        },
+      ]
+    : [
+        ...questionResult.answers.map((label, ai) => ({
+          label,
+          count: getAnswerCount(ai),
+          isCorrect: questionResult.solutions.includes(ai),
+          color: ANSWERS_COLORS[ai % 4],
+          answerLabel: ANSWERS_LABELS[ai % 4],
+        })),
+        {
+          label: t("manager:result.noAnswer"),
+          count: noAnswerCount,
+          isCorrect: false,
+          color: null,
+          answerLabel: null,
+        },
+      ]
 
   return (
     <div className="flex flex-col border-b border-gray-100 md:flex-row">

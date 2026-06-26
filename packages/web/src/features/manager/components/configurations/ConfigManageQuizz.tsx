@@ -1,11 +1,11 @@
-import { EVENTS } from "@razzia/common/constants"
-import AlertDialog from "@razzia/web/components/AlertDialog"
-import Button from "@razzia/web/components/Button"
+import { EVENTS } from "@questly/common/constants"
+import AlertDialog from "@questly/web/components/AlertDialog"
+import Button from "@questly/web/components/Button"
 import {
   useEvent,
   useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { useConfig } from "@razzia/web/features/manager/contexts/config-context"
+} from "@questly/web/features/game/contexts/socket-context"
+import { useConfig } from "@questly/web/features/manager/contexts/config-context"
 import { useNavigate } from "@tanstack/react-router"
 import { SquarePen, Trash2, Upload } from "lucide-react"
 import { type ChangeEvent, useRef } from "react"

@@ -1,10 +1,10 @@
-import { EVENTS } from "@razzia/common/constants"
-import { inviteCodeValidator } from "@razzia/common/validators/auth"
-import type { SocketContext } from "@razzia/socket/handlers/types"
-import { getQuizz } from "@razzia/socket/services/config"
-import Game from "@razzia/socket/services/game"
-import Registry from "@razzia/socket/services/registry"
-import { withGame } from "@razzia/socket/utils/game"
+import { EVENTS } from "@questly/common/constants"
+import { inviteCodeValidator } from "@questly/common/validators/auth"
+import type { SocketContext } from "@questly/socket/handlers/types"
+import { getQuizz } from "@questly/socket/services/config"
+import Game from "@questly/socket/services/game"
+import Registry from "@questly/socket/services/registry"
+import { withGame } from "@questly/socket/utils/game"
 
 export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   const registry = Registry.getInstance()

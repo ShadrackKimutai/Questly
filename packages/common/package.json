@@ -1,5 +1,5 @@
 {
-  "name": "@razzia/common",
+  "name": "@questly/common",
   "type": "module",
   "scripts": {
     "types": "tsc --noEmit",

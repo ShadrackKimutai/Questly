@@ -4,9 +4,9 @@
     "noErrorTruncation": true,
     "esModuleInterop": true,
     "paths": {
-      "@razzia/common/*": ["./packages/common/src/*"],
-      "@razzia/socket/*": ["./packages/socket/src/*"],
-      "@razzia/web/*": ["./packages/web/src/*"]
+      "@questly/common/*": ["./packages/common/src/*"],
+      "@questly/socket/*": ["./packages/socket/src/*"],
+      "@questly/web/*": ["./packages/web/src/*"]
     },
     "strict": true,
     "strictNullChecks": true

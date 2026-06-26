@@ -2,16 +2,16 @@
   <img width="450" height="120" align="center" src=".github/logo.svg">
   <br>
   <div align="center">
-    <img alt="Visitor Badge" src="https://api.visitorbadge.io/api/visitors?path=https://github.com/Ralex91/Razzia/edit/main/README.md&countColor=%23FF9900">
-    <img src="https://img.shields.io/docker/pulls/ralex91/razzia?style=for-the-badge&color=FF9900" alt="Docker Pulls">
+    <img alt="Visitor Badge" src="https://api.visitorbadge.io/api/visitors?path=https://github.com/questly-co/Questly/edit/main/README.md&countColor=%23FF9900">
+    <img src="https://img.shields.io/docker/pulls/questly-co/questly?style=for-the-badge&color=FF9900" alt="Docker Pulls">
   </div>
 </p>
 
 ## 🧩 What is this project?
 
-Razzia is a straightforward and open-source quiz platform, allowing users to host it on their own server for smaller events.
+Questly is a straightforward and open-source quiz platform, allowing users to host it on their own server for smaller events.
 
-> **Disclaimer**: Razzia is an independent, open-source software project. It is not affiliated with, endorsed by, or sponsored by any third-party quiz platform or service. Any resemblance to other quiz platforms is purely incidental.
+> **Disclaimer**: Questly is an independent, open-source software project. It is not affiliated with, endorsed by, or sponsored by any third-party quiz platform or service. Any resemblance to other quiz platforms is purely incidental.
 
 <p align="center">
   <img width="30%" src=".github/previews/1.png" alt="Login">
@@ -52,7 +52,7 @@ Or using Docker directly:
 docker run -d \
   -p 3000:3000 \
   -v ./config:/app/config \
-  ralex91/razzia:latest
+  questly-co/questly:latest
 ```
 
 **Configuration Volume:**
@@ -71,8 +71,8 @@ The application will be available at http://localhost:3000
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Ralex91/Razzia.git
-cd ./Razzia
+git clone https://github.com/questly-co/Questly.git
+cd ./Questly
 ```
 
 2. Install dependencies:
@@ -179,8 +179,8 @@ Quiz Options:
 
 Contributions are welcome! Please read the [CONTRIBUTING.md](.github/CONTRIBUTING.md) guide before submitting a pull request.
 
-For bug reports or feature requests, please [create an issue](https://github.com/Ralex91/Razzia/issues).
+For bug reports or feature requests, please [create an issue](https://github.com/questly-co/Questly/issues).
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Ralex91/Razzia&type=date&legend=bottom-right)](https://www.star-history.com/#Ralex91/Razzia&type=date&legend=bottom-right)
+[![Star History Chart](https://api.star-history.com/svg?repos=questly-co/Questly&type=date&legend=bottom-right)](https://www.star-history.com/#questly-co/Questly&type=date&legend=bottom-right)

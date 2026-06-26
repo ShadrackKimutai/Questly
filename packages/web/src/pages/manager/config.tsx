@@ -1,13 +1,13 @@
-import { EVENTS } from "@razzia/common/constants"
-import { STATUS } from "@razzia/common/types/game/status"
-import Background from "@razzia/web/components/Background"
-import Loader from "@razzia/web/components/Loader"
+import { EVENTS } from "@questly/common/constants"
+import { STATUS } from "@questly/common/types/game/status"
+import Background from "@questly/web/components/Background"
+import Loader from "@questly/web/components/Loader"
 import {
   useEvent,
   useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { useManagerStore } from "@razzia/web/features/game/stores/manager"
-import Configurations from "@razzia/web/features/manager/components/configurations"
+} from "@questly/web/features/game/contexts/socket-context"
+import { useManagerStore } from "@questly/web/features/game/stores/manager"
+import Configurations from "@questly/web/features/manager/components/configurations"
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 
 const ManagerConfigPage = () => {

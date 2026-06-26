@@ -19,6 +19,7 @@
     "deleteConfirm": "Eliminare il risultato per \"{{name}}\"? Questa azione non può essere annullata.",
     "deleted": "Risultato eliminato",
     "noAnswer": "Nessuna risposta",
+    "wrongAnswer": "Errato",
     "none": "Nessun risultato ancora, termina una partita per vedere i rapporti qui",
     "paginationOf": " di ",
     "stats": {

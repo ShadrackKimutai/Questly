@@ -1,7 +1,6 @@
 ---
-
 ###
-### Custom nginx vhost for Questly (Razzia) — SPA + WebSocket
+### Custom nginx vhost for Questly - SPA + WebSocket
 ###
 
 vhost: |
@@ -52,7 +51,6 @@ vhost_type:
 ### Features
 ###
 features:
-
   ssl: |
     ssl_certificate           __SSL_PATH_CRT__;
     ssl_certificate_key       __SSL_PATH_KEY__;

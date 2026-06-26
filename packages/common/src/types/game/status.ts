@@ -1,4 +1,4 @@
-import type { Player, QuestionMedia, QuestionType } from "@razzia/common/types/game"
+import type { Player, QuestionMedia, QuestionType } from "@questly/common/types/game"
 
 export const STATUS = {
   SHOW_ROOM: "SHOW_ROOM",

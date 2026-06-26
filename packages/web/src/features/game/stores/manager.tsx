@@ -1,10 +1,10 @@
-import type { Player } from "@razzia/common/types/game"
-import type { StatusDataMap } from "@razzia/common/types/game/status"
-import type { ManagerConfig } from "@razzia/common/types/manager"
+import type { Player } from "@questly/common/types/game"
+import type { StatusDataMap } from "@questly/common/types/game/status"
+import type { ManagerConfig } from "@questly/common/types/manager"
 import {
   createStatus,
   type Status,
-} from "@razzia/web/features/game/utils/createStatus"
+} from "@questly/web/features/game/utils/createStatus"
 import { create } from "zustand"
 
 interface ManagerStore<T> {

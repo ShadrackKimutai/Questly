@@ -1,4 +1,4 @@
-import type { Question, QuestionType, QuizzWithId } from "@razzia/common/types/game"
+import type { Question, QuestionType, QuizzWithId } from "@questly/common/types/game"
 import {
   createContext,
   useContext,

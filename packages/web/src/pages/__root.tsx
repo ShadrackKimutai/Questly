@@ -1,9 +1,9 @@
-import ErrorPage from "@razzia/web/components/ErrorPage"
-import NotFound from "@razzia/web/components/NotFound"
+import ErrorPage from "@questly/web/components/ErrorPage"
+import NotFound from "@questly/web/components/NotFound"
 import {
   SocketProvider,
   useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
+} from "@questly/web/features/game/contexts/socket-context"
 import { createRootRoute, Outlet } from "@tanstack/react-router"
 import { useEffect } from "react"
 

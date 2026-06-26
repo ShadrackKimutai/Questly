@@ -19,6 +19,7 @@
     "deleteConfirm": "Delete result for \"{{name}}\"? This cannot be undone.",
     "deleted": "Result deleted",
     "noAnswer": "No answer",
+    "wrongAnswer": "Incorrect",
     "none": "No results yet, finish a game to see reports here",
     "paginationOf": " of ",
     "stats": {

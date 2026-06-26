@@ -21,11 +21,11 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@razzia/web": fileURLToPath(new URL("./src", import.meta.url)),
-      "@razzia/common": fileURLToPath(
+      "@questly/web": fileURLToPath(new URL("./src", import.meta.url)),
+      "@questly/common": fileURLToPath(
         new URL("../common/src", import.meta.url),
       ),
-      "@razzia/socket": fileURLToPath(
+      "@questly/socket": fileURLToPath(
         new URL("../socket/src", import.meta.url),
       ),
     },

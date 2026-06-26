@@ -1,9 +1,9 @@
-import type { GameResult } from "@razzia/common/types/game"
-import ResultModalAnswers from "@razzia/web/features/manager/components/ResultModal/ResultModalAnswers"
-import ResultModalHeader from "@razzia/web/features/manager/components/ResultModal/ResultModalHeader"
-import ResultModalStats from "@razzia/web/features/manager/components/ResultModal/ResultModalStats"
-import ResultModalTable from "@razzia/web/features/manager/components/ResultModal/ResultModalTable"
-import { ResultModalProvider } from "@razzia/web/features/manager/contexts/result-modal-context"
+import type { GameResult } from "@questly/common/types/game"
+import ResultModalAnswers from "@questly/web/features/manager/components/ResultModal/ResultModalAnswers"
+import ResultModalHeader from "@questly/web/features/manager/components/ResultModal/ResultModalHeader"
+import ResultModalStats from "@questly/web/features/manager/components/ResultModal/ResultModalStats"
+import ResultModalTable from "@questly/web/features/manager/components/ResultModal/ResultModalTable"
+import { ResultModalProvider } from "@questly/web/features/manager/contexts/result-modal-context"
 import { useEffect } from "react"
 
 interface Props {

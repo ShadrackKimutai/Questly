@@ -1,6 +1,6 @@
 services:
-  razzia:
-    image: ralex91/razzia:latest
+  questly:
+    image: questly-co/questly:latest
     ports:
       - "3000:3000"
     volumes:

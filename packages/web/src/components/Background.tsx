@@ -1,5 +1,5 @@
-import logo from "@razzia/web/assets/logo.svg"
-import GithubIcon from "@razzia/web/components/GithubIcon"
+import logo from "@questly/web/assets/logo.svg"
+import GithubIcon from "@questly/web/components/GithubIcon"
 import type { PropsWithChildren } from "react"
 
 const Background = ({ children }: PropsWithChildren) => (
@@ -13,14 +13,14 @@ const Background = ({ children }: PropsWithChildren) => (
     {children}
 
     <a
-      href="https://github.com/Ralex91/Razzia"
+      href="https://github.com/questly-co/Questly"
       target="_blank"
       rel="noopener noreferrer"
       className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1.5 text-sm font-semibold text-white/50 transition-colors hover:text-white/80"
     >
       <GithubIcon size={14} />
       {/* oxlint-disable-next-line no-undef */}
-      Razzia - v{__APP_VERSION__}
+      Questly - v{__APP_VERSION__}
     </a>
   </section>
 )

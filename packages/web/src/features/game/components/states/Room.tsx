@@ -1,13 +1,13 @@
 import * as AlertDialog from "@radix-ui/react-alert-dialog"
-import { EVENTS } from "@razzia/common/constants"
-import type { Player } from "@razzia/common/types/game"
-import type { ManagerStatusDataMap } from "@razzia/common/types/game/status"
+import { EVENTS } from "@questly/common/constants"
+import type { Player } from "@questly/common/types/game"
+import type { ManagerStatusDataMap } from "@questly/common/types/game/status"
 import {
   useEvent,
   useSocket,
-} from "@razzia/web/features/game/contexts/socket-context"
-import { useManagerStore } from "@razzia/web/features/game/stores/manager"
-import { useOnClickOutside } from "@razzia/web/hooks/useOnClickOutside"
+} from "@questly/web/features/game/contexts/socket-context"
+import { useManagerStore } from "@questly/web/features/game/stores/manager"
+import { useOnClickOutside } from "@questly/web/hooks/useOnClickOutside"
 import { Maximize2, X } from "lucide-react"
 import { QRCodeSVG } from "qrcode.react"
 import { useRef, useState } from "react"

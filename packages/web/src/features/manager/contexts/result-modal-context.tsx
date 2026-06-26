@@ -1,4 +1,8 @@
-import type { GameResult, QuestionResult } from "@razzia/common/types/game"
+import type {
+  GameResult,
+  PlayerAnswerRecord,
+  QuestionResult,
+} from "@questly/common/types/game"
 import {
   createContext,
   useContext,
@@ -16,6 +20,8 @@ interface ResultModalContextType {
   correctCount: number
   correctPct: number
   maxAnswerCount: number
+  getAnswerCount: (_answerIndex: number) => number
+  isAnswerCorrect: (_answer: PlayerAnswerRecord["answerId"]) => boolean
   getPlayerPoints: (_name: string) => number
   goNext: () => void
   goPrev: () => void
@@ -23,6 +29,11 @@ interface ResultModalContextType {
 }
 
 const ResultModalContext = createContext<ResultModalContextType | null>(null)
+
+const sorted = (values: number[]) => [...values].sort((a, b) => a - b)
+
+const isSameAnswerSet = (left: number[], right: number[]) =>
+  JSON.stringify(sorted(left)) === JSON.stringify(sorted(right))
 
 type Props = PropsWithChildren<{
   result: GameResult
@@ -40,20 +51,46 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
     (pa) => pa.answerId !== null,
   ).length
 
-  const correctCount = questionResult.playerAnswers.filter(
-    (pa) =>
-      pa.answerId !== null && questionResult.solutions.includes(pa.answerId),
+  const isAnswerCorrect = (answer: PlayerAnswerRecord["answerId"]) => {
+    if (answer === null) {
+      return false
+    }
+
+    if (typeof answer === "string") {
+      return (
+        questionResult.textSolutions?.some(
+          (solution) =>
+            solution.toLowerCase().trim() === answer.toLowerCase().trim(),
+        ) ?? false
+      )
+    }
+
+    if (Array.isArray(answer)) {
+      return isSameAnswerSet(answer, questionResult.solutions)
+    }
+
+    return questionResult.solutions.includes(answer)
+  }
+
+  const correctCount = questionResult.playerAnswers.filter((pa) =>
+    isAnswerCorrect(pa.answerId),
   ).length
 
   const correctPct =
     totalPlayers > 0 ? Math.round((correctCount / totalPlayers) * 100) : 0
 
+  const getAnswerCount = (answerIndex: number) =>
+    questionResult.playerAnswers.filter(({ answerId }) => {
+      if (Array.isArray(answerId)) {
+        return answerId.includes(answerIndex)
+      }
+
+      return answerId === answerIndex
+    }).length
+
   const maxAnswerCount = Math.max(
     1,
-    ...questionResult.answers.map(
-      (_, ai) =>
-        questionResult.playerAnswers.filter((pa) => pa.answerId === ai).length,
-    ),
+    ...questionResult.answers.map((_, ai) => getAnswerCount(ai)),
   )
 
   const getPlayerPoints = (name: string) =>
@@ -75,6 +112,8 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
         correctCount,
         correctPct,
         maxAnswerCount,
+        getAnswerCount,
+        isAnswerCorrect,
         getPlayerPoints,
         goNext,
         goPrev,

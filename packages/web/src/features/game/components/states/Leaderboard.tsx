@@ -1,5 +1,5 @@
-import type { ManagerStatusDataMap } from "@razzia/common/types/game/status"
-import Fire from "@razzia/web/features/game/components/icons/Fire"
+import type { ManagerStatusDataMap } from "@questly/common/types/game/status"
+import Fire from "@questly/web/features/game/components/icons/Fire"
 import { AnimatePresence, motion, useSpring, useTransform } from "motion/react"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
