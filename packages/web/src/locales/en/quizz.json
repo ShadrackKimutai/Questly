@@ -13,7 +13,10 @@
       "noTimeLimitHint": "Points are awarded based on answer order. There is no time limit to answer.",
       "questionDisplay": "Question display",
       "questionDisplayHint": "Duration before answers appear",
-      "timings": "Timings"
+      "timings": "Timings",
+      "questionType": "Question type",
+      "typeSingle": "Single",
+      "typeMultiple": "Multiple"
     },
     "deleteQuestion": "Delete question",
     "deleteQuestionConfirm": "Are you sure you want to delete this question?",

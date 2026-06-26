@@ -123,6 +123,9 @@ export interface ClientToServerEvents {
   [EVENTS.PLAYER.SELECTED_ANSWER]: (
     _message: MessageWithoutStatus<{ answerKey: number }>,
   ) => void
+  [EVENTS.PLAYER.SELECTED_ANSWERS]: (
+    _message: MessageWithoutStatus<{ answerKeys: number[] }>,
+  ) => void
 
   // Results actions
   [EVENTS.RESULTS.GET]: (_id: string) => void

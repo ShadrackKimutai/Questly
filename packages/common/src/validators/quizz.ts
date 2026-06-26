@@ -20,6 +20,7 @@ const questionValidator = z.object({
     .transform((v) => (Array.isArray(v) ? v : [v])),
   cooldown: z.number().int().min(3).max(15),
   time: z.number().int().min(-1),
+  type: z.enum(["single", "multiple"]).optional(),
 })
 
 export const quizzValidator = z.object({

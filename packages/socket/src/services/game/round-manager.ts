@@ -146,6 +146,7 @@ export class RoundManager {
       media: question.media,
       time: question.time,
       totalPlayer: this.opts.players.count(),
+      type: question.type ?? (question.solutions.length > 1 ? "multiple" : "single"),
     })
 
     await this.opts.cooldown.start(question.time)
@@ -170,7 +171,10 @@ export class RoundManager {
 
     const totalType = this.playersAnswers.reduce(
       (acc: Record<number, number>, { answerId }) => {
-        acc[answerId] = (acc[answerId] || 0) + 1
+        const ids = Array.isArray(answerId) ? answerId : [answerId]
+        ids.forEach((id) => {
+          acc[id] = (acc[id] || 0) + 1
+        })
 
         return acc
       },
@@ -183,9 +187,15 @@ export class RoundManager {
           (a) => a.playerId === player.id,
         )
 
-        const isCorrect = playerAnswer
-          ? question.solutions.includes(playerAnswer.answerId)
-          : false
+        const isCorrect = (() => {
+          if (!playerAnswer) return false
+          const { answerId } = playerAnswer
+          if (Array.isArray(answerId)) {
+            const sorted = (arr: number[]) => [...arr].sort((a, b) => a - b)
+            return JSON.stringify(sorted(answerId)) === JSON.stringify(sorted(question.solutions))
+          }
+          return question.solutions.includes(answerId)
+        })()
 
         const points =
           playerAnswer && isCorrect ? Math.round(playerAnswer.points) : 0
@@ -231,6 +241,50 @@ export class RoundManager {
     this.leaderboard = sortedPlayers
     this.tempOldLeaderboard = oldLeaderboard
     this.playersAnswers = []
+  }
+
+  selectAnswers(socket: Socket, answerIds: number[]): void {
+    const player = this.opts.players.findById(socket.id)
+
+    if (!player) {
+      return
+    }
+
+    if (this.playersAnswers.find((a) => a.playerId === socket.id)) {
+      return
+    }
+
+    const question = this.opts.quizz.questions[this.currentQuestion]
+
+    const points = (() => {
+      if (question.time === NO_TIME_LIMIT) {
+        return orderToPoint(
+          this.playersAnswers.length,
+          this.opts.players.count(),
+        )
+      }
+
+      return timeToPoint(this.startTime, question.time)
+    })()
+
+    this.playersAnswers.push({
+      playerId: player.id,
+      answerId: answerIds,
+      points,
+    })
+
+    this.opts.send(socket.id, STATUS.WAIT, {
+      text: "game:waitingForAnswers",
+    })
+
+    socket
+      .to(this.opts.gameId)
+      .emit(EVENTS.GAME.PLAYER_ANSWER, this.playersAnswers.length)
+    this.opts.players.broadcastCount()
+
+    if (this.playersAnswers.length === this.opts.players.count()) {
+      this.opts.cooldown.abort()
+    }
   }
 
   selectAnswer(socket: Socket, answerId: number): void {

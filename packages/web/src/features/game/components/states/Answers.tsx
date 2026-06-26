@@ -23,37 +23,55 @@ interface Props {
 }
 
 const Answers = ({
-  data: { question, answers, media, time, totalPlayer },
+  data: { question, answers, media, time, totalPlayer, type },
 }: Props) => {
   const { socket } = useSocket()
   const { player, gameId } = usePlayerStore()
+  const isMultiple = type === "multiple"
 
   const [cooldown, setCooldown] = useState(time)
   const [totalAnswer, setTotalAnswer] = useState(0)
+  const [submitted, setSubmitted] = useState(false)
+  const [selectedKeys, setSelectedKeys] = useState<number[]>([])
   const { t } = useTranslation()
 
-  const [sfxPop] = useSound(SFX.ANSWERS.SOUND, {
-    volume: 0.1,
-  })
-
+  const [sfxPop] = useSound(SFX.ANSWERS.SOUND, { volume: 0.1 })
   const [playMusic, { stop: stopMusic }] = useSound(SFX.ANSWERS.MUSIC, {
     volume: 0.2,
     interrupt: true,
     loop: true,
   })
 
-  const handleAnswer = (answerKey: number) => () => {
-    if (!player || !gameId) {
-      return
+  const handleSelect = (key: number) => () => {
+    if (!player || !gameId || submitted) return
+
+    if (isMultiple) {
+      setSelectedKeys((prev) =>
+        prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
+      )
+    } else {
+      setSelectedKeys((prev) => (prev[0] === key ? [] : [key]))
     }
 
-    socket.emit(EVENTS.PLAYER.SELECTED_ANSWER, {
-      gameId,
-      data: {
-        answerKey,
-      },
-    })
     sfxPop()
+  }
+
+  const handleSubmit = () => {
+    if (!player || !gameId || submitted || selectedKeys.length === 0) return
+
+    if (isMultiple) {
+      socket.emit(EVENTS.PLAYER.SELECTED_ANSWERS, {
+        gameId,
+        data: { answerKeys: selectedKeys },
+      })
+    } else {
+      socket.emit(EVENTS.PLAYER.SELECTED_ANSWER, {
+        gameId,
+        data: { answerKey: selectedKeys[0] },
+      })
+    }
+
+    setSubmitted(true)
   }
 
   useEffect(() => {
@@ -62,9 +80,7 @@ const Answers = ({
       MEDIA_TYPES.VIDEO,
     ] as QuestionMediaType[]
 
-    if (disabledMusicMedia.includes(media?.type)) {
-      return
-    }
+    if (disabledMusicMedia.includes(media?.type)) return
 
     playMusic()
 
@@ -90,6 +106,12 @@ const Answers = ({
           {question}
         </h2>
 
+        {isMultiple && (
+          <p className="rounded-lg bg-black/30 px-4 py-1.5 text-sm font-semibold text-white drop-shadow">
+            {t("game:selectAllThatApply")}
+          </p>
+        )}
+
         <QuestionMedia media={media} alt={question} />
       </div>
 
@@ -97,33 +119,50 @@ const Answers = ({
         <div className="mx-auto mb-4 flex w-full max-w-7xl justify-between gap-1 px-2 text-lg font-bold text-white md:text-xl">
           {time !== NO_TIME_LIMIT && (
             <div className="flex flex-col items-center rounded-lg bg-black/40 px-4 text-lg font-bold">
-              <span className="translate-y-1 text-sm">
-                {t("game:hud.time")}
-              </span>
+              <span className="translate-y-1 text-sm">{t("game:hud.time")}</span>
               <span>{cooldown}</span>
             </div>
           )}
           <div className="flex flex-col items-center rounded-lg bg-black/40 px-4 text-lg font-bold">
-            <span className="translate-y-1 text-sm">
-              {t("game:hud.answers")}
-            </span>
-            <span>
-              {totalAnswer}/{totalPlayer}
-            </span>
+            <span className="translate-y-1 text-sm">{t("game:hud.answers")}</span>
+            <span>{totalAnswer}/{totalPlayer}</span>
           </div>
         </div>
 
-        <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 px-2 text-lg font-bold text-white md:text-xl">
-          {answers.map((answer, key) => (
-            <AnswerButton
-              key={key}
-              className={clsx(ANSWERS_COLORS[key])}
-              label={ANSWERS_LABELS[key]}
-              onClick={handleAnswer(key)}
-            >
-              {answer}
-            </AnswerButton>
-          ))}
+        <div className="mx-auto mb-2 grid w-full max-w-7xl grid-cols-2 gap-1 px-2 text-lg font-bold text-white md:text-xl">
+          {answers.map((answer, key) => {
+            const isSelected = selectedKeys.includes(key)
+
+            return (
+              <AnswerButton
+                key={key}
+                className={clsx(
+                  ANSWERS_COLORS[key],
+                  submitted && "opacity-60 cursor-not-allowed",
+                )}
+                label={ANSWERS_LABELS[key]}
+                selected={isSelected}
+                showRadio={!isMultiple}
+                showCheckbox={isMultiple}
+                onClick={handleSelect(key)}
+                disabled={submitted}
+              >
+                {answer}
+              </AnswerButton>
+            )
+          })}
+        </div>
+
+        <div className="mx-auto mb-4 w-full max-w-7xl px-2">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={submitted || selectedKeys.length === 0}
+            className="bg-primary w-full rounded-2xl py-4 text-lg font-bold text-white shadow-lg transition-opacity disabled:opacity-40"
+          >
+            {t("game:submitAnswer")}
+            {isMultiple && selectedKeys.length > 0 && ` (${selectedKeys.length})`}
+          </button>
         </div>
       </div>
     </div>

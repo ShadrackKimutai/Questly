@@ -23,5 +23,8 @@
   "usernamePlaceholder": "Username here",
   "waitingForAnswers": "Waiting for the players to answer",
   "waitingForPlayers": "Waiting for players",
-  "wrong": "Too bad"
+  "wrong": "Too bad",
+  "selectAllThatApply": "Select all that apply",
+  "submitAnswers": "Submit answers",
+  "submitAnswer": "Submit answer"
 }

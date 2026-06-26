@@ -1,4 +1,4 @@
-import type { Player, QuestionMedia } from "@razzia/common/types/game"
+import type { Player, QuestionMedia, QuestionType } from "@razzia/common/types/game"
 
 export const STATUS = {
   SHOW_ROOM: "SHOW_ROOM",
@@ -29,6 +29,7 @@ export interface CommonStatusDataMap {
     media?: QuestionMedia
     time: number
     totalPlayer: number
+    type?: QuestionType
   }
   SHOW_RESULT: {
     correct: boolean

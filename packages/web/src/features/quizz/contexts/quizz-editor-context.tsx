@@ -34,9 +34,11 @@ const defaultQuestion = (): QuestionWithId => ({
   solutions: [0],
   cooldown: 5,
   time: 20,
+  type: "single",
 })
 
 const toQuestionWithId = (q: Question): QuestionWithId => ({
+  type: q.solutions.length > 1 ? "multiple" : "single",
   ...q,
   id: uuid(),
 })

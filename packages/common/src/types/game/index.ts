@@ -11,7 +11,7 @@ export interface Player {
 
 export interface Answer {
   playerId: string
-  answerId: number
+  answerId: number | number[]
   points: number
 }
 
@@ -24,6 +24,8 @@ export interface QuestionMedia {
   url: string
 }
 
+export type QuestionType = 'single' | 'multiple'
+
 export interface Question {
   question: string
   media?: QuestionMedia
@@ -31,6 +33,7 @@ export interface Question {
   solutions: number[]
   cooldown: number
   time: number
+  type?: QuestionType
 }
 
 export interface Quizz {
@@ -52,7 +55,7 @@ export interface GameUpdateQuestion {
 
 export interface PlayerAnswerRecord {
   playerName: string
-  answerId: number | null
+  answerId: number | number[] | null
 }
 
 export type QuestionResult = Question & {

@@ -40,7 +40,14 @@ const QuestionEditorAnswers = () => {
     })
   }
 
+  const isMultiple = currentQuestion.type === "multiple"
+
   const toggleSolution = (index: number) => {
+    if (!isMultiple) {
+      updateQuestion(currentIndex, { solutions: [index] })
+      return
+    }
+
     const current = currentQuestion.solutions
 
     if (current.includes(index)) {
@@ -104,7 +111,8 @@ const QuestionEditorAnswers = () => {
                   type="button"
                   onClick={() => toggleSolution(i)}
                   className={clsx(
-                    "flex size-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
+                    "flex size-6 shrink-0 items-center justify-center border-2 transition-colors",
+                    isMultiple ? "rounded-sm" : "rounded-full",
                     isSelected
                       ? "border-white bg-white text-green-600"
                       : "border-white/60 bg-transparent",

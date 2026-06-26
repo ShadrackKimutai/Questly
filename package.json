@@ -1,6 +1,6 @@
 {
   "name": "razzia",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "scripts": {
     "dev": "dotenv -e .env -- pnpm -r --parallel dev",
     "dev:web": "dotenv -e .env -- pnpm --filter web dev",
