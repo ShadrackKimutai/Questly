@@ -22,6 +22,8 @@ export const EVENTS = {
     SELECTED_ANSWER: "player:selectedAnswer",
     SELECTED_ANSWERS: "player:selectedAnswers",
     TEXT_ANSWER: "player:textAnswer",
+    CHANGE_MASCOT: "player:changeMascot",
+    MASCOT_CHANGED: "player:mascotChanged",
   },
   MANAGER: {
     SUCCESS_RECONNECT: "manager:successReconnect",
@@ -32,6 +34,7 @@ export const EVENTS = {
     REMOVE_PLAYER: "manager:removePlayer",
     ERROR_MESSAGE: "manager:errorMessage",
     PLAYER_KICKED: "manager:playerKicked",
+    PLAYER_UPDATED: "manager:playerUpdated",
     AUTH: "manager:auth",
     RECONNECT: "manager:reconnect",
     LEAVE: "manager:leave",
@@ -60,6 +63,13 @@ export const EVENTS = {
     DELETE: "results:delete",
   },
 } as const
+
+export const MASCOTS = [
+  "🦊", "🐺", "🐸", "🦁", "🐯", "🦝",
+  "🐻", "🐼", "🐨", "🦄", "🦋", "🐙",
+  "🦈", "🦅", "🦜", "🐬", "🦒", "🦓",
+  "🦘", "🦦", "🦥", "🦚", "🦩", "🐝",
+] as const
 
 export const NO_TIME_LIMIT = -1
 

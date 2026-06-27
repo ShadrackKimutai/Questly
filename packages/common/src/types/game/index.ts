@@ -5,6 +5,7 @@ export interface Player {
   clientId: string
   connected: boolean
   username: string
+  mascot: string
   points: number
   streak: number
 }

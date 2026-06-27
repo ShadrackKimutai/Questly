@@ -69,7 +69,7 @@ const Leaderboard = ({ data: { oldLeaderboard, leaderboard } }: Props) => {
       </h2>
       <div className="flex w-full flex-col gap-2">
         <AnimatePresence mode="popLayout">
-          {displayedLeaderboard.map(({ id, username, points, streak }) => (
+          {displayedLeaderboard.map(({ id, username, mascot, points, streak }) => (
             <motion.div
               key={id}
               layout
@@ -93,6 +93,7 @@ const Leaderboard = ({ data: { oldLeaderboard, leaderboard } }: Props) => {
               className="bg-primary flex w-full justify-between rounded-xl p-3 text-3xl font-bold text-white"
             >
               <span className="flex items-center gap-2 drop-shadow-md">
+                <span className="text-3xl leading-none">{mascot}</span>
                 {username}
                 <StreakBadge streak={streak} />
               </span>

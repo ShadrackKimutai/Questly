@@ -97,7 +97,7 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   })
 
   socket.on(EVENTS.PLAYER.LOGIN, ({ gameId, data }) =>
-    withGame(gameId, socket, (game) => game.join(socket, data.username)),
+    withGame(gameId, socket, (game) => game.join(socket, data.username, data.mascot)),
   )
 
   socket.on(EVENTS.MANAGER.KICK_PLAYER, ({ gameId, playerId }) =>
@@ -123,6 +123,12 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
   socket.on(EVENTS.PLAYER.TEXT_ANSWER, ({ gameId, data }) =>
     withGame(gameId, socket, (game) =>
       game.textAnswer(socket, data.answerText),
+    ),
+  )
+
+  socket.on(EVENTS.PLAYER.CHANGE_MASCOT, ({ gameId, data }) =>
+    withGame(gameId, socket, (game) =>
+      game.changeMascot(socket, data.mascot),
     ),
   )
 

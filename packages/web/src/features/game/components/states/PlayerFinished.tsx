@@ -20,6 +20,8 @@ const PlayerFinished = ({ data: { rank, subject } }: Props) => {
 
   return (
     <div className="flex h-full flex-1 flex-col items-center justify-center gap-4 px-4">
+      <span className="text-9xl leading-none drop-shadow-lg">{player?.mascot}</span>
+
       <p className="text-center text-4xl font-bold text-white drop-shadow-lg md:text-5xl">
         {subject}
       </p>

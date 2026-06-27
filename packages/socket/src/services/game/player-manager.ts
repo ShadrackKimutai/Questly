@@ -1,4 +1,4 @@
-import { EVENTS } from "@questly/common/constants"
+import { EVENTS, MASCOTS } from "@questly/common/constants"
 import type { Player } from "@questly/common/types/game"
 import type { Server, Socket } from "@questly/common/types/game/socket"
 import { usernameValidator } from "@questly/common/validators/auth"
@@ -15,7 +15,16 @@ export class PlayerManager {
     this.getManagerId = getManagerId
   }
 
-  join(socket: Socket, username: string): void {
+  private assignMascot(preferred: string): string {
+    const taken = new Set(this.players.map((p) => p.mascot))
+    if (MASCOTS.includes(preferred as typeof MASCOTS[number]) && !taken.has(preferred)) {
+      return preferred
+    }
+    const available = (MASCOTS as readonly string[]).find((m) => !taken.has(m))
+    return available ?? preferred
+  }
+
+  join(socket: Socket, username: string, mascot: string): void {
     const clientId = socket.handshake.auth.clientId as string
 
     if (this.findByClientId(clientId)) {
@@ -37,11 +46,14 @@ export class PlayerManager {
 
     socket.join(this.gameId)
 
+    const assignedMascot = this.assignMascot(mascot)
+
     const player: Player = {
       id: socket.id,
       clientId,
       connected: true,
       username,
+      mascot: assignedMascot,
       points: 0,
       streak: 0,
     }
@@ -49,7 +61,18 @@ export class PlayerManager {
     this.players.push(player)
     this.io.to(this.getManagerId()).emit(EVENTS.MANAGER.NEW_PLAYER, player)
     this.io.to(this.gameId).emit(EVENTS.GAME.TOTAL_PLAYERS, this.players.length)
-    socket.emit(EVENTS.GAME.SUCCESS_JOIN, this.gameId)
+    socket.emit(EVENTS.GAME.SUCCESS_JOIN, { gameId: this.gameId, mascot: assignedMascot })
+  }
+
+  changeMascot(socket: Socket, preferred: string): void {
+    const player = this.findById(socket.id)
+    if (!player) return
+
+    const confirmed = this.assignMascot(preferred)
+    player.mascot = confirmed
+
+    socket.emit(EVENTS.PLAYER.MASCOT_CHANGED, { mascot: confirmed })
+    this.io.to(this.getManagerId()).emit(EVENTS.MANAGER.PLAYER_UPDATED, player)
   }
 
   kick(socket: Socket, playerId: string): boolean {

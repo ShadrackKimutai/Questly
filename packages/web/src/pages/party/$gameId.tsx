@@ -34,12 +34,12 @@ const PlayerGamePage = () => {
     ({
       gameId: reconnectGameId,
       status: reconnectStatus,
-      player,
+      player: { username, mascot, points },
       currentQuestion,
     }) => {
       setGameId(reconnectGameId)
       setStatus(reconnectStatus.name, reconnectStatus.data)
-      setPlayer(player)
+      setPlayer({ username, mascot, points })
       setQuestionStates(currentQuestion)
     },
   )

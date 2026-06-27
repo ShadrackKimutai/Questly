@@ -37,7 +37,7 @@ export interface ServerToClientEvents {
     data: StatusDataMap[Status]
   }) => void
   [EVENTS.GAME.SUCCESS_ROOM]: (_data: string) => void
-  [EVENTS.GAME.SUCCESS_JOIN]: (_gameId: string) => void
+  [EVENTS.GAME.SUCCESS_JOIN]: (_data: { gameId: string; mascot: string }) => void
   [EVENTS.GAME.TOTAL_PLAYERS]: (_count: number) => void
   [EVENTS.GAME.ERROR_MESSAGE]: (_message: string) => void
   [EVENTS.GAME.START_COOLDOWN]: () => void
@@ -53,7 +53,7 @@ export interface ServerToClientEvents {
   [EVENTS.PLAYER.SUCCESS_RECONNECT]: (_data: {
     gameId: string
     status: { name: Status; data: StatusDataMap[Status] }
-    player: { username: string; points: number }
+    player: { username: string; mascot: string; points: number }
     currentQuestion: GameUpdateQuestion
   }) => void
   [EVENTS.PLAYER.UPDATE_LEADERBOARD]: (_data: { leaderboard: Player[] }) => void
@@ -79,6 +79,8 @@ export interface ServerToClientEvents {
   [EVENTS.MANAGER.REMOVE_PLAYER]: (_playerId: string) => void
   [EVENTS.MANAGER.ERROR_MESSAGE]: (_message: string) => void
   [EVENTS.MANAGER.PLAYER_KICKED]: (_playerId: string) => void
+  [EVENTS.MANAGER.PLAYER_UPDATED]: (_player: Player) => void
+  [EVENTS.PLAYER.MASCOT_CHANGED]: (_data: { mascot: string }) => void
   [EVENTS.MANAGER.UNAUTHORIZED]: () => void
 
   // Quizz events
@@ -116,7 +118,7 @@ export interface ClientToServerEvents {
   // Player actions
   [EVENTS.PLAYER.JOIN]: (_inviteCode: string) => void
   [EVENTS.PLAYER.LOGIN]: (
-    _message: MessageWithoutStatus<{ username: string }>,
+    _message: MessageWithoutStatus<{ username: string; mascot: string }>,
   ) => void
   [EVENTS.PLAYER.RECONNECT]: (_message: { gameId: string }) => void
   [EVENTS.PLAYER.LEAVE]: (_message: { gameId: string }) => void
@@ -128,6 +130,9 @@ export interface ClientToServerEvents {
   ) => void
   [EVENTS.PLAYER.TEXT_ANSWER]: (
     _message: MessageWithoutStatus<{ answerText: string }>,
+  ) => void
+  [EVENTS.PLAYER.CHANGE_MASCOT]: (
+    _message: MessageWithoutStatus<{ mascot: string }>,
   ) => void
 
   // Results actions

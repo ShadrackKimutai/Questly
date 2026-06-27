@@ -8,7 +8,10 @@ import {
   useSocket,
 } from "@questly/web/features/game/contexts/socket-context"
 import { usePlayerStore } from "@questly/web/features/game/stores/player"
-
+import {
+  getOrAssignMascot,
+  saveMascot,
+} from "@questly/web/features/game/utils/mascot"
 import { useNavigate } from "@tanstack/react-router"
 import { type KeyboardEvent, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -18,31 +21,31 @@ const Username = () => {
   const { gameId, login, setStatus } = usePlayerStore()
   const navigate = useNavigate()
   const [username, setUsername] = useState("")
+  const [mascot] = useState(() => getOrAssignMascot())
   const { t } = useTranslation()
 
   const handleLogin = () => {
-    if (!gameId) {
-      return
-    }
-
-    socket.emit(EVENTS.PLAYER.LOGIN, { gameId, data: { username } })
+    if (!gameId) return
+    socket.emit(EVENTS.PLAYER.LOGIN, { gameId, data: { username, mascot } })
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "Enter") {
-      handleLogin()
-    }
+    if (event.key === "Enter") handleLogin()
   }
 
-  useEvent(EVENTS.GAME.SUCCESS_JOIN, (joinedGameId) => {
+  useEvent(EVENTS.GAME.SUCCESS_JOIN, ({ gameId: joinedGameId, mascot: confirmedMascot }) => {
+    saveMascot(confirmedMascot)
     setStatus(STATUS.WAIT, { text: "game:waitingForPlayers" })
-    login(username)
-
+    login(username, confirmedMascot)
     navigate({ to: "/party/$gameId", params: { gameId: joinedGameId } })
   })
 
   return (
     <Card>
+      <div className="mb-4 flex flex-col items-center gap-1">
+        <span className="text-7xl leading-none">{mascot}</span>
+        <p className="text-sm text-gray-500">{t("game:yourMascot")}</p>
+      </div>
       <Input
         className="text-center"
         onChange={(e) => setUsername(e.target.value)}

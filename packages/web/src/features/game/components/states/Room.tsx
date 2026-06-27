@@ -42,6 +42,10 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
     setPlayerList(playerList.filter((p) => p.id !== playerId))
   })
 
+  useEvent(EVENTS.MANAGER.PLAYER_UPDATED, (updated) => {
+    setPlayerList(playerList.map((p) => (p.id === updated.id ? updated : p)))
+  })
+
   useEvent(EVENTS.GAME.TOTAL_PLAYERS, (total) => {
     setTotalPlayers(total)
   })
@@ -102,6 +106,8 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
               className="fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-6"
             >
               <button
+                type="button"
+                title="Close"
                 onClick={handleCloseQrCode}
                 className="absolute -top-3 -right-3 rounded-full bg-white p-1.5 shadow-md hover:bg-gray-100"
               >
@@ -131,10 +137,11 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
         {playerList.map((player) => (
           <div
             key={player.id}
-            className="bg-primary rounded-xl px-4 py-3 font-bold text-white"
+            className="bg-primary flex items-center gap-2 rounded-xl px-4 py-3 font-bold text-white"
             onClick={handleKick(player.id)}
           >
-            <span className="cursor-pointer text-3xl drop-shadow-sm hover:line-through hover:decoration-3">
+            <span className="text-3xl leading-none">{player.mascot}</span>
+            <span className="cursor-pointer text-2xl drop-shadow-sm hover:line-through hover:decoration-3">
               {player.username}
             </span>
           </div>

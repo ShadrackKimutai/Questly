@@ -128,8 +128,12 @@ class Game {
 
   // Player actions
 
-  join(socket: Socket, username: string) {
-    this.playerManager.join(socket, username)
+  join(socket: Socket, username: string, mascot: string) {
+    this.playerManager.join(socket, username, mascot)
+  }
+
+  changeMascot(socket: Socket, mascot: string) {
+    this.playerManager.changeMascot(socket, mascot)
   }
 
   kickPlayer(socket: Socket, playerId: string) {
@@ -218,7 +222,7 @@ class Game {
       gameId: this.gameId,
       currentQuestion: this.round.getReconnectInfo(),
       status,
-      player: { username: player.username, points: player.points },
+      player: { username: player.username, mascot: player.mascot, points: player.points },
     })
     socket.emit(EVENTS.GAME.TOTAL_PLAYERS, this.playerManager.count())
 
