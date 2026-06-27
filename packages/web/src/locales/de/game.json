@@ -23,5 +23,14 @@
   "usernamePlaceholder": "Benutzername hier",
   "waitingForAnswers": "Warten auf die Antworten der Spieler",
   "waitingForPlayers": "Warten auf Spieler",
-  "wrong": "Schade"
+  "wrong": "Schade",
+  "reviewTitle": "Review your answers",
+  "reviewSkip": "Skip",
+  "reviewContinue": "See your result",
+  "lockRoom": "Lock room",
+  "unlockRoom": "Unlock room",
+  "yourAnswer": "Your answer",
+  "correctAnswer": "Correct answer",
+  "correctAnswers": "Correct answers",
+  "missed": "missed"
 }

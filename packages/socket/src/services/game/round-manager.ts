@@ -10,6 +10,7 @@ import type {
 } from "@questly/common/types/game"
 import type { Server, Socket } from "@questly/common/types/game/socket"
 import {
+  type AnswerFeedback,
   type Status,
   STATUS,
   type StatusDataMap,
@@ -215,9 +216,36 @@ export class RoundManager {
 
     this.opts.players.replace(sortedPlayers)
 
+    const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
+
     sortedPlayers.forEach((player, index) => {
       const rank = index + 1
       const aheadPlayer = sortedPlayers[index - 1]
+
+      const playerAnswer = this.playersAnswers.find((a) => a.playerId === player.id)
+      const answerId = playerAnswer?.answerId ?? null
+
+      const answerFeedback: AnswerFeedback = qType === "shortanswer"
+        ? {
+            type: "shortanswer",
+            playerText: typeof answerId === "string" ? answerId : null,
+            correctOptions: question.textSolutions ?? [],
+          }
+        : {
+            type: "choice",
+            items: question.answers.map((text, i) => {
+              const selectedIds = Array.isArray(answerId)
+                ? answerId
+                : typeof answerId === "number"
+                  ? [answerId]
+                  : []
+              return {
+                text,
+                selectedByPlayer: selectedIds.includes(i),
+                isCorrect: question.solutions.includes(i),
+              }
+            }),
+          }
 
       this.opts.send(player.id, STATUS.SHOW_RESULT, {
         correct: player.lastCorrect,
@@ -226,6 +254,7 @@ export class RoundManager {
         myPoints: player.points,
         rank,
         aheadOfMe: aheadPlayer ? aheadPlayer.username : null,
+        answerFeedback,
       })
     })
 
@@ -399,7 +428,7 @@ export class RoundManager {
 
       const top = this.leaderboard.slice(0, 3)
 
-      this.opts.onGameFinished({
+      const result: GameResult = {
         id: `${Date.now()}-${nanoid(8)}`,
         subject: this.opts.quizz.subject,
         date: new Date().toISOString(),
@@ -409,11 +438,14 @@ export class RoundManager {
           rank: index + 1,
         })),
         questions: this.questionsHistory,
-      })
+      }
+
+      this.opts.onGameFinished(result)
 
       this.opts.send(this.opts.getManagerId(), STATUS.FINISHED, {
         subject: this.opts.quizz.subject,
         top,
+        resultId: result.id,
       })
 
       this.leaderboard.forEach((player, index) => {

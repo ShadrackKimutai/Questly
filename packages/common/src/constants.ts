@@ -39,6 +39,7 @@ export const EVENTS = {
     RECONNECT: "manager:reconnect",
     LEAVE: "manager:leave",
     KICK_PLAYER: "manager:kickPlayer",
+    SET_MAX_PLAYERS: "manager:setMaxPlayers",
     START_GAME: "manager:startGame",
     ABORT_QUIZ: "manager:abortQuiz",
     NEXT_QUESTION: "manager:nextQuestion",

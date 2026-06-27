@@ -136,6 +136,11 @@ class Game {
     this.playerManager.changeMascot(socket, mascot)
   }
 
+  setMaxPlayers(socket: Socket, maxPlayers: number | null) {
+    if (this._manager.id !== socket.id) return
+    this.playerManager.setMaxPlayers(maxPlayers)
+  }
+
   kickPlayer(socket: Socket, playerId: string) {
     if (this.playerManager.kick(socket, playerId)) {
       this.playerStatus.delete(playerId)

@@ -78,6 +78,20 @@ button:not(:disabled),
   animation: balanced 0.8s linear infinite;
 }
 
+.anim-dance {
+  animation: dance 0.8s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes dance {
+  0%   { transform: translateY(0)    scale(1)    rotate(0deg); }
+  20%  { transform: translateY(-18px) scale(1.15) rotate(-10deg); }
+  40%  { transform: translateY(-4px)  scale(0.95) rotate(0deg); }
+  60%  { transform: translateY(-14px) scale(1.1)  rotate(10deg); }
+  80%  { transform: translateY(-2px)  scale(0.97) rotate(0deg); }
+  100% { transform: translateY(0)    scale(1)    rotate(0deg); }
+}
+
 @keyframes balanced {
   0% {
     transform: rotate(0deg);

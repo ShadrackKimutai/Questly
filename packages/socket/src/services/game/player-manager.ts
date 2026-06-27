@@ -8,11 +8,20 @@ export class PlayerManager {
   private readonly gameId: string
   private readonly getManagerId: () => string
   private players: Player[] = []
+  private maxPlayers: number | null = null
 
   constructor(io: Server, gameId: string, getManagerId: () => string) {
     this.io = io
     this.gameId = gameId
     this.getManagerId = getManagerId
+  }
+
+  setMaxPlayers(max: number | null): void {
+    this.maxPlayers = max
+  }
+
+  getMaxPlayers(): number | null {
+    return this.maxPlayers
   }
 
   private assignMascot(preferred: string): string {
@@ -32,6 +41,12 @@ export class PlayerManager {
         EVENTS.GAME.ERROR_MESSAGE,
         "errors:game.playerAlreadyConnected",
       )
+
+      return
+    }
+
+    if (this.maxPlayers !== null && this.players.length >= this.maxPlayers) {
+      socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:game.roomFull")
 
       return
     }

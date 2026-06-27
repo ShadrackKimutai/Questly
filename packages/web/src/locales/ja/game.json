@@ -23,5 +23,14 @@
   "usernamePlaceholder": "ユーザー名を入力",
   "waitingForAnswers": "プレイヤーの回答を待っています",
   "waitingForPlayers": "プレイヤーを待っています",
-  "wrong": "残念！"
+  "wrong": "残念！",
+  "reviewTitle": "Review your answers",
+  "reviewSkip": "Skip",
+  "reviewContinue": "See your result",
+  "lockRoom": "Lock room",
+  "unlockRoom": "Unlock room",
+  "yourAnswer": "Your answer",
+  "correctAnswer": "Correct answer",
+  "correctAnswers": "Correct answers",
+  "missed": "missed"
 }

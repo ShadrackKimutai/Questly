@@ -11,10 +11,18 @@ interface PlayerState {
   points?: number
 }
 
+export interface AnswerHistoryEntry {
+  question: string
+  correct: boolean
+  points: number
+}
+
 interface PlayerStore<T> {
   gameId: string | null
   player: PlayerState | null
   status: Status<T> | null
+  pendingQuestion: string | null
+  history: AnswerHistoryEntry[]
 
   setGameId: (_gameId: string | null) => void
 
@@ -25,6 +33,9 @@ interface PlayerStore<T> {
 
   setStatus: <K extends keyof T>(_name: K, _data: T[K]) => void
 
+  setPendingQuestion: (_question: string) => void
+  appendHistory: (_entry: AnswerHistoryEntry) => void
+
   reset: () => void
 }
 
@@ -32,6 +43,8 @@ const initialState = {
   gameId: null,
   player: null,
   status: null,
+  pendingQuestion: null,
+  history: [],
 }
 
 export const usePlayerStore = create<PlayerStore<StatusDataMap>>((set) => ({
@@ -58,6 +71,11 @@ export const usePlayerStore = create<PlayerStore<StatusDataMap>>((set) => ({
     })),
 
   setStatus: (name, data) => set({ status: createStatus(name, data) }),
+
+  setPendingQuestion: (question) => set({ pendingQuestion: question }),
+
+  appendHistory: (entry) =>
+    set((state) => ({ history: [...state.history, entry] })),
 
   reset: () => set(initialState),
 }))

@@ -11,7 +11,8 @@
     "managerDisconnected": "El administrador se ha desconectado",
     "noPlayersConnected": "No hay jugadores conectados",
     "notFound": "Partida no encontrada",
-    "playerAlreadyConnected": "El jugador ya está conectado"
+    "playerAlreadyConnected": "El jugador ya está conectado",
+    "roomFull": "The room is full"
   },
   "manager": {
     "failedToReadConfig": "Error al leer la configuración del juego",

@@ -11,7 +11,8 @@
     "managerDisconnected": "管理者が切断されました",
     "noPlayersConnected": "接続中のプレイヤーがいません",
     "notFound": "ゲームが見つかりません",
-    "playerAlreadyConnected": "プレイヤーはすでに接続されています"
+    "playerAlreadyConnected": "プレイヤーはすでに接続されています",
+    "roomFull": "The room is full"
   },
   "manager": {
     "failedToReadConfig": "ゲーム設定の読み込みに失敗しました",

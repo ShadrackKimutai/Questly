@@ -11,7 +11,8 @@
     "managerDisconnected": "Manager disconnected",
     "noPlayersConnected": "No players connected",
     "notFound": "Game not found",
-    "playerAlreadyConnected": "Player already connected"
+    "playerAlreadyConnected": "Player already connected",
+    "roomFull": "The room is full"
   },
   "manager": {
     "failedToReadConfig": "Failed to read game config",

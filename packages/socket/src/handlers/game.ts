@@ -104,6 +104,10 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
     withGame(gameId, socket, (game) => game.kickPlayer(socket, playerId)),
   )
 
+  socket.on(EVENTS.MANAGER.SET_MAX_PLAYERS, ({ gameId, maxPlayers }) =>
+    withGame(gameId, socket, (game) => game.setMaxPlayers(socket, maxPlayers)),
+  )
+
   socket.on(EVENTS.MANAGER.START_GAME, ({ gameId }) =>
     withGame(gameId, socket, (game) => game.start(socket)),
   )

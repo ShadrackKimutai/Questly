@@ -23,11 +23,22 @@
   "usernamePlaceholder": "Username here",
   "yourMascot": "Your mascot",
   "pickYourMascot": "Tap to change your mascot",
+  "tapToChangeMascot": "Tap to change mascot",
+  "chooseMascot": "Choose your mascot",
   "waitingForAnswers": "Waiting for the players to answer",
   "waitingForPlayers": "Waiting for players",
   "wrong": "Too bad",
   "selectAllThatApply": "Select all that apply",
   "typeYourAnswer": "Type your answer...",
   "submitAnswers": "Submit answers",
-  "submitAnswer": "Submit answer"
+  "submitAnswer": "Submit answer",
+  "reviewTitle": "Review your answers",
+  "reviewSkip": "Skip",
+  "reviewContinue": "See your result",
+  "lockRoom": "Lock room",
+  "unlockRoom": "Unlock room",
+  "yourAnswer": "Your answer",
+  "correctAnswer": "Correct answer",
+  "correctAnswers": "Correct answers",
+  "missed": "missed"
 }

@@ -1,5 +1,9 @@
 import type { Player, QuestionMedia, QuestionType } from "@questly/common/types/game"
 
+export type AnswerFeedback =
+  | { type: "shortanswer"; playerText: string | null; correctOptions: string[] }
+  | { type: "choice"; items: { text: string; selectedByPlayer: boolean; isCorrect: boolean }[] }
+
 export const STATUS = {
   SHOW_ROOM: "SHOW_ROOM",
   SHOW_START: "SHOW_START",
@@ -38,9 +42,10 @@ export interface CommonStatusDataMap {
     myPoints: number
     rank: number
     aheadOfMe: string | null
+    answerFeedback: AnswerFeedback
   }
   WAIT: { text: string }
-  FINISHED: { subject: string; top: Player[]; rank?: number }
+  FINISHED: { subject: string; top: Player[]; rank?: number; resultId?: string }
 }
 
 interface ManagerExtraStatus {

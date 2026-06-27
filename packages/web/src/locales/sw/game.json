@@ -27,5 +27,14 @@
   "selectAllThatApply": "Chagua yote yanayofaa",
   "typeYourAnswer": "Andika jibu lako...",
   "submitAnswers": "Wasilisha majibu",
-  "submitAnswer": "Wasilisha jibu"
+  "submitAnswer": "Wasilisha jibu",
+  "reviewTitle": "Kagua majibu yako",
+  "reviewSkip": "Ruka",
+  "reviewContinue": "Ona matokeo yako",
+  "lockRoom": "Funga chumba",
+  "unlockRoom": "Fungua chumba",
+  "yourAnswer": "Jibu lako",
+  "correctAnswer": "Jibu sahihi",
+  "correctAnswers": "Majibu sahihi",
+  "missed": "ulipoteza"
 }

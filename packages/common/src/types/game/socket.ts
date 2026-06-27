@@ -102,6 +102,7 @@ export interface ClientToServerEvents {
     gameId: string
     playerId: string
   }) => void
+  [EVENTS.MANAGER.SET_MAX_PLAYERS]: (_message: { gameId: string; maxPlayers: number | null }) => void
   [EVENTS.MANAGER.START_GAME]: (_message: MessageGameId) => void
   [EVENTS.MANAGER.ABORT_QUIZ]: (_message: MessageGameId) => void
   [EVENTS.MANAGER.NEXT_QUESTION]: (_message: MessageGameId) => void

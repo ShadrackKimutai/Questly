@@ -11,7 +11,8 @@
     "managerDisconnected": "Msimamizi amekatika",
     "noPlayersConnected": "Hakuna wachezaji waliounganishwa",
     "notFound": "Mchezo haukupatikana",
-    "playerAlreadyConnected": "Mchezaji ameshaungana"
+    "playerAlreadyConnected": "Mchezaji ameshaungana",
+    "roomFull": "The room is full"
   },
   "manager": {
     "failedToReadConfig": "Imeshindwa kusoma mipangilio ya mchezo",

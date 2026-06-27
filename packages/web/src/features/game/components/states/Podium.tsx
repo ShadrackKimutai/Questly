@@ -131,7 +131,10 @@ const Podium = ({ data: { subject, top } }: Props) => {
                 { "translate-y-0! opacity-100": apparition >= 2 },
               )}
             >
-              <span className="text-6xl leading-none drop-shadow-lg md:text-7xl">{top[1].mascot}</span>
+              <span className={clsx(
+                "text-6xl leading-none drop-shadow-lg md:text-7xl",
+                { "anim-dance": apparition >= 4 },
+              )}>{top[1].mascot}</span>
               <p
                 className={clsx(
                   "overflow-visible text-center text-2xl font-bold whitespace-nowrap text-white drop-shadow-lg md:text-4xl",
@@ -164,7 +167,7 @@ const Podium = ({ data: { subject, top } }: Props) => {
           >
             <span className={clsx(
               "text-7xl leading-none drop-shadow-lg opacity-0 md:text-8xl",
-              { "opacity-100": apparition >= 4 },
+              { "opacity-100 anim-dance": apparition >= 4 },
             )}>{top[0].mascot}</span>
             <p
               className={clsx(
@@ -191,7 +194,10 @@ const Podium = ({ data: { subject, top } }: Props) => {
                 },
               )}
             >
-              <span className="text-6xl leading-none drop-shadow-lg md:text-7xl">{top[2].mascot}</span>
+              <span className={clsx(
+                "text-6xl leading-none drop-shadow-lg md:text-7xl",
+                { "anim-dance": apparition >= 4 },
+              )}>{top[2].mascot}</span>
               <p
                 className={clsx(
                   "overflow-visible text-center text-2xl font-bold whitespace-nowrap text-white drop-shadow-lg md:text-4xl",

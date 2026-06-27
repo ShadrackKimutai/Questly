@@ -8,7 +8,7 @@ import {
 } from "@questly/web/features/game/contexts/socket-context"
 import { useManagerStore } from "@questly/web/features/game/stores/manager"
 import { useOnClickOutside } from "@questly/web/hooks/useOnClickOutside"
-import { Maximize2, X } from "lucide-react"
+import { Lock, LockOpen, Maximize2, X } from "lucide-react"
 import { QRCodeSVG } from "qrcode.react"
 import { useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
@@ -25,6 +25,7 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
   const [playerList, setPlayerList] = useState<Player[]>(players)
   const [totalPlayers, setTotalPlayers] = useState(0)
   const [qrOpen, setQrOpen] = useState(false)
+  const [locked, setLocked] = useState(false)
   const qrContentRef = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()
 
@@ -62,6 +63,16 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
   }
 
   const handleCloseQrCode = () => setQrOpen(false)
+
+  const handleToggleLock = () => {
+    if (!gameId) return
+    const next = !locked
+    socket.emit(EVENTS.MANAGER.SET_MAX_PLAYERS, {
+      gameId,
+      maxPlayers: next ? totalPlayers : null,
+    })
+    setLocked(next)
+  }
 
   return (
     <section className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-2">
@@ -126,11 +137,29 @@ const Room = ({ data: { text, inviteCode } }: Props) => {
         {t(text)}
       </h2>
 
-      <div className="mb-6 flex items-center justify-center rounded-lg bg-black/40 px-6 py-3">
-        <span className="text-2xl font-bold text-white drop-shadow-md">
-          {t("game:playersJoined")}
-          {totalPlayers}
-        </span>
+      <div className="mb-6 flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center rounded-lg bg-black/40 px-6 py-3">
+          <span className="text-2xl font-bold text-white drop-shadow-md">
+            {t("game:playersJoined")}
+            {totalPlayers}
+          </span>
+        </div>
+        <button
+          type="button"
+          title={locked ? t("game:unlockRoom") : t("game:lockRoom")}
+          onClick={handleToggleLock}
+          className={`flex items-center justify-center rounded-lg p-3 transition-colors ${
+            locked
+              ? "bg-red-500/80 hover:bg-red-500"
+              : "bg-black/40 hover:bg-black/50"
+          }`}
+        >
+          {locked ? (
+            <Lock className="size-6 text-white" />
+          ) : (
+            <LockOpen className="size-6 text-white/80" />
+          )}
+        </button>
       </div>
 
       <div className="flex flex-wrap gap-3">

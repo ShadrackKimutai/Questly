@@ -35,7 +35,23 @@
       "points": "Points"
     },
     "playerCount": "{{count}} player(s)",
-    "timeLimitSuffix": "s time limit"
+    "timeLimitSuffix": "s time limit",
+    "backToOverview": "Back to overview",
+    "prevQuestion": "Previous question",
+    "nextQuestion": "Next question",
+    "closeResults": "Close results",
+    "overview": {
+      "overallAccuracy": "Overall accuracy",
+      "players": "Players",
+      "questions": "Questions",
+      "leaderboard": "Leaderboard",
+      "class": "Class"
+    },
+    "player": {
+      "accuracy": "Accuracy",
+      "rank": "Rank & Points",
+      "vsClass": "{{playerPct}}% correct vs {{overallPct}}% class average"
+    }
   },
   "tabs": {
     "play": "Play",

@@ -38,6 +38,14 @@ const Answers = ({
   const inputRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
 
+  useEffect(() => {
+    if (player) {
+      const { setPendingQuestion } = usePlayerStore.getState()
+      setPendingQuestion(question)
+    }
+    // oxlint-disable-next-line
+  }, [])
+
   const [sfxPop] = useSound(SFX.ANSWERS.SOUND, { volume: 0.1 })
   const [playMusic, { stop: stopMusic }] = useSound(SFX.ANSWERS.MUSIC, {
     volume: 0.2,
