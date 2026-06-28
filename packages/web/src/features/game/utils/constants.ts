@@ -92,6 +92,6 @@ export const MANAGER_SKIP_BTN = {
   [STATUS.SHOW_RESULT]: null,
   [STATUS.SHOW_RESPONSES]: "common:next",
   [STATUS.SHOW_LEADERBOARD]: "common:next",
-  [STATUS.FINISHED]: "common:exit",
+  [STATUS.FINISHED]: "manager:result.viewResults",
   [STATUS.WAIT]: null,
 }

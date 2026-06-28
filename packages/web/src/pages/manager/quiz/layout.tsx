@@ -8,7 +8,7 @@ import { useManagerStore } from "@questly/web/features/game/stores/manager"
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router"
 import { useEffect } from "react"
 
-export const Route = createFileRoute("/manager/quizz")({
+export const Route = createFileRoute("/manager/quiz")({
   component: RouteComponent,
 })
 

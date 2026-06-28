@@ -14,8 +14,39 @@ interface Props {
   data: ManagerStatusDataMap["SHOW_RESPONSES"]
 }
 
+const WORD_COLORS = [
+  "text-yellow-300", "text-sky-300", "text-emerald-300",
+  "text-pink-300", "text-violet-300", "text-orange-300",
+]
+
+const WordCloud = ({ wordResponses }: { wordResponses: Record<string, number> }) => {
+  const entries = Object.entries(wordResponses).sort((a, b) => b[1] - a[1])
+  const maxCount = entries[0]?.[1] ?? 1
+
+  return (
+    <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-x-4 gap-y-2 px-4 py-6">
+      {entries.map(([word, count], i) => {
+        const ratio = count / maxCount
+        const size = Math.round(16 + ratio * 40)
+        return (
+          <span
+            key={word}
+            className={clsx("font-bold drop-shadow-md transition-all", WORD_COLORS[i % WORD_COLORS.length])}
+            style={{ fontSize: `${size}px`, lineHeight: 1.2 }}
+          >
+            {word}
+            {count > 1 && (
+              <sup className="ml-0.5 text-xs font-semibold opacity-70">{count}</sup>
+            )}
+          </span>
+        )
+      })}
+    </div>
+  )
+}
+
 const Responses = ({
-  data: { question, answers, responses, solutions },
+  data: { question, answers, responses, solutions, type, wordResponses },
 }: Props) => {
   const [percentages, setPercentages] = useState<Record<string, string>>({})
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
@@ -37,7 +68,6 @@ const Responses = ({
   useEffect(() => {
     stopMusic()
     sfxResults()
-
     setPercentages(calculatePercentages(responses))
   }, [responses, playMusic, stopMusic, sfxResults])
 
@@ -51,6 +81,8 @@ const Responses = ({
     stopMusic()
   }, [playMusic, stopMusic])
 
+  const isWordCloud = type === "wordcloud"
+
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
       <div className="mx-auto inline-flex h-full w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5">
@@ -58,44 +90,50 @@ const Responses = ({
           {question}
         </h2>
 
-        <div
-          className={`mt-8 grid h-40 w-full max-w-3xl gap-4 px-2`}
-          style={{ gridTemplateColumns: `repeat(${answers.length}, 1fr)` }}
-        >
-          {answers.map((_, key) => (
-            <div
-              key={key}
-              className={clsx(
-                "flex flex-col justify-end self-end overflow-hidden rounded-md",
-                ANSWERS_COLORS[key],
-              )}
-              style={{ height: percentages[key] }}
-            >
-              <span className="w-full bg-black/10 text-center text-lg font-bold text-white drop-shadow-md">
-                {responses[key] || 0}
-              </span>
-            </div>
-          ))}
-        </div>
+        {isWordCloud ? (
+          <WordCloud wordResponses={wordResponses ?? {}} />
+        ) : (
+          <div
+            className="mt-8 grid h-40 w-full max-w-3xl gap-4 px-2"
+            style={{ gridTemplateColumns: `repeat(${answers.length}, 1fr)` }}
+          >
+            {answers.map((_, key) => (
+              <div
+                key={key}
+                className={clsx(
+                  "flex flex-col justify-end self-end overflow-hidden rounded-md",
+                  ANSWERS_COLORS[key],
+                )}
+                style={{ height: percentages[key] }}
+              >
+                <span className="w-full bg-black/10 text-center text-lg font-bold text-white drop-shadow-md">
+                  {responses[key] || 0}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      <div>
-        <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 rounded-full px-2 text-lg font-bold text-white md:text-xl">
-          {answers.map((answer, key) => (
-            <AnswerButton
-              key={key}
-              className={clsx(ANSWERS_COLORS[key], {
-                // oxlint-disable-next-line typescript/no-unnecessary-condition
-                "opacity-65": responses && !solutions.includes(key),
-              })}
-              label={ANSWERS_LABELS[key]}
-              correct={solutions.includes(key)}
-            >
-              {answer}
-            </AnswerButton>
-          ))}
+      {!isWordCloud && (
+        <div>
+          <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 rounded-full px-2 text-lg font-bold text-white md:text-xl">
+            {answers.map((answer, key) => (
+              <AnswerButton
+                key={key}
+                className={clsx(ANSWERS_COLORS[key], {
+                  // oxlint-disable-next-line typescript/no-unnecessary-condition
+                  "opacity-65": responses && !solutions.includes(key),
+                })}
+                label={ANSWERS_LABELS[key]}
+                correct={solutions.includes(key)}
+              >
+                {answer}
+              </AnswerButton>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

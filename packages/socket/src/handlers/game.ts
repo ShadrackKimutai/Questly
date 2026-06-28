@@ -1,7 +1,7 @@
 import { EVENTS } from "@questly/common/constants"
 import { inviteCodeValidator } from "@questly/common/validators/auth"
 import type { SocketContext } from "@questly/socket/handlers/types"
-import { getQuizz } from "@questly/socket/services/config"
+import { getQuiz } from "@questly/socket/services/config"
 import Game from "@questly/socket/services/game"
 import Registry from "@questly/socket/services/registry"
 import { withGame } from "@questly/socket/utils/game"
@@ -62,17 +62,17 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
     socket.emit(EVENTS.GAME.RESET, "errors:game.expired")
   })
 
-  socket.on(EVENTS.GAME.CREATE, (quizzId) => {
-    const quizzList = getQuizz()
-    const quizz = quizzList.find((q) => q.id === quizzId)
+  socket.on(EVENTS.GAME.CREATE, (quizId) => {
+    const quizList = getQuiz()
+    const quiz = quizList.find((q) => q.id === quizId)
 
-    if (!quizz) {
-      socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:quizz.notFound")
+    if (!quiz) {
+      socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:quiz.notFound")
 
       return
     }
 
-    const game = new Game(io, socket, quizz)
+    const game = new Game(io, socket, quiz)
     registry.addGame(game)
   })
 
@@ -89,6 +89,12 @@ export const gameSocketHandlers = ({ io, socket }: SocketContext) => {
 
     if (!game) {
       socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:game.notFound")
+
+      return
+    }
+
+    if (game.isLocked()) {
+      socket.emit(EVENTS.GAME.ERROR_MESSAGE, "errors:game.roomFull")
 
       return
     }

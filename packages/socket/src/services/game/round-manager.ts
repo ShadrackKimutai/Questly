@@ -6,7 +6,7 @@ import type {
   Player,
   Question,
   QuestionResult,
-  Quizz,
+  Quiz,
 } from "@questly/common/types/game"
 import type { Server, Socket } from "@questly/common/types/game/socket"
 import {
@@ -32,7 +32,7 @@ type SendFn = <T extends Status>(
 ) => void
 
 export interface RoundManagerOptions {
-  quizz: Quizz
+  quiz: Quiz
   players: PlayerManager
   cooldown: CooldownTimer
   io: Server
@@ -65,7 +65,7 @@ export class RoundManager {
   getReconnectInfo() {
     return {
       current: this.currentQuestion + 1,
-      total: this.opts.quizz.questions.length,
+      total: this.opts.quiz.questions.length,
     }
   }
 
@@ -88,7 +88,7 @@ export class RoundManager {
 
     this.opts.broadcast(STATUS.SHOW_START, {
       time: 3,
-      subject: this.opts.quizz.subject,
+      subject: this.opts.quiz.subject,
     })
 
     await sleep(3)
@@ -104,13 +104,13 @@ export class RoundManager {
       return
     }
 
-    const question = this.opts.quizz.questions[this.currentQuestion]
+    const question = this.opts.quiz.questions[this.currentQuestion]
 
     this.opts.onNewQuestion()
 
     this.opts.io.to(this.opts.gameId).emit(EVENTS.GAME.UPDATE_QUESTION, {
       current: this.currentQuestion + 1,
-      total: this.opts.quizz.questions.length,
+      total: this.opts.quiz.questions.length,
     })
 
     this.opts.broadcast(STATUS.SHOW_PREPARED, {
@@ -183,6 +183,8 @@ export class RoundManager {
       {},
     )
 
+    const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
+
     const sortedPlayers = currentPlayers
       .map((player) => {
         const playerAnswer = this.playersAnswers.find(
@@ -191,6 +193,7 @@ export class RoundManager {
 
         const isCorrect = (() => {
           if (!playerAnswer) return false
+          if (qType === "wordcloud") return true
           const { answerId } = playerAnswer
           if (typeof answerId === "string") {
             return (question.textSolutions ?? []).some(
@@ -216,8 +219,6 @@ export class RoundManager {
 
     this.opts.players.replace(sortedPlayers)
 
-    const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
-
     sortedPlayers.forEach((player, index) => {
       const rank = index + 1
       const aheadPlayer = sortedPlayers[index - 1]
@@ -225,7 +226,12 @@ export class RoundManager {
       const playerAnswer = this.playersAnswers.find((a) => a.playerId === player.id)
       const answerId = playerAnswer?.answerId ?? null
 
-      const answerFeedback: AnswerFeedback = qType === "shortanswer"
+      const answerFeedback: AnswerFeedback = qType === "wordcloud"
+        ? {
+            type: "wordcloud",
+            playerText: typeof answerId === "string" ? answerId : null,
+          }
+        : qType === "shortanswer"
         ? {
             type: "shortanswer",
             playerText: typeof answerId === "string" ? answerId : null,
@@ -258,9 +264,22 @@ export class RoundManager {
       })
     })
 
+    const wordResponses: Record<string, number> | undefined =
+      qType === "wordcloud"
+        ? this.playersAnswers.reduce<Record<string, number>>((acc, { answerId }) => {
+            if (typeof answerId === "string" && answerId.trim()) {
+              const key = answerId.trim().toLowerCase()
+              acc[key] = (acc[key] ?? 0) + 1
+            }
+            return acc
+          }, {})
+        : undefined
+
     this.opts.send(this.opts.getManagerId(), STATUS.SHOW_RESPONSES, {
       ...question,
       responses: totalType,
+      type: qType,
+      wordResponses,
     })
 
     this.questionsHistory.push({
@@ -289,7 +308,7 @@ export class RoundManager {
       return
     }
 
-    const question = this.opts.quizz.questions[this.currentQuestion]
+    const question = this.opts.quiz.questions[this.currentQuestion]
 
     const points = (() => {
       if (question.time === NO_TIME_LIMIT) {
@@ -324,7 +343,7 @@ export class RoundManager {
 
   selectAnswer(socket: Socket, answerId: number): void {
     const player = this.opts.players.findById(socket.id)
-    const question = this.opts.quizz.questions[this.currentQuestion]
+    const question = this.opts.quiz.questions[this.currentQuestion]
 
     if (!player) {
       return
@@ -367,7 +386,7 @@ export class RoundManager {
 
   textAnswer(socket: Socket, answerText: string): void {
     const player = this.opts.players.findById(socket.id)
-    const question = this.opts.quizz.questions[this.currentQuestion]
+    const question = this.opts.quiz.questions[this.currentQuestion]
 
     if (!player) return
     if (this.playersAnswers.find((a) => a.playerId === socket.id)) return
@@ -399,7 +418,7 @@ export class RoundManager {
       return
     }
 
-    if (!this.opts.quizz.questions[this.currentQuestion + 1]) {
+    if (!this.opts.quiz.questions[this.currentQuestion + 1]) {
       return
     }
 
@@ -421,7 +440,7 @@ export class RoundManager {
 
   showLeaderboard(): void {
     const isLastRound =
-      this.currentQuestion + 1 === this.opts.quizz.questions.length
+      this.currentQuestion + 1 === this.opts.quiz.questions.length
 
     if (isLastRound) {
       this.started = false
@@ -430,7 +449,7 @@ export class RoundManager {
 
       const result: GameResult = {
         id: `${Date.now()}-${nanoid(8)}`,
-        subject: this.opts.quizz.subject,
+        subject: this.opts.quiz.subject,
         date: new Date().toISOString(),
         players: this.leaderboard.map((player, index) => ({
           username: player.username,
@@ -443,14 +462,14 @@ export class RoundManager {
       this.opts.onGameFinished(result)
 
       this.opts.send(this.opts.getManagerId(), STATUS.FINISHED, {
-        subject: this.opts.quizz.subject,
+        subject: this.opts.quiz.subject,
         top,
         resultId: result.id,
       })
 
       this.leaderboard.forEach((player, index) => {
         this.opts.send(player.id, STATUS.FINISHED, {
-          subject: this.opts.quizz.subject,
+          subject: this.opts.quiz.subject,
           top,
           rank: index + 1,
         })

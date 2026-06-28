@@ -1,6 +1,6 @@
-import type { GameResultMeta, QuizzMeta } from "@questly/common/types/game"
+import type { GameResultMeta, QuizMeta } from "@questly/common/types/game"
 
 export interface ManagerConfig {
-  quizz: QuizzMeta[]
+  quiz: QuizMeta[]
   results: GameResultMeta[]
 }

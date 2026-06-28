@@ -8,9 +8,9 @@ import { useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
-const ConfigSelectQuizz = () => {
+const ConfigSelectQuiz = () => {
   const { socket } = useSocket()
-  const { quizz: quizzList } = useConfig()
+  const { quiz: quizList } = useConfig()
   const [selected, setSelected] = useState<string | null>(null)
   const { t } = useTranslation()
 
@@ -24,7 +24,7 @@ const ConfigSelectQuizz = () => {
 
   const handleSubmit = () => {
     if (!selected) {
-      toast.error(t("manager:quizz.pleaseSelect"))
+      toast.error(t("manager:quiz.pleaseSelect"))
 
       return
     }
@@ -34,36 +34,36 @@ const ConfigSelectQuizz = () => {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      {quizzList.length > 0 && (
+      {quizList.length > 0 && (
         <Button className="mb-4 shrink-0" onClick={handleSubmit}>
-          {t("manager:quizz.startGame")}
+          {t("manager:quiz.startGame")}
         </Button>
       )}
       <div className="min-h-0 flex-1 space-y-2 overflow-auto p-0.5">
-        {quizzList.map((quizz) => (
+        {quizList.map((quiz) => (
           <button
-            key={quizz.id}
+            key={quiz.id}
             className="flex w-full items-center justify-between rounded-md p-3 outline outline-gray-300"
-            onClick={handleSelect(quizz.id)}
+            onClick={handleSelect(quiz.id)}
           >
-            {quizz.subject}
+            {quiz.subject}
 
             <div
               className={clsx(
                 "size-5 rounded p-0.5 outline outline-offset-3 outline-gray-300",
-                selected === quizz.id && "bg-primary border-primary/80",
+                selected === quiz.id && "bg-primary border-primary/80",
               )}
             >
-              {selected === quizz.id && (
+              {selected === quiz.id && (
                 <Check className="size-full stroke-4 text-white" />
               )}
             </div>
           </button>
         ))}
-        {!quizzList.length && (
+        {!quizList.length && (
           <div className="my-8 text-center text-gray-500">
-            <p>{t("manager:quizz.notFound")}</p>
-            <p className="text-sm">{t("manager:quizz.pleaseCreate")}</p>
+            <p>{t("manager:quiz.notFound")}</p>
+            <p className="text-sm">{t("manager:quiz.pleaseCreate")}</p>
           </div>
         )}
       </div>
@@ -71,4 +71,4 @@ const ConfigSelectQuizz = () => {
   )
 }
 
-export default ConfigSelectQuizz
+export default ConfigSelectQuiz

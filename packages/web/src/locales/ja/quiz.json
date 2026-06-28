@@ -13,7 +13,8 @@
       "noTimeLimitHint": "ポイントは回答順に付与されます。回答に制限時間はありません。",
       "questionDisplay": "問題表示",
       "questionDisplayHint": "回答が表示されるまでの時間",
-      "timings": "タイミング"
+      "timings": "タイミング",
+      "typeWordCloud": "ワードクラウド"
     },
     "deleteQuestion": "この質問を削除",
     "deleteQuestionConfirm": "この質問を削除してもよろしいですか？",
@@ -25,7 +26,8 @@
     "mediaUrlPlaceholder": "URLを入力...",
     "placeholder": "質問を入力してください..."
   },
-  "quizzSaved": "クイズを保存しました",
-  "quizzUpdated": "クイズを更新しました",
-  "titleQuizzPlaceholder": "クイズのタイトル..."
+  "quizSaved": "クイズを保存しました",
+  "quizUpdated": "クイズを更新しました",
+  "titleQuizPlaceholder": "クイズのタイトル...",
+  "wordcloudHint": "プレイヤーが自由に単語やフレーズを入力します。すべての回答がワードクラウドに表示されます。"
 }

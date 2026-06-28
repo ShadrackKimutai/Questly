@@ -1,5 +1,5 @@
 import { EVENTS } from "@questly/common/constants"
-import type { Player, Quizz } from "@questly/common/types/game"
+import type { Player, Quiz } from "@questly/common/types/game"
 import type { Server, Socket } from "@questly/common/types/game/socket"
 import {
   STATUS,
@@ -43,7 +43,7 @@ class Game {
     { name: Status; data: StatusDataMap[Status] }
   >()
 
-  constructor(io: Server, socket: Socket, quizz: Quizz) {
+  constructor(io: Server, socket: Socket, quiz: Quiz) {
     const clientId = socket.handshake.auth.clientId as string
 
     this.io = io
@@ -64,7 +64,7 @@ class Game {
     )
 
     this.round = new RoundManager({
-      quizz,
+      quiz,
       players: this.playerManager,
       cooldown: this.cooldown,
       io,
@@ -86,7 +86,7 @@ class Game {
     })
 
     console.log(
-      `New game created: ${this.inviteCode} subject: ${quizz.subject}`,
+      `New game created: ${this.inviteCode} subject: ${quiz.subject}`,
     )
   }
 
@@ -134,6 +134,11 @@ class Game {
 
   changeMascot(socket: Socket, mascot: string) {
     this.playerManager.changeMascot(socket, mascot)
+  }
+
+  isLocked(): boolean {
+    const max = this.playerManager.getMaxPlayers()
+    return max !== null && this.playerManager.count() >= max
   }
 
   setMaxPlayers(socket: Socket, maxPlayers: number | null) {

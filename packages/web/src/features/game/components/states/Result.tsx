@@ -17,6 +17,23 @@ interface Props {
 const FeedbackPanel = ({ feedback }: { feedback: AnswerFeedback }) => {
   const { t } = useTranslation()
 
+  if (feedback.type === "wordcloud") {
+    return (
+      <div className="mt-2 w-full max-w-md space-y-2 rounded-2xl bg-black/30 p-4 backdrop-blur-sm">
+        <div className="flex items-start gap-3">
+          <div>
+            <p className="text-xs font-semibold tracking-wide text-white/50 uppercase">
+              {t("game:yourAnswer")}
+            </p>
+            <p className="text-sm font-semibold text-white/80">
+              {feedback.playerText ?? t("game:noAnswer")}
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   if (feedback.type === "shortanswer") {
     return (
       <div className="mt-2 w-full max-w-md space-y-2 rounded-2xl bg-black/30 p-4 backdrop-blur-sm">
@@ -158,7 +175,9 @@ const Result = ({
         </span>
       )}
 
-      {!correct && <FeedbackPanel feedback={answerFeedback} />}
+      {answerFeedback && (answerFeedback.type === "wordcloud" || !correct) && (
+        <FeedbackPanel feedback={answerFeedback} />
+      )}
     </section>
   )
 }

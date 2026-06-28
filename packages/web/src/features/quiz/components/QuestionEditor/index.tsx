@@ -1,8 +1,8 @@
 import background from "@questly/web/assets/background.png"
-import QuestionEditorAnswers from "@questly/web/features/quizz/components/QuestionEditor/QuestionEditorAnswers"
-import QuestionEditorConfig from "@questly/web/features/quizz/components/QuestionEditor/QuestionEditorConfig"
-import QuestionEditorMedia from "@questly/web/features/quizz/components/QuestionEditor/QuestionEditorMedia"
-import QuestionEditorTitle from "@questly/web/features/quizz/components/QuestionEditor/QuestionEditorTitle"
+import QuestionEditorAnswers from "@questly/web/features/quiz/components/QuestionEditor/QuestionEditorAnswers"
+import QuestionEditorConfig from "@questly/web/features/quiz/components/QuestionEditor/QuestionEditorConfig"
+import QuestionEditorMedia from "@questly/web/features/quiz/components/QuestionEditor/QuestionEditorMedia"
+import QuestionEditorTitle from "@questly/web/features/quiz/components/QuestionEditor/QuestionEditorTitle"
 
 const QuestionEditor = () => (
   <div className="flex flex-1 overflow-hidden">

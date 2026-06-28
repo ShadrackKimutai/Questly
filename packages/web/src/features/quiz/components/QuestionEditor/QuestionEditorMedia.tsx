@@ -1,17 +1,17 @@
 import type { QuestionMediaType } from "@questly/common/types/game"
-import { questionMediaValidator } from "@questly/common/validators/quizz"
+import { questionMediaValidator } from "@questly/common/validators/quiz"
 import Button from "@questly/web/components/Button"
 import Card from "@questly/web/components/Card"
 import Input from "@questly/web/components/Input"
 import QuestionMedia from "@questly/web/components/QuestionMedia"
-import { useQuizzEditor } from "@questly/web/features/quizz/contexts/quizz-editor-context"
+import { useQuizEditor } from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import { Image, ImageOff, Music, Video } from "lucide-react"
 import { type ChangeEvent } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
 const QuestionEditorMedia = () => {
-  const { updateQuestion, currentIndex, currentQuestion } = useQuizzEditor()
+  const { updateQuestion, currentIndex, currentQuestion } = useQuizEditor()
   const questionMedia = currentQuestion.media
   const { t } = useTranslation()
 
@@ -52,12 +52,12 @@ const QuestionEditorMedia = () => {
         <Card className="my-auto flex max-h-100 w-full max-w-xl flex-1 flex-col items-center justify-center gap-2 bg-white">
           <ImageOff className="size-16 stroke-gray-600" />
           <p className="text-center text-sm text-gray-600">
-            {t("quizz:question.addMediaHint")}
+            {t("quiz:question.addMediaHint")}
           </p>
           <Input
             variant="sm"
             className="w-full max-w-md"
-            placeholder={t("quizz:question.mediaUrlPlaceholder")}
+            placeholder={t("quiz:question.mediaUrlPlaceholder")}
             value={questionMedia?.url ?? ""}
             onChange={handleChangeMedia}
           />
@@ -68,7 +68,7 @@ const QuestionEditorMedia = () => {
             >
               <div className="flex items-center gap-1.5">
                 <Image className="size-6" />
-                <p>{t("quizz:question.media.image")}</p>
+                <p>{t("quiz:question.media.image")}</p>
               </div>
             </Button>
             <Button
@@ -77,7 +77,7 @@ const QuestionEditorMedia = () => {
             >
               <div className="flex items-center gap-1.5">
                 <Video className="size-6" />
-                <p>{t("quizz:question.media.video")}</p>
+                <p>{t("quiz:question.media.video")}</p>
               </div>
             </Button>
             <Button
@@ -86,7 +86,7 @@ const QuestionEditorMedia = () => {
             >
               <div className="flex items-center gap-1.5">
                 <Music className="size-6" />
-                <p>{t("quizz:question.media.audio")}</p>
+                <p>{t("quiz:question.media.audio")}</p>
               </div>
             </Button>
           </div>

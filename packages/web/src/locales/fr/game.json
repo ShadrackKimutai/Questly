@@ -32,5 +32,8 @@
   "yourAnswer": "Your answer",
   "correctAnswer": "Correct answer",
   "correctAnswers": "Correct answers",
-  "missed": "missed"
+  "missed": "missed",
+  "noAnswer": "Pas de réponse",
+  "typeYourWord": "Écris un mot ou une phrase...",
+  "wordcloudHint": "Écris n'importe quel mot ou phrase – toutes les réponses comptent !"
 }

@@ -28,7 +28,8 @@ const ManagerGamePage = () => {
     useManagerStore()
   const { setQuestionStates } = useQuestionStore()
   const { t } = useTranslation()
-  const [gameResult, setGameResult] = useState<GameResult | null>(null)
+  const [pendingResult, setPendingResult] = useState<GameResult | null>(null)
+  const [showResults, setShowResults] = useState(false)
 
   useEvent(EVENTS.GAME.STATUS, ({ name, data }) => {
     if (name in GAME_STATE_COMPONENTS_MANAGER) {
@@ -43,7 +44,7 @@ const ManagerGamePage = () => {
   useEvent(
     EVENTS.RESULTS.DATA,
     useCallback((data: GameResult) => {
-      setGameResult(data)
+      setPendingResult(data)
     }, []),
   )
 
@@ -75,8 +76,9 @@ const ManagerGamePage = () => {
     toast.error(t(message))
   })
 
-  const handleCloseResults = () => {
-    setGameResult(null)
+  const exitGame = () => {
+    setShowResults(false)
+    setPendingResult(null)
     navigate({ to: "/manager/config" })
     reset()
     setQuestionStates(null)
@@ -88,12 +90,10 @@ const ManagerGamePage = () => {
     }
 
     if (status.name === STATUS.FINISHED) {
-      if (gameResult) {
-        handleCloseResults()
+      if (showResults) {
+        exitGame()
       } else {
-        navigate({ to: "/manager/config" })
-        reset()
-        setQuestionStates(null)
+        setShowResults(true)
       }
 
       return
@@ -134,8 +134,8 @@ const ManagerGamePage = () => {
         {CurrentComponent && <CurrentComponent data={status.data as never} />}
       </GameWrapper>
 
-      {gameResult && (
-        <ResultModal result={gameResult} onClose={handleCloseResults} />
+      {showResults && pendingResult && (
+        <ResultModal result={pendingResult} onClose={exitGame} />
       )}
     </>
   )

@@ -4,9 +4,9 @@ import Card from "@questly/web/components/Card"
 import LanguageSwitcher from "@questly/web/components/LanguageSwitcher"
 import { useSocket } from "@questly/web/features/game/contexts/socket-context"
 import { useManagerStore } from "@questly/web/features/game/stores/manager"
-import ConfigManageQuizz from "@questly/web/features/manager/components/configurations/ConfigManageQuizz"
+import ConfigManageQuiz from "@questly/web/features/manager/components/configurations/ConfigManageQuiz"
 import ConfigResults from "@questly/web/features/manager/components/configurations/ConfigResults"
-import ConfigSelectQuizz from "@questly/web/features/manager/components/configurations/ConfigSelectQuizz"
+import ConfigSelectQuiz from "@questly/web/features/manager/components/configurations/ConfigSelectQuiz"
 import ConfigTabButton from "@questly/web/features/manager/components/configurations/ConfigTabButton"
 import { ConfigProvider } from "@questly/web/features/manager/contexts/config-context"
 import { LogOut } from "lucide-react"
@@ -16,11 +16,11 @@ import { useTranslation } from "react-i18next"
 const tabs = [
   {
     nameKey: "manager:tabs.play",
-    component: ConfigSelectQuizz,
+    component: ConfigSelectQuiz,
   },
   {
-    nameKey: "manager:tabs.quizz",
-    component: ConfigManageQuizz,
+    nameKey: "manager:tabs.quiz",
+    component: ConfigManageQuiz,
   },
   {
     nameKey: "manager:tabs.results",

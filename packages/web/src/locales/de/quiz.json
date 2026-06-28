@@ -13,7 +13,8 @@
       "noTimeLimitHint": "Punkte werden nach Antwortreihenfolge vergeben. Es gibt kein Zeitlimit zum Antworten.",
       "questionDisplay": "Frageanzeige",
       "questionDisplayHint": "Dauer bevor Antworten erscheinen",
-      "timings": "Zeiten"
+      "timings": "Zeiten",
+      "typeWordCloud": "Wortwolke"
     },
     "deleteQuestion": "Frage löschen",
     "deleteQuestionConfirm": "Möchtest du diese Frage wirklich löschen?",
@@ -25,7 +26,8 @@
     "mediaUrlPlaceholder": "URL eingeben...",
     "placeholder": "Beginne deine Frage zu tippen..."
   },
-  "quizzSaved": "Quiz erfolgreich gespeichert",
-  "quizzUpdated": "Quiz erfolgreich aktualisiert",
-  "titleQuizzPlaceholder": "Quiz-Titel..."
+  "quizSaved": "Quiz erfolgreich gespeichert",
+  "quizUpdated": "Quiz erfolgreich aktualisiert",
+  "titleQuizPlaceholder": "Quiz-Titel...",
+  "wordcloudHint": "Spieler tippen freie Wörter oder Phrasen. Alle Antworten werden in einer Wortwolke angezeigt."
 }

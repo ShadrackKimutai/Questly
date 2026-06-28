@@ -40,5 +40,8 @@
   "yourAnswer": "Your answer",
   "correctAnswer": "Correct answer",
   "correctAnswers": "Correct answers",
-  "missed": "missed"
+  "missed": "missed",
+  "noAnswer": "No answer",
+  "typeYourWord": "Type a word or phrase...",
+  "wordcloudHint": "Type any word or phrase — all responses count!"
 }

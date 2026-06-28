@@ -1,14 +1,14 @@
 import { EVENTS } from "@questly/common/constants"
 import type { Socket } from "@questly/common/types/game/socket"
 import type { SocketContext } from "@questly/socket/handlers/types"
-import { getQuizzMeta, getResultsMeta } from "@questly/socket/services/config"
+import { getQuizMeta, getResultsMeta } from "@questly/socket/services/config"
 
 const getClientId = (socket: SocketContext["socket"]) =>
   socket.handshake.auth.clientId as string
 
 export const emitConfig = (socket: SocketContext["socket"]) =>
   socket.emit(EVENTS.MANAGER.CONFIG, {
-    quizz: getQuizzMeta(),
+    quiz: getQuizMeta(),
     results: getResultsMeta(),
   })
 

@@ -19,7 +19,8 @@
       "typeSingle": "Moja",
       "typeMultiple": "Nyingi",
       "typeTrueFalse": "Kweli / Uongo",
-      "typeShortAnswer": "Jibu Fupi"
+      "typeShortAnswer": "Jibu Fupi",
+      "typeWordCloud": "Wingu la Maneno"
     },
     "deleteQuestion": "Futa swali",
     "deleteQuestionConfirm": "Je, una uhakika unataka kufuta swali hili?",
@@ -31,7 +32,8 @@
     "mediaUrlPlaceholder": "Ingiza URL...",
     "placeholder": "Anza kuandika swali lako..."
   },
-  "quizzSaved": "Maswali yamehifadhiwa",
-  "quizzUpdated": "Maswali yamefanyiwa mabadiliko",
-  "titleQuizzPlaceholder": "Kichwa cha maswali..."
+  "quizSaved": "Maswali yamehifadhiwa",
+  "quizUpdated": "Maswali yamefanyiwa mabadiliko",
+  "titleQuizPlaceholder": "Kichwa cha maswali...",
+  "wordcloudHint": "Wachezaji wanaandika maneno au sentensi kwa uhuru. Majibu yote yanaonyeshwa kwenye wingu la maneno."
 }

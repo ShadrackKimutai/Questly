@@ -13,7 +13,8 @@
       "noTimeLimitHint": "I punti vengono assegnati in base all'ordine di risposta. Non c'è limite di tempo per rispondere.",
       "questionDisplay": "Visualizzazione domanda",
       "questionDisplayHint": "Durata prima che appaiano le risposte",
-      "timings": "Tempi"
+      "timings": "Tempi",
+      "typeWordCloud": "Nuvola di parole"
     },
     "deleteQuestion": "Elimina domanda",
     "deleteQuestionConfirm": "Sei sicuro di voler eliminare questa domanda?",
@@ -25,7 +26,8 @@
     "mediaUrlPlaceholder": "Inserisci URL...",
     "placeholder": "Inizia a scrivere la tua domanda..."
   },
-  "quizzSaved": "Quiz salvato con successo",
-  "quizzUpdated": "Quiz aggiornato con successo",
-  "titleQuizzPlaceholder": "Titolo del quiz..."
+  "quizSaved": "Quiz salvato con successo",
+  "quizUpdated": "Quiz aggiornato con successo",
+  "titleQuizPlaceholder": "Titolo del quiz...",
+  "wordcloudHint": "I giocatori digitano parole o frasi libere. Tutte le risposte vengono mostrate in una nuvola di parole."
 }

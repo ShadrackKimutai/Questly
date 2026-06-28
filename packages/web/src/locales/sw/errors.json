@@ -24,7 +24,7 @@
     "description": "Ukurasa unaotafuta haupo.",
     "title": "Ukurasa haukupatikana"
   },
-  "quizz": {
+  "quiz": {
     "answerEmpty": "Jibu haliwezi kuwa tupu",
     "failedToDelete": "Imeshindwa kufuta maswali",
     "failedToSave": "Maswali hayakamiliki, hakikisha maswali yote yana kichwa na jibu moja sahihi angalau",

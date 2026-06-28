@@ -24,7 +24,7 @@
     "description": "La pagina che cerchi non esiste.",
     "title": "Pagina non trovata"
   },
-  "quizz": {
+  "quiz": {
     "answerEmpty": "Una risposta non può essere vuota",
     "failedToDelete": "Impossibile eliminare il quiz",
     "failedToSave": "Il quiz è incompleto, assicurati che tutte le domande abbiano un titolo e almeno una risposta corretta",

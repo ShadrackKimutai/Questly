@@ -2,7 +2,7 @@
   "configurationsTitle": "Configuraciones",
   "logout": "Cerrar sesión",
   "passwordPlaceholder": "Contraseña",
-  "quizz": {
+  "quiz": {
     "create": "Crear cuestionario",
     "delete": "Eliminar cuestionario",
     "deleteConfirm": "¿Estás seguro de que quieres eliminar \"{{name}}\"? Esta acción no se puede deshacer.",
@@ -35,11 +35,12 @@
       "points": "Puntos"
     },
     "playerCount": "{{count}} jugador(es)",
-    "timeLimitSuffix": "s de tiempo límite"
+    "timeLimitSuffix": "s de tiempo límite",
+    "viewResults": "View Results"
   },
   "tabs": {
     "play": "Jugar",
-    "quizz": "Cuestionario",
+    "quiz": "Cuestionario",
     "results": "Resultados"
   }
 }

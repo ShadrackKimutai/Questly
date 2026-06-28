@@ -2,7 +2,7 @@ import type { ManagerConfig } from "@questly/common/types/manager"
 import { createContext, useContext, type ReactNode } from "react"
 
 const ConfigContext = createContext<ManagerConfig>({
-  quizz: [],
+  quiz: [],
   results: [],
 })
 

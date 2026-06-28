@@ -2,13 +2,13 @@ import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
 } from "@questly/web/features/game/utils/constants"
-import { useQuizzEditor } from "@questly/web/features/quizz/contexts/quizz-editor-context"
+import { useQuizEditor } from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import clsx from "clsx"
-import { Check, Minus, Plus } from "lucide-react"
+import { Check, Cloud, Minus, Plus } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const QuestionEditorAnswers = () => {
-  const { currentQuestion, currentIndex, updateQuestion } = useQuizzEditor()
+  const { currentQuestion, currentIndex, updateQuestion } = useQuizEditor()
   const { t } = useTranslation()
 
   const updateAnswer = (index: number, value: string) => {
@@ -43,6 +43,7 @@ const QuestionEditorAnswers = () => {
   const isMultiple = currentQuestion.type === "multiple"
   const isTrueFalse = currentQuestion.type === "truefalse"
   const isShortAnswer = currentQuestion.type === "shortanswer"
+  const isWordCloud = currentQuestion.type === "wordcloud"
 
   const updateTextSolution = (index: number, value: string) => {
     const next = [...(currentQuestion.textSolutions ?? [])]
@@ -78,6 +79,17 @@ const QuestionEditorAnswers = () => {
     }
   }
 
+  if (isWordCloud) {
+    return (
+      <div className="z-10 flex flex-col items-center justify-center gap-3 rounded-2xl bg-white/10 px-6 py-8 text-center backdrop-blur-sm">
+        <Cloud className="size-10 text-white/60" />
+        <p className="text-base font-semibold text-white/80">
+          {t("quiz:wordcloudHint")}
+        </p>
+      </div>
+    )
+  }
+
   if (isShortAnswer) {
     const textSolutions = currentQuestion.textSolutions ?? [""]
 
@@ -85,7 +97,7 @@ const QuestionEditorAnswers = () => {
       <div className="z-10 flex flex-col gap-3">
         <div className="flex items-center justify-between px-1">
           <div className="rounded-lg bg-white px-2 py-1 text-sm font-semibold text-gray-500">
-            {t("quizz:acceptedAnswers")}
+            {t("quiz:acceptedAnswers")}
           </div>
           <button
             type="button"
@@ -103,7 +115,7 @@ const QuestionEditorAnswers = () => {
               <Check className="size-4 shrink-0 text-white" />
               <input
                 className="flex-1 bg-transparent font-semibold text-white placeholder-white/70 outline-none"
-                placeholder={t("quizz:addAnswerPlaceholder")}
+                placeholder={t("quiz:addAnswerPlaceholder")}
                 value={sol}
                 onChange={(e) => updateTextSolution(i, e.target.value)}
               />
@@ -130,7 +142,7 @@ const QuestionEditorAnswers = () => {
         <div className="flex items-center justify-between px-1">
           <div className="rounded-lg bg-white px-2 py-1 text-sm font-semibold text-gray-500">
             {currentQuestion.answers.length}
-            {t("quizz:answersCountSuffix")}
+            {t("quiz:answersCountSuffix")}
           </div>
           <div className="flex gap-2">
             <button
@@ -173,7 +185,7 @@ const QuestionEditorAnswers = () => {
               <div className="flex flex-1 items-center justify-between gap-1.5 drop-shadow-md">
                 <input
                   className="w-full bg-transparent font-semibold text-white placeholder-white/70 outline-none read-only:cursor-default"
-                  placeholder={t("quizz:addAnswerPlaceholder")}
+                  placeholder={t("quiz:addAnswerPlaceholder")}
                   value={answer}
                   readOnly={isTrueFalse}
                   onChange={(e) => updateAnswer(i, e.target.value)}

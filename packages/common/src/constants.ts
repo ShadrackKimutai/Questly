@@ -48,15 +48,15 @@ export const EVENTS = {
     LOGOUT: "manager:logout",
     UNAUTHORIZED: "manager:unauthorized",
   },
-  QUIZZ: {
-    GET: "quizz:get",
-    DATA: "quizz:data",
-    SAVE: "quizz:save",
-    SAVE_SUCCESS: "quizz:saveSuccess",
-    UPDATE: "quizz:update",
-    UPDATE_SUCCESS: "quizz:updateSuccess",
-    DELETE: "quizz:delete",
-    ERROR: "quizz:error",
+  QUIZ: {
+    GET: "quiz:get",
+    DATA: "quiz:data",
+    SAVE: "quiz:save",
+    SAVE_SUCCESS: "quiz:saveSuccess",
+    UPDATE: "quiz:update",
+    UPDATE_SUCCESS: "quiz:updateSuccess",
+    DELETE: "quiz:delete",
+    ERROR: "quiz:error",
   },
   RESULTS: {
     GET: "results:get",
@@ -80,8 +80,8 @@ export const MEDIA_TYPES = {
   AUDIO: "audio",
 } as const
 
-export const EXAMPLE_QUIZZ = {
-  subject: "Example Quizz",
+export const EXAMPLE_QUIZ = {
+  subject: "Example Quiz",
   questions: [
     {
       question: "What is good answer ?",

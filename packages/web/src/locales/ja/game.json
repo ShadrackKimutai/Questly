@@ -32,5 +32,8 @@
   "yourAnswer": "Your answer",
   "correctAnswer": "Correct answer",
   "correctAnswers": "Correct answers",
-  "missed": "missed"
+  "missed": "missed",
+  "noAnswer": "回答なし",
+  "typeYourWord": "単語やフレーズを入力...",
+  "wordcloudHint": "どんな単語やフレーズでもOK — すべての回答が有効です！"
 }

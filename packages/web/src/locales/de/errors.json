@@ -24,7 +24,7 @@
     "description": "Die gesuchte Seite existiert nicht.",
     "title": "Seite nicht gefunden"
   },
-  "quizz": {
+  "quiz": {
     "answerEmpty": "Eine Antwort darf nicht leer sein",
     "failedToDelete": "Quiz konnte nicht gelöscht werden",
     "failedToSave": "Quiz ist unvollständig, stelle sicher, dass alle Fragen einen Titel und mindestens eine richtige Antwort haben",

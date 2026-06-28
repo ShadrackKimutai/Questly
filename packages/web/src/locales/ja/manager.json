@@ -2,7 +2,7 @@
   "configurationsTitle": "設定",
   "logout": "ログアウト",
   "passwordPlaceholder": "パスワード",
-  "quizz": {
+  "quiz": {
     "create": "クイズを作成",
     "delete": "クイズを削除",
     "deleteConfirm": "「{{name}}」を削除してもよろしいですか？この操作は元に戻せません。",
@@ -35,11 +35,12 @@
       "points": "ポイント"
     },
     "playerCount": "{{count}}人",
-    "timeLimitSuffix": "秒制限"
+    "timeLimitSuffix": "秒制限",
+    "viewResults": "View Results"
   },
   "tabs": {
     "play": "プレイ",
-    "quizz": "クイズ",
+    "quiz": "クイズ",
     "results": "結果"
   }
 }

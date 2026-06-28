@@ -2,7 +2,7 @@
   "configurationsTitle": "Mipangilio",
   "logout": "Toka",
   "passwordPlaceholder": "Nenosiri",
-  "quizz": {
+  "quiz": {
     "create": "Unda Maswali",
     "delete": "Futa maswali",
     "deleteConfirm": "Je, una uhakika unataka kufuta \"{{name}}\"? Kitendo hiki hakiwezi kutenduliwa.",
@@ -35,11 +35,12 @@
       "points": "Pointi"
     },
     "playerCount": "wachezaji {{count}}",
-    "timeLimitSuffix": "s kikomo cha muda"
+    "timeLimitSuffix": "s kikomo cha muda",
+    "viewResults": "View Results"
   },
   "tabs": {
     "play": "Cheza",
-    "quizz": "Maswali",
+    "quiz": "Maswali",
     "results": "Matokeo"
   }
 }

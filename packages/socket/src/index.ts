@@ -1,7 +1,7 @@
 import type { Server } from "@questly/common/types/game/socket"
 import { gameSocketHandlers } from "@questly/socket/handlers/game"
 import { managerSocketHandlers } from "@questly/socket/handlers/manager"
-import { quizzSocketHandlers } from "@questly/socket/handlers/quizz"
+import { quizSocketHandlers } from "@questly/socket/handlers/quiz"
 import { resultsSocketHandlers } from "@questly/socket/handlers/results"
 import type { SocketHandler } from "@questly/socket/handlers/types"
 import { initConfig } from "@questly/socket/services/config"
@@ -20,7 +20,7 @@ io.listen(WS_PORT)
 
 const socketHandlers: SocketHandler[] = [
   managerSocketHandlers,
-  quizzSocketHandlers,
+  quizSocketHandlers,
   gameSocketHandlers,
   resultsSocketHandlers,
 ]

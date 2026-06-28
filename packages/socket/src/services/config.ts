@@ -1,10 +1,10 @@
-import { EXAMPLE_QUIZZ } from "@questly/common/constants"
+import { EXAMPLE_QUIZ } from "@questly/common/constants"
 import type {
   GameResult,
   GameResultMeta,
-  QuizzWithId,
+  QuizWithId,
 } from "@questly/common/types/game"
-import { quizzValidator } from "@questly/common/validators/quizz"
+import { quizValidator } from "@questly/common/validators/quiz"
 import { normalizeFilename } from "@questly/socket/utils/game"
 import fs from "fs"
 import { resolve } from "path"
@@ -42,14 +42,14 @@ export const initConfig = () => {
     )
   }
 
-  const isQuizzExists = fs.existsSync(getPath("quizz"))
+  const isQuizExists = fs.existsSync(getPath("quiz"))
 
-  if (!isQuizzExists) {
-    fs.mkdirSync(getPath("quizz"))
+  if (!isQuizExists) {
+    fs.mkdirSync(getPath("quiz"))
 
     fs.writeFileSync(
-      getPath("quizz/example.json"),
-      JSON.stringify(EXAMPLE_QUIZZ, null, 2),
+      getPath("quiz/example.json"),
+      JSON.stringify(EXAMPLE_QUIZ, null, 2),
     )
   }
 }
@@ -72,28 +72,28 @@ export const getGameConfig = (): GameConfig => {
   return {} as GameConfig
 }
 
-export const getQuizzMeta = () =>
-  getQuizz().map(({ id, subject }) => ({ id, subject }))
+export const getQuizMeta = () =>
+  getQuiz().map(({ id, subject }) => ({ id, subject }))
 
-export const getQuizzById = (id: string) => {
-  const filePath = getPath(`quizz/${id}.json`)
+export const getQuizById = (id: string) => {
+  const filePath = getPath(`quiz/${id}.json`)
 
   if (!fs.existsSync(filePath)) {
-    throw new Error(`Quizz "${id}" not found`)
+    throw new Error(`Quiz "${id}" not found`)
   }
 
   const data = fs.readFileSync(filePath, "utf-8")
-  const result = quizzValidator.safeParse(JSON.parse(data))
+  const result = quizValidator.safeParse(JSON.parse(data))
 
   if (!result.success) {
-    throw new Error(`Invalid quizz "${id}"`)
+    throw new Error(`Invalid quiz "${id}"`)
   }
 
   return { id, ...result.data }
 }
 
-export const getQuizz = () => {
-  const isExists = fs.existsSync(getPath("quizz"))
+export const getQuiz = () => {
+  const isExists = fs.existsSync(getPath("quiz"))
 
   if (!isExists) {
     return []
@@ -101,16 +101,16 @@ export const getQuizz = () => {
 
   try {
     const files = fs
-      .readdirSync(getPath("quizz"))
+      .readdirSync(getPath("quiz"))
       .filter((file) => file.endsWith(".json"))
 
-    const quizz: QuizzWithId[] = files.flatMap((file) => {
-      const data = fs.readFileSync(getPath(`quizz/${file}`), "utf-8")
+    const quiz: QuizWithId[] = files.flatMap((file) => {
+      const data = fs.readFileSync(getPath(`quiz/${file}`), "utf-8")
       const id = file.replace(".json", "")
-      const result = quizzValidator.safeParse(JSON.parse(data))
+      const result = quizValidator.safeParse(JSON.parse(data))
 
       if (!result.success) {
-        console.warn(`Invalid quizz config "${file}":`, result.error.issues)
+        console.warn(`Invalid quiz config "${file}":`, result.error.issues)
 
         return []
       }
@@ -118,25 +118,25 @@ export const getQuizz = () => {
       return [{ id, ...result.data }]
     })
 
-    return quizz
+    return quiz
   } catch (error) {
-    console.error("Failed to read quizz config:", error)
+    console.error("Failed to read quiz config:", error)
 
     return []
   }
 }
 
-export const updateQuizz = (id: string, data: unknown): { id: string } => {
-  const result = quizzValidator.safeParse(data)
+export const updateQuiz = (id: string, data: unknown): { id: string } => {
+  const result = quizValidator.safeParse(data)
 
   if (!result.success) {
     throw new Error(result.error.issues[0].message)
   }
 
-  const oldPath = getPath(`quizz/${id}.json`)
+  const oldPath = getPath(`quiz/${id}.json`)
 
   if (!fs.existsSync(oldPath)) {
-    throw new Error(`Quizz "${id}" not found`)
+    throw new Error(`Quiz "${id}" not found`)
   }
 
   fs.writeFileSync(oldPath, JSON.stringify(result.data, null, 2))
@@ -144,11 +144,11 @@ export const updateQuizz = (id: string, data: unknown): { id: string } => {
   return { id }
 }
 
-export const deleteQuizz = (id: string): void => {
-  const filePath = getPath(`quizz/${id}.json`)
+export const deleteQuiz = (id: string): void => {
+  const filePath = getPath(`quiz/${id}.json`)
 
   if (!fs.existsSync(filePath)) {
-    throw new Error(`Quizz "${id}" not found`)
+    throw new Error(`Quiz "${id}" not found`)
   }
 
   fs.unlinkSync(filePath)
@@ -228,15 +228,15 @@ export const deleteResult = (id: string): void => {
   fs.unlinkSync(filePath)
 }
 
-export const saveQuizz = (data: unknown): { id: string } => {
-  const result = quizzValidator.safeParse(data)
+export const saveQuiz = (data: unknown): { id: string } => {
+  const result = quizValidator.safeParse(data)
 
   if (!result.success) {
     throw new Error(result.error.issues[0].message)
   }
 
   const id = normalizeFilename(result.data.subject)
-  const filePath = getPath(`quizz/${id}.json`)
+  const filePath = getPath(`quiz/${id}.json`)
 
   fs.writeFileSync(filePath, JSON.stringify(result.data, null, 2))
 

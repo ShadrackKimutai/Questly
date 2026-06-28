@@ -1,4 +1,4 @@
-import type { Question, QuestionType, QuizzWithId } from "@questly/common/types/game"
+import type { Question, QuestionType, QuizWithId } from "@questly/common/types/game"
 import {
   createContext,
   useContext,
@@ -11,8 +11,8 @@ export type QuestionWithId = Question & {
   id: string
 }
 
-interface QuizzEditorContextType {
-  quizzId: string | null
+interface QuizEditorContextType {
+  quizId: string | null
   subject: string
   setSubject: (_subject: string) => void
   questions: QuestionWithId[]
@@ -25,7 +25,7 @@ interface QuizzEditorContextType {
   updateQuestion: (_index: number, _updates: Partial<QuestionWithId>) => void
 }
 
-const QuizzEditorContext = createContext<QuizzEditorContextType | null>(null)
+const QuizEditorContext = createContext<QuizEditorContextType | null>(null)
 
 const defaultQuestion = (): QuestionWithId => ({
   id: uuid(),
@@ -50,16 +50,16 @@ const toQuestionWithId = (q: Question): QuestionWithId => ({
   id: uuid(),
 })
 
-type QuizzEditorProviderProps = PropsWithChildren<{
-  initialData?: QuizzWithId
+type QuizEditorProviderProps = PropsWithChildren<{
+  initialData?: QuizWithId
 }>
 
-export const QuizzEditorProvider = ({
+export const QuizEditorProvider = ({
   children,
   initialData,
-}: QuizzEditorProviderProps) => {
+}: QuizEditorProviderProps) => {
   const [subject, setSubject] = useState(
-    initialData?.subject ?? "Untitled Quizz",
+    initialData?.subject ?? "Untitled Quiz",
   )
   const [questions, setQuestions] = useState<QuestionWithId[]>(
     initialData
@@ -103,9 +103,9 @@ export const QuizzEditorProvider = ({
   }
 
   return (
-    <QuizzEditorContext.Provider
+    <QuizEditorContext.Provider
       value={{
-        quizzId: initialData?.id ?? null,
+        quizId: initialData?.id ?? null,
         subject,
         setSubject,
         questions,
@@ -119,15 +119,15 @@ export const QuizzEditorProvider = ({
       }}
     >
       {children}
-    </QuizzEditorContext.Provider>
+    </QuizEditorContext.Provider>
   )
 }
 
-export const useQuizzEditor = () => {
-  const ctx = useContext(QuizzEditorContext)
+export const useQuizEditor = () => {
+  const ctx = useContext(QuizEditorContext)
 
   if (!ctx) {
-    throw new Error("useQuizzEditor must be used inside QuizzEditorProvider")
+    throw new Error("useQuizEditor must be used inside QuizEditorProvider")
   }
 
   return ctx

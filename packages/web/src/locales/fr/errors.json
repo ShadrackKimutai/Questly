@@ -24,14 +24,14 @@
     "description": "La page que vous recherchez n'existe pas.",
     "title": "Page introuvable"
   },
-  "quizz": {
+  "quiz": {
     "answerEmpty": "Une réponse ne peut pas être vide",
-    "failedToDelete": "Suppression du quizz a echoué",
-    "failedToSave": "Le quizz est incomplet, vérifiez que chaque question a un titre et au moins une bonne réponse",
-    "failedToUpdate": "La mise à jour du quizz a echoué",
+    "failedToDelete": "Suppression du quiz a echoué",
+    "failedToSave": "Le quiz est incomplet, vérifiez que chaque question a un titre et au moins une bonne réponse",
+    "failedToUpdate": "La mise à jour du quiz a echoué",
     "invalidMediaUrl": "L'URL du média doit être une URL valide",
-    "noQuestions": "Un quizz doit avoir au moins une question",
-    "notFound": "Quizz introuvable",
+    "noQuestions": "Un quiz doit avoir au moins une question",
+    "notFound": "Quiz introuvable",
     "questionEmpty": "La question ne peut pas être vide",
     "subjectEmpty": "Le sujet ne peut pas être vide",
     "tooFewAnswers": "Une question doit avoir au moins 2 réponses",

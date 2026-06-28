@@ -2,16 +2,16 @@
   "configurationsTitle": "Configurations",
   "logout": "Logout",
   "passwordPlaceholder": "Password",
-  "quizz": {
-    "create": "Create Quizz",
-    "delete": "Delete quizz",
+  "quiz": {
+    "create": "Create Quiz",
+    "delete": "Delete quiz",
     "deleteConfirm": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
-    "deleted": "Quizz deleted",
-    "import": "Import quizz from JSON",
-    "none": "No quizz created yet",
-    "notFound": "No quizz found",
-    "pleaseCreate": "Please create a quizz first",
-    "pleaseSelect": "Please select a quizz",
+    "deleted": "Quiz deleted",
+    "import": "Import quiz from JSON",
+    "none": "No quiz created yet",
+    "notFound": "No quiz found",
+    "pleaseCreate": "Please create a quiz first",
+    "pleaseSelect": "Please select a quiz",
     "startGame": "Start game"
   },
   "result": {
@@ -34,6 +34,7 @@
       "player": "Player",
       "points": "Points"
     },
+    "viewResults": "View Results",
     "playerCount": "{{count}} player(s)",
     "timeLimitSuffix": "s time limit",
     "backToOverview": "Back to overview",
@@ -55,7 +56,7 @@
   },
   "tabs": {
     "play": "Play",
-    "quizz": "Quizz",
+    "quiz": "Quiz",
     "results": "Results"
   }
 }

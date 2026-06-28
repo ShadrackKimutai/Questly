@@ -24,14 +24,14 @@
     "description": "The page you are looking for does not exist.",
     "title": "Page not found"
   },
-  "quizz": {
+  "quiz": {
     "answerEmpty": "An answer cannot be empty",
-    "failedToDelete": "Failed to delete quizz",
-    "failedToSave": "Quizz is incomplete, make sure all questions have a title and at least one correct answer",
-    "failedToUpdate": "Failed to update quizz",
+    "failedToDelete": "Failed to delete quiz",
+    "failedToSave": "Quiz is incomplete, make sure all questions have a title and at least one correct answer",
+    "failedToUpdate": "Failed to update quiz",
     "invalidMediaUrl": "Media URL must be a valid URL",
-    "noQuestions": "A quizz must have at least one question",
-    "notFound": "Quizz not found",
+    "noQuestions": "A quiz must have at least one question",
+    "notFound": "Quiz not found",
     "questionEmpty": "Question cannot be empty",
     "subjectEmpty": "Subject cannot be empty",
     "tooFewAnswers": "A question must have at least 2 answers",

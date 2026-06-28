@@ -17,11 +17,11 @@ import {
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import Button from "@questly/web/components/Button"
-import QuizzEditorCard from "@questly/web/features/quizz/components/QuizzEditorCard"
+import QuizEditorCard from "@questly/web/features/quiz/components/QuizEditorCard"
 import {
-  useQuizzEditor,
+  useQuizEditor,
   type QuestionWithId,
-} from "@questly/web/features/quizz/contexts/quizz-editor-context"
+} from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import clsx from "clsx"
 import { Plus } from "lucide-react"
 import { useRef } from "react"
@@ -61,7 +61,7 @@ const SortableItem = ({
       {...listeners}
       className={clsx(isDragging && "shadow-lg")}
     >
-      <QuizzEditorCard
+      <QuizEditorCard
         question={q}
         index={index}
         isActive={isActive}
@@ -73,7 +73,7 @@ const SortableItem = ({
   )
 }
 
-const QuizzEditorSidebar = () => {
+const QuizEditorSidebar = () => {
   const {
     questions,
     currentIndex,
@@ -81,7 +81,7 @@ const QuizzEditorSidebar = () => {
     addQuestion,
     removeQuestion,
     reorderQuestions,
-  } = useQuizzEditor()
+  } = useQuizEditor()
   const { t } = useTranslation()
 
   const isDragging = useRef(false)
@@ -149,10 +149,10 @@ const QuizzEditorSidebar = () => {
         className="bg text-md mt-1 mb-8 flex items-center justify-center gap-1 bg-gray-200 text-gray-600"
       >
         <Plus className="size-6" />
-        {t("quizz:addQuestion")}
+        {t("quiz:addQuestion")}
       </Button>
     </aside>
   )
 }
 
-export default QuizzEditorSidebar
+export default QuizEditorSidebar

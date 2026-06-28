@@ -2,7 +2,7 @@
   "configurationsTitle": "Konfigurationen",
   "logout": "Abmelden",
   "passwordPlaceholder": "Passwort",
-  "quizz": {
+  "quiz": {
     "create": "Quiz erstellen",
     "delete": "Quiz löschen",
     "deleteConfirm": "Möchtest du \"{{name}}\" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -35,11 +35,12 @@
       "points": "Punkte"
     },
     "playerCount": "{{count}} Spieler",
-    "timeLimitSuffix": "s Zeitlimit"
+    "timeLimitSuffix": "s Zeitlimit",
+    "viewResults": "View Results"
   },
   "tabs": {
     "play": "Spielen",
-    "quizz": "Quiz",
+    "quiz": "Quiz",
     "results": "Ergebnisse"
   }
 }

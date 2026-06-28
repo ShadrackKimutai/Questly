@@ -12,20 +12,20 @@ import { type ChangeEvent, useRef } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
-const ConfigManageQuizz = () => {
-  const { quizz } = useConfig()
+const ConfigManageQuiz = () => {
+  const { quiz } = useConfig()
   const { socket } = useSocket()
   const navigate = useNavigate()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { t } = useTranslation()
 
-  useEvent(EVENTS.QUIZZ.ERROR, (message) => {
+  useEvent(EVENTS.QUIZ.ERROR, (message) => {
     toast.error(t(message))
   })
 
   const handleDelete = (id: string) => () => {
-    socket.emit(EVENTS.QUIZZ.DELETE, id)
-    toast.success(t("manager:quizz.deleted"))
+    socket.emit(EVENTS.QUIZ.DELETE, id)
+    toast.success(t("manager:quiz.deleted"))
   }
 
   const handleImport = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ const ConfigManageQuizz = () => {
     reader.onload = (event) => {
       try {
         const data: unknown = JSON.parse(event.target?.result as string)
-        socket.emit(EVENTS.QUIZZ.SAVE, data)
+        socket.emit(EVENTS.QUIZ.SAVE, data)
       } catch {
         toast.error("Invalid JSON file")
       }
@@ -55,14 +55,14 @@ const ConfigManageQuizz = () => {
       <div className="mb-4 flex shrink-0 gap-2">
         <Button
           className="flex-1"
-          onClick={() => navigate({ to: "/manager/quizz" })}
+          onClick={() => navigate({ to: "/manager/quiz" })}
         >
-          {t("manager:quizz.create")}
+          {t("manager:quiz.create")}
         </Button>
         <Button
           className="aspect-square bg-gray-200 px-3 text-gray-600"
           onClick={() => fileInputRef.current?.click()}
-          title={t("manager:quizz.import")}
+          title={t("manager:quiz.import")}
         >
           <Upload className="size-4" />
         </Button>
@@ -75,7 +75,7 @@ const ConfigManageQuizz = () => {
         />
       </div>
       <div className="min-h-0 flex-1 space-y-2 overflow-auto p-0.5">
-        {quizz.map((q) => (
+        {quiz.map((q) => (
           <div
             key={q.id}
             className="flex h-12 w-full items-center justify-between rounded-md pr-1.5 pl-3 outline outline-gray-300"
@@ -86,8 +86,8 @@ const ConfigManageQuizz = () => {
                 className="rounded-sm p-2 text-gray-600 hover:bg-gray-600/10"
                 onClick={() =>
                   navigate({
-                    to: "/manager/quizz/$quizzId",
-                    params: { quizzId: q.id },
+                    to: "/manager/quiz/$quizId",
+                    params: { quizId: q.id },
                   })
                 }
               >
@@ -100,8 +100,8 @@ const ConfigManageQuizz = () => {
                     <Trash2 className="size-4 stroke-red-500" />
                   </button>
                 }
-                title={t("manager:quizz.delete")}
-                description={t("manager:quizz.deleteConfirm", {
+                title={t("manager:quiz.delete")}
+                description={t("manager:quiz.deleteConfirm", {
                   name: q.subject,
                 })}
                 confirmLabel={t("common:delete")}
@@ -110,9 +110,9 @@ const ConfigManageQuizz = () => {
             </div>
           </div>
         ))}
-        {quizz.length === 0 && (
+        {quiz.length === 0 && (
           <p className="my-8 text-center text-gray-500">
-            {t("manager:quizz.none")}
+            {t("manager:quiz.none")}
           </p>
         )}
       </div>
@@ -120,4 +120,4 @@ const ConfigManageQuizz = () => {
   )
 }
 
-export default ConfigManageQuizz
+export default ConfigManageQuiz

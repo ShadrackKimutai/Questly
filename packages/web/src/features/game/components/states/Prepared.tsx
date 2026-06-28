@@ -19,7 +19,7 @@ const Prepared = ({ data: { totalAnswers, questionNumber } }: Props) => {
         {t("game:questionPrefix")}
         {questionNumber}
       </h2>
-      <div className="anim-quizz grid aspect-square w-60 grid-cols-2 gap-4 rounded-2xl bg-gray-700 p-5 md:w-60">
+      <div className="anim-quiz grid aspect-square w-60 grid-cols-2 gap-4 rounded-2xl bg-gray-700 p-5 md:w-60">
         {Array.from({ length: totalAnswers }).map((_, key) => (
           <div
             key={key}

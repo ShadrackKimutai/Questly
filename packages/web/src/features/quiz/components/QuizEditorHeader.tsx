@@ -5,14 +5,14 @@ import {
   useEvent,
   useSocket,
 } from "@questly/web/features/game/contexts/socket-context"
-import { useQuizzEditor } from "@questly/web/features/quizz/contexts/quizz-editor-context"
+import { useQuizEditor } from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import { useNavigate } from "@tanstack/react-router"
 import type { ChangeEvent } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 
-const QuizzEditorHeader = () => {
-  const { quizzId, subject, setSubject, questions } = useQuizzEditor()
+const QuizEditorHeader = () => {
+  const { quizId, subject, setSubject, questions } = useQuizEditor()
   const { socket } = useSocket()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -22,24 +22,24 @@ const QuizzEditorHeader = () => {
   }
 
   const handleSave = () => {
-    if (quizzId) {
-      socket.emit(EVENTS.QUIZZ.UPDATE, { id: quizzId, subject, questions })
+    if (quizId) {
+      socket.emit(EVENTS.QUIZ.UPDATE, { id: quizId, subject, questions })
     } else {
-      socket.emit(EVENTS.QUIZZ.SAVE, { subject, questions })
+      socket.emit(EVENTS.QUIZ.SAVE, { subject, questions })
     }
   }
 
-  useEvent(EVENTS.QUIZZ.SAVE_SUCCESS, () => {
-    toast.success(t("quizz:quizzSaved"))
+  useEvent(EVENTS.QUIZ.SAVE_SUCCESS, () => {
+    toast.success(t("quiz:quizSaved"))
     navigate({ to: "/manager/config" })
   })
 
-  useEvent(EVENTS.QUIZZ.UPDATE_SUCCESS, (_data) => {
-    toast.success(t("quizz:quizzUpdated"))
+  useEvent(EVENTS.QUIZ.UPDATE_SUCCESS, (_data) => {
+    toast.success(t("quiz:quizUpdated"))
     navigate({ to: "/manager/config" })
   })
 
-  useEvent(EVENTS.QUIZZ.ERROR, (message) => {
+  useEvent(EVENTS.QUIZ.ERROR, (message) => {
     toast.error(t(message))
   })
 
@@ -51,7 +51,7 @@ const QuizzEditorHeader = () => {
           className="w-64"
           value={subject}
           onChange={handleChangeSubject}
-          placeholder={t("quizz:titleQuizzPlaceholder")}
+          placeholder={t("quiz:titleQuizPlaceholder")}
         />
       </div>
 
@@ -70,4 +70,4 @@ const QuizzEditorHeader = () => {
   )
 }
 
-export default QuizzEditorHeader
+export default QuizEditorHeader

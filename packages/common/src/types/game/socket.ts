@@ -3,7 +3,7 @@ import type {
   GameResult,
   GameUpdateQuestion,
   Player,
-  QuizzWithId,
+  QuizWithId,
 } from "@questly/common/types/game"
 import type { Status, StatusDataMap } from "@questly/common/types/game/status"
 import type { ManagerConfig } from "@questly/common/types/manager"
@@ -66,7 +66,7 @@ export interface ServerToClientEvents {
     currentQuestion: GameUpdateQuestion
   }) => void
   [EVENTS.MANAGER.CONFIG]: (_config: ManagerConfig) => void
-  [EVENTS.QUIZZ.DATA]: (_quizz: QuizzWithId) => void
+  [EVENTS.QUIZ.DATA]: (_quiz: QuizWithId) => void
   [EVENTS.MANAGER.GAME_CREATED]: (_data: {
     gameId: string
     inviteCode: string
@@ -83,10 +83,10 @@ export interface ServerToClientEvents {
   [EVENTS.PLAYER.MASCOT_CHANGED]: (_data: { mascot: string }) => void
   [EVENTS.MANAGER.UNAUTHORIZED]: () => void
 
-  // Quizz events
-  [EVENTS.QUIZZ.SAVE_SUCCESS]: (_data: { id: string }) => void
-  [EVENTS.QUIZZ.UPDATE_SUCCESS]: (_data: { id: string }) => void
-  [EVENTS.QUIZZ.ERROR]: (_message: string) => void
+  // Quiz events
+  [EVENTS.QUIZ.SAVE_SUCCESS]: (_data: { id: string }) => void
+  [EVENTS.QUIZ.UPDATE_SUCCESS]: (_data: { id: string }) => void
+  [EVENTS.QUIZ.ERROR]: (_message: string) => void
 
   // Results events
   [EVENTS.RESULTS.DATA]: (_result: GameResult) => void
@@ -94,7 +94,7 @@ export interface ServerToClientEvents {
 
 export interface ClientToServerEvents {
   // Manager actions
-  [EVENTS.GAME.CREATE]: (_quizzId: string) => void
+  [EVENTS.GAME.CREATE]: (_quizId: string) => void
   [EVENTS.MANAGER.AUTH]: (_password: string) => void
   [EVENTS.MANAGER.RECONNECT]: (_message: { gameId: string }) => void
   [EVENTS.MANAGER.LEAVE]: (_message: { gameId: string }) => void
@@ -110,11 +110,11 @@ export interface ClientToServerEvents {
   [EVENTS.MANAGER.GET_CONFIG]: () => void
   [EVENTS.MANAGER.LOGOUT]: () => void
 
-  // Quizz actions
-  [EVENTS.QUIZZ.GET]: (_id: string) => void
-  [EVENTS.QUIZZ.SAVE]: (_quizz: unknown) => void
-  [EVENTS.QUIZZ.UPDATE]: (_data: QuizzWithId) => void
-  [EVENTS.QUIZZ.DELETE]: (_id: string) => void
+  // Quiz actions
+  [EVENTS.QUIZ.GET]: (_id: string) => void
+  [EVENTS.QUIZ.SAVE]: (_quiz: unknown) => void
+  [EVENTS.QUIZ.UPDATE]: (_data: QuizWithId) => void
+  [EVENTS.QUIZ.DELETE]: (_id: string) => void
 
   // Player actions
   [EVENTS.PLAYER.JOIN]: (_inviteCode: string) => void

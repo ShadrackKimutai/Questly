@@ -3,6 +3,7 @@ import type { Player, QuestionMedia, QuestionType } from "@questly/common/types/
 export type AnswerFeedback =
   | { type: "shortanswer"; playerText: string | null; correctOptions: string[] }
   | { type: "choice"; items: { text: string; selectedByPlayer: boolean; isCorrect: boolean }[] }
+  | { type: "wordcloud"; playerText: string | null }
 
 export const STATUS = {
   SHOW_ROOM: "SHOW_ROOM",
@@ -56,6 +57,8 @@ interface ManagerExtraStatus {
     solutions: number[]
     answers: string[]
     media?: QuestionMedia
+    type?: QuestionType
+    wordResponses?: Record<string, number>
   }
   SHOW_LEADERBOARD: { oldLeaderboard: Player[]; leaderboard: Player[] }
 }

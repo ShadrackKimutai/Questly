@@ -13,11 +13,11 @@ import { Route as authLayoutRouteImport } from './pages/(auth)/layout'
 import { Route as authIndexRouteImport } from './pages/(auth)/index'
 import { Route as PartyGameIdRouteImport } from './pages/party/$gameId'
 import { Route as ManagerConfigRouteImport } from './pages/manager/config'
-import { Route as ManagerQuizzLayoutRouteImport } from './pages/manager/quizz/layout'
-import { Route as ManagerQuizzIndexRouteImport } from './pages/manager/quizz/index'
+import { Route as ManagerQuizLayoutRouteImport } from './pages/manager/quiz/layout'
+import { Route as ManagerQuizIndexRouteImport } from './pages/manager/quiz/index'
 import { Route as authManagerIndexRouteImport } from './pages/(auth)/manager/index'
 import { Route as PartyManagerGameIdRouteImport } from './pages/party/manager/$gameId'
-import { Route as ManagerQuizzQuizzIdRouteImport } from './pages/manager/quizz/$quizzId'
+import { Route as ManagerQuizQuizIdRouteImport } from './pages/manager/quiz/$quizId'
 
 const authLayoutRoute = authLayoutRouteImport.update({
   id: '/(auth)',
@@ -38,15 +38,15 @@ const ManagerConfigRoute = ManagerConfigRouteImport.update({
   path: '/manager/config',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ManagerQuizzLayoutRoute = ManagerQuizzLayoutRouteImport.update({
-  id: '/manager/quizz',
-  path: '/manager/quizz',
+const ManagerQuizLayoutRoute = ManagerQuizLayoutRouteImport.update({
+  id: '/manager/quiz',
+  path: '/manager/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ManagerQuizzIndexRoute = ManagerQuizzIndexRouteImport.update({
+const ManagerQuizIndexRoute = ManagerQuizIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ManagerQuizzLayoutRoute,
+  getParentRoute: () => ManagerQuizLayoutRoute,
 } as any)
 const authManagerIndexRoute = authManagerIndexRouteImport.update({
   id: '/manager/',
@@ -58,79 +58,79 @@ const PartyManagerGameIdRoute = PartyManagerGameIdRouteImport.update({
   path: '/party/manager/$gameId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ManagerQuizzQuizzIdRoute = ManagerQuizzQuizzIdRouteImport.update({
-  id: '/$quizzId',
-  path: '/$quizzId',
-  getParentRoute: () => ManagerQuizzLayoutRoute,
+const ManagerQuizQuizIdRoute = ManagerQuizQuizIdRouteImport.update({
+  id: '/$quizId',
+  path: '/$quizId',
+  getParentRoute: () => ManagerQuizLayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/manager/quizz': typeof ManagerQuizzLayoutRouteWithChildren
+  '/manager/quiz': typeof ManagerQuizLayoutRouteWithChildren
   '/manager/config': typeof ManagerConfigRoute
   '/party/$gameId': typeof PartyGameIdRoute
   '/': typeof authIndexRoute
-  '/manager/quizz/$quizzId': typeof ManagerQuizzQuizzIdRoute
+  '/manager/quiz/$quizId': typeof ManagerQuizQuizIdRoute
   '/party/manager/$gameId': typeof PartyManagerGameIdRoute
   '/manager/': typeof authManagerIndexRoute
-  '/manager/quizz/': typeof ManagerQuizzIndexRoute
+  '/manager/quiz/': typeof ManagerQuizIndexRoute
 }
 export interface FileRoutesByTo {
   '/manager/config': typeof ManagerConfigRoute
   '/party/$gameId': typeof PartyGameIdRoute
   '/': typeof authIndexRoute
-  '/manager/quizz/$quizzId': typeof ManagerQuizzQuizzIdRoute
+  '/manager/quiz/$quizId': typeof ManagerQuizQuizIdRoute
   '/party/manager/$gameId': typeof PartyManagerGameIdRoute
   '/manager': typeof authManagerIndexRoute
-  '/manager/quizz': typeof ManagerQuizzIndexRoute
+  '/manager/quiz': typeof ManagerQuizIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(auth)': typeof authLayoutRouteWithChildren
-  '/manager/quizz': typeof ManagerQuizzLayoutRouteWithChildren
+  '/manager/quiz': typeof ManagerQuizLayoutRouteWithChildren
   '/manager/config': typeof ManagerConfigRoute
   '/party/$gameId': typeof PartyGameIdRoute
   '/(auth)/': typeof authIndexRoute
-  '/manager/quizz/$quizzId': typeof ManagerQuizzQuizzIdRoute
+  '/manager/quiz/$quizId': typeof ManagerQuizQuizIdRoute
   '/party/manager/$gameId': typeof PartyManagerGameIdRoute
   '/(auth)/manager/': typeof authManagerIndexRoute
-  '/manager/quizz/': typeof ManagerQuizzIndexRoute
+  '/manager/quiz/': typeof ManagerQuizIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/manager/quizz'
+    | '/manager/quiz'
     | '/manager/config'
     | '/party/$gameId'
     | '/'
-    | '/manager/quizz/$quizzId'
+    | '/manager/quiz/$quizId'
     | '/party/manager/$gameId'
     | '/manager/'
-    | '/manager/quizz/'
+    | '/manager/quiz/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/manager/config'
     | '/party/$gameId'
     | '/'
-    | '/manager/quizz/$quizzId'
+    | '/manager/quiz/$quizId'
     | '/party/manager/$gameId'
     | '/manager'
-    | '/manager/quizz'
+    | '/manager/quiz'
   id:
     | '__root__'
     | '/(auth)'
-    | '/manager/quizz'
+    | '/manager/quiz'
     | '/manager/config'
     | '/party/$gameId'
     | '/(auth)/'
-    | '/manager/quizz/$quizzId'
+    | '/manager/quiz/$quizId'
     | '/party/manager/$gameId'
     | '/(auth)/manager/'
-    | '/manager/quizz/'
+    | '/manager/quiz/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   authLayoutRoute: typeof authLayoutRouteWithChildren
-  ManagerQuizzLayoutRoute: typeof ManagerQuizzLayoutRouteWithChildren
+  ManagerQuizLayoutRoute: typeof ManagerQuizLayoutRouteWithChildren
   ManagerConfigRoute: typeof ManagerConfigRoute
   PartyGameIdRoute: typeof PartyGameIdRoute
   PartyManagerGameIdRoute: typeof PartyManagerGameIdRoute
@@ -166,19 +166,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ManagerConfigRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/manager/quizz': {
-      id: '/manager/quizz'
-      path: '/manager/quizz'
-      fullPath: '/manager/quizz'
-      preLoaderRoute: typeof ManagerQuizzLayoutRouteImport
+    '/manager/quiz': {
+      id: '/manager/quiz'
+      path: '/manager/quiz'
+      fullPath: '/manager/quiz'
+      preLoaderRoute: typeof ManagerQuizLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/manager/quizz/': {
-      id: '/manager/quizz/'
+    '/manager/quiz/': {
+      id: '/manager/quiz/'
       path: '/'
-      fullPath: '/manager/quizz/'
-      preLoaderRoute: typeof ManagerQuizzIndexRouteImport
-      parentRoute: typeof ManagerQuizzLayoutRoute
+      fullPath: '/manager/quiz/'
+      preLoaderRoute: typeof ManagerQuizIndexRouteImport
+      parentRoute: typeof ManagerQuizLayoutRoute
     }
     '/(auth)/manager/': {
       id: '/(auth)/manager/'
@@ -194,12 +194,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartyManagerGameIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/manager/quizz/$quizzId': {
-      id: '/manager/quizz/$quizzId'
-      path: '/$quizzId'
-      fullPath: '/manager/quizz/$quizzId'
-      preLoaderRoute: typeof ManagerQuizzQuizzIdRouteImport
-      parentRoute: typeof ManagerQuizzLayoutRoute
+    '/manager/quiz/$quizId': {
+      id: '/manager/quiz/$quizId'
+      path: '/$quizId'
+      fullPath: '/manager/quiz/$quizId'
+      preLoaderRoute: typeof ManagerQuizQuizIdRouteImport
+      parentRoute: typeof ManagerQuizLayoutRoute
     }
   }
 }
@@ -218,22 +218,22 @@ const authLayoutRouteWithChildren = authLayoutRoute._addFileChildren(
   authLayoutRouteChildren,
 )
 
-interface ManagerQuizzLayoutRouteChildren {
-  ManagerQuizzQuizzIdRoute: typeof ManagerQuizzQuizzIdRoute
-  ManagerQuizzIndexRoute: typeof ManagerQuizzIndexRoute
+interface ManagerQuizLayoutRouteChildren {
+  ManagerQuizQuizIdRoute: typeof ManagerQuizQuizIdRoute
+  ManagerQuizIndexRoute: typeof ManagerQuizIndexRoute
 }
 
-const ManagerQuizzLayoutRouteChildren: ManagerQuizzLayoutRouteChildren = {
-  ManagerQuizzQuizzIdRoute: ManagerQuizzQuizzIdRoute,
-  ManagerQuizzIndexRoute: ManagerQuizzIndexRoute,
+const ManagerQuizLayoutRouteChildren: ManagerQuizLayoutRouteChildren = {
+  ManagerQuizQuizIdRoute: ManagerQuizQuizIdRoute,
+  ManagerQuizIndexRoute: ManagerQuizIndexRoute,
 }
 
-const ManagerQuizzLayoutRouteWithChildren =
-  ManagerQuizzLayoutRoute._addFileChildren(ManagerQuizzLayoutRouteChildren)
+const ManagerQuizLayoutRouteWithChildren =
+  ManagerQuizLayoutRoute._addFileChildren(ManagerQuizLayoutRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   authLayoutRoute: authLayoutRouteWithChildren,
-  ManagerQuizzLayoutRoute: ManagerQuizzLayoutRouteWithChildren,
+  ManagerQuizLayoutRoute: ManagerQuizLayoutRouteWithChildren,
   ManagerConfigRoute: ManagerConfigRoute,
   PartyGameIdRoute: PartyGameIdRoute,
   PartyManagerGameIdRoute: PartyManagerGameIdRoute,

@@ -1,7 +1,7 @@
 import { MEDIA_TYPES } from "@questly/common/constants"
 import type { QuestionMedia } from "@questly/common/types/game"
 import AlertDialog from "@questly/web/components/AlertDialog"
-import { type QuestionWithId } from "@questly/web/features/quizz/contexts/quizz-editor-context"
+import { type QuestionWithId } from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import clsx from "clsx"
 import { Music, Trash2, Video } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -34,7 +34,7 @@ interface Props {
   onDelete: () => void
 }
 
-const QuizzEditorCard = ({
+const QuizEditorCard = ({
   question,
   index,
   isActive,
@@ -60,7 +60,7 @@ const QuizzEditorCard = ({
         {index + 1}
       </span>
       <p className="truncate text-center text-xs font-semibold text-gray-700">
-        {question.question || t("quizz:noQuestionYet")}
+        {question.question || t("quiz:noQuestionYet")}
       </p>
 
       <SlideMedia media={question.media} />
@@ -88,8 +88,8 @@ const QuizzEditorCard = ({
               <Trash2 className="size-3.5" />
             </button>
           }
-          title={t("quizz:question.deleteQuestion")}
-          description={t("quizz:question.deleteQuestionConfirm")}
+          title={t("quiz:question.deleteQuestion")}
+          description={t("quiz:question.deleteQuestionConfirm")}
           confirmLabel={t("common:delete")}
           onConfirm={onDelete}
         />
@@ -98,4 +98,4 @@ const QuizzEditorCard = ({
   )
 }
 
-export default QuizzEditorCard
+export default QuizEditorCard

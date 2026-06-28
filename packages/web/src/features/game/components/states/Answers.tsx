@@ -29,6 +29,7 @@ const Answers = ({
   const { player, gameId } = usePlayerStore()
   const isMultiple = type === "multiple"
   const isShortAnswer = type === "shortanswer"
+  const isWordCloud = type === "wordcloud"
 
   const [cooldown, setCooldown] = useState(time)
   const [totalAnswer, setTotalAnswer] = useState(0)
@@ -70,7 +71,7 @@ const Answers = ({
   const handleSubmit = () => {
     if (!player || !gameId || submitted) return
 
-    if (isShortAnswer) {
+    if (isShortAnswer || isWordCloud) {
       if (!textInput.trim()) return
       socket.emit(EVENTS.PLAYER.TEXT_ANSWER, {
         gameId,
@@ -125,6 +126,12 @@ const Answers = ({
           {question}
         </h2>
 
+        {isWordCloud && (
+          <p className="rounded-lg bg-black/30 px-4 py-1.5 text-sm font-semibold text-white drop-shadow">
+            {t("game:wordcloudHint")}
+          </p>
+        )}
+
         {isMultiple && (
           <p className="rounded-lg bg-black/30 px-4 py-1.5 text-sm font-semibold text-white drop-shadow">
             {t("game:selectAllThatApply")}
@@ -148,7 +155,7 @@ const Answers = ({
           </div>
         </div>
 
-        {isShortAnswer && player ? (
+        {(isShortAnswer || isWordCloud) && player ? (
           <div className="mx-auto mb-3 w-full max-w-7xl px-2">
             <div className="mb-2 flex gap-2">
               <input
@@ -158,7 +165,7 @@ const Answers = ({
                 onChange={(e) => setTextInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                 disabled={submitted}
-                placeholder={t("game:typeYourAnswer")}
+                placeholder={t(isWordCloud ? "game:typeYourWord" : "game:typeYourAnswer")}
                 className="flex-1 rounded-2xl bg-white/20 px-4 py-3 text-base font-semibold text-white placeholder-white/60 outline-none backdrop-blur-sm focus:bg-white/30 disabled:opacity-60"
               />
             </div>
@@ -171,7 +178,7 @@ const Answers = ({
               {t("game:submitAnswer")}
             </button>
           </div>
-        ) : isShortAnswer ? (
+        ) : (isShortAnswer || isWordCloud) ? (
           <div className="mx-auto mb-3 w-full max-w-7xl px-2">
             <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 text-white/80 font-semibold">
               {t("game:waitingForAnswers")}

@@ -1,9 +1,9 @@
-import { useQuizzEditor } from "@questly/web/features/quizz/contexts/quizz-editor-context"
+import { useQuizEditor } from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import type { ChangeEvent } from "react"
 import { useTranslation } from "react-i18next"
 
 const QuestionEditorTitle = () => {
-  const { updateQuestion, currentIndex, currentQuestion } = useQuizzEditor()
+  const { updateQuestion, currentIndex, currentQuestion } = useQuizEditor()
   const { t } = useTranslation()
 
   const handleChangeQuestion = (e: ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +14,7 @@ const QuestionEditorTitle = () => {
     <div className="z-10 rounded-xl bg-white shadow-sm">
       <input
         className="w-full resize-none p-4 text-center text-xl font-semibold text-gray-800 outline-none placeholder:text-gray-400"
-        placeholder={t("quizz:question.placeholder")}
+        placeholder={t("quiz:question.placeholder")}
         value={currentQuestion.question}
         onChange={handleChangeQuestion}
       />

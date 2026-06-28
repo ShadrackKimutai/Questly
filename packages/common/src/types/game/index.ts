@@ -25,7 +25,7 @@ export interface QuestionMedia {
   url: string
 }
 
-export type QuestionType = 'single' | 'multiple' | 'truefalse' | 'shortanswer'
+export type QuestionType = 'single' | 'multiple' | 'truefalse' | 'shortanswer' | 'wordcloud'
 
 export interface Question {
   question: string
@@ -38,14 +38,14 @@ export interface Question {
   type?: QuestionType
 }
 
-export interface Quizz {
+export interface Quiz {
   subject: string
   questions: Question[]
 }
 
-export type QuizzWithId = Quizz & { id: string }
+export type QuizWithId = Quiz & { id: string }
 
-export interface QuizzMeta {
+export interface QuizMeta {
   id: string
   subject: string
 }
