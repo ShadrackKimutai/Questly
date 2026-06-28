@@ -11,10 +11,11 @@ export const questionMediaValidator = z.object({
 const questionValidator = z.object({
   question: z.string().min(1, "errors:quiz.questionEmpty"),
   media: questionMediaValidator.optional(),
-  answers: z.array(z.string().min(1, "errors:quiz.answerEmpty")),
+  answers: z.array(z.string().min(1, "errors:quiz.answerEmpty")).default([]),
   solutions: z
     .union([z.number().int().min(0), z.array(z.number().int().min(0)).min(0)])
-    .transform((v) => (Array.isArray(v) ? v : [v])),
+    .transform((v) => (Array.isArray(v) ? v : [v]))
+    .default([]),
   textSolutions: z.array(z.string().min(1, "errors:quiz.answerEmpty")).optional(),
   cooldown: z.number().int().min(3).max(15),
   time: z.number().int().min(-1),

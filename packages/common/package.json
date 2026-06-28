@@ -11,8 +11,11 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/node": "^25.9.2",
+    "prettier": "^3.8.4",
     "@types/node": "^26.0.0",
     "prettier": "^3.8.3",
+      origin/dependabot/npm_and_yarn/types/node-26.0.0
     "typescript": "^6.0.3"
   }
 }
