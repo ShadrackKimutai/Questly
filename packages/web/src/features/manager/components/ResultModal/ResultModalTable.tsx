@@ -4,11 +4,11 @@ import {
 } from "@questly/web/features/game/utils/constants"
 import { useResultModal } from "@questly/web/features/manager/contexts/result-modal-context"
 import clsx from "clsx"
-import { Check, X } from "lucide-react"
+import { Check, Minus, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const ResultModalTable = () => {
-  const { questionResult, getPlayerPoints, isAnswerCorrect } = useResultModal()
+  const { questionResult, getPlayerPoints, getAnswerStatus } = useResultModal()
   const { t } = useTranslation()
 
   return (
@@ -27,7 +27,7 @@ const ResultModalTable = () => {
       </thead>
       <tbody className="divide-y divide-gray-100">
         {questionResult.playerAnswers.map((pa, i) => {
-          const isCorrect = isAnswerCorrect(pa.answerId)
+          const status = getAnswerStatus(pa.answerId)
 
           const answer =
             typeof pa.answerId === "number"
@@ -75,14 +75,19 @@ const ResultModalTable = () => {
                 )}
               </td>
               <td className="px-4 py-2.5">
-                {isCorrect ? (
+                {status === "correct" ? (
                   <span className="flex items-center gap-1 text-green-600">
-                    <Check className="size-3.5" />{" "}
+                    <Check className="size-3.5" />
                     {t("manager:result.table.correct")}
+                  </span>
+                ) : status === "participated" ? (
+                  <span className="flex items-center gap-1 text-violet-500">
+                    <Minus className="size-3.5" />
+                    {t("manager:result.table.participated")}
                   </span>
                 ) : (
                   <span className="flex items-center gap-1 text-red-500">
-                    <X className="size-3.5" />{" "}
+                    <X className="size-3.5" />
                     {t("manager:result.table.incorrect")}
                   </span>
                 )}

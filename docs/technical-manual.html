@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Questly Technical Guide</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #162033;
+        --muted: #667085;
+        --line: #d9e0ea;
+        --paper: #ffffff;
+        --wash: #f5f7fb;
+        --brand: #ff9900;
+        --brand-dark: #9b5c00;
+        --blue: #2563eb;
+        --green: #16803c;
+        --red: #c2410c;
+        --code: #111827;
+        --code-text: #e5e7eb;
+        --nav: 280px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--wash);
+        color: var(--ink);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      a {
+        color: var(--blue);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: var(--nav) minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      aside {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: auto;
+        border-right: 1px solid var(--line);
+        background: var(--paper);
+        padding: 22px 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 18px;
+      }
+
+      .mark {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: var(--brand);
+        color: #fff;
+        font-weight: 900;
+        font-size: 22px;
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 16px;
+      }
+
+      .brand span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      nav h2 {
+        margin: 20px 0 8px;
+        color: var(--muted);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      nav a {
+        display: block;
+        border-radius: 8px;
+        padding: 7px 9px;
+        color: #334155;
+        font-size: 13px;
+      }
+
+      nav a:hover {
+        background: #fff4df;
+        color: var(--brand-dark);
+        text-decoration: none;
+      }
+
+      main {
+        max-width: 1180px;
+        width: 100%;
+        padding: 34px 42px 80px;
+      }
+
+      header {
+        border: 1px solid var(--line);
+        border-top: 6px solid var(--brand);
+        border-radius: 14px;
+        background: var(--paper);
+        padding: 34px;
+        margin-bottom: 28px;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: clamp(32px, 5vw, 52px);
+        line-height: 1;
+      }
+
+      header p {
+        max-width: 760px;
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 22px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid #ffd08a;
+        border-radius: 999px;
+        background: #fff7e8;
+        color: var(--brand-dark);
+        padding: 5px 10px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      section {
+        scroll-margin-top: 22px;
+        margin: 26px 0;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--paper);
+        padding: 24px;
+      }
+
+      h2 {
+        margin: 0 0 16px;
+        font-size: 24px;
+        line-height: 1.2;
+      }
+
+      h3 {
+        margin: 24px 0 10px;
+        font-size: 17px;
+      }
+
+      p {
+        margin: 0 0 12px;
+      }
+
+      ul,
+      ol {
+        margin: 0 0 14px;
+        padding-left: 22px;
+      }
+
+      li {
+        margin: 5px 0;
+      }
+
+      code,
+      pre {
+        font-family:
+          "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono",
+          monospace;
+      }
+
+      code {
+        border-radius: 5px;
+        background: #eef2f7;
+        color: #0f172a;
+        padding: 2px 5px;
+        font-size: 0.92em;
+      }
+
+      pre {
+        overflow: auto;
+        border-radius: 10px;
+        background: var(--code);
+        color: var(--code-text);
+        padding: 16px 18px;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--line);
+        padding: 10px 12px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #f0f4fa;
+        color: #344054;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fbfcfe;
+        padding: 16px;
+      }
+
+      .card strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .card span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .callout {
+        border-left: 4px solid var(--blue);
+        border-radius: 8px;
+        background: #eff6ff;
+        padding: 14px 16px;
+        margin: 16px 0;
+      }
+
+      .callout.warn {
+        border-color: var(--brand);
+        background: #fff7e8;
+      }
+
+      .callout.good {
+        border-color: var(--green);
+        background: #eefbf2;
+      }
+
+      .tag {
+        display: inline-block;
+        border-radius: 5px;
+        padding: 2px 7px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .tag.c2s {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag.s2c {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+
+      .state {
+        display: inline-block;
+        border-radius: 6px;
+        background: #eef2f7;
+        padding: 2px 7px;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .architecture {
+        white-space: pre;
+        overflow: auto;
+        border-radius: 10px;
+        background: #0f172a;
+        color: #dbeafe;
+        padding: 18px;
+        font-family: "JetBrains Mono", Consolas, monospace;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .footer {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 28px;
+      }
+
+      @media (max-width: 900px) {
+        .layout {
+          display: block;
+        }
+
+        aside {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        main {
+          padding: 22px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media print {
+        aside {
+          display: none;
+        }
+
+        .layout {
+          display: block;
+        }
+
+        main {
+          max-width: none;
+          padding: 0;
+        }
+
+        section {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <aside>
+        <div class="brand">
+          <div class="mark">Q</div>
+          <div>
+            <strong>Questly</strong>
+            <span>Technical guide</span>
+          </div>
+        </div>
+
+        <nav aria-label="Guide navigation">
+          <h2>Start</h2>
+          <a href="#overview">Overview</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#setup">Setup</a>
+          <a href="#configuration">Configuration</a>
+
+          <h2>Codebase</h2>
+          <a href="#workspaces">Workspaces</a>
+          <a href="#web">Web package</a>
+          <a href="#socket">Socket package</a>
+          <a href="#common">Common package</a>
+
+          <h2>Runtime</h2>
+          <a href="#game-flow">Game flow</a>
+          <a href="#question-types">Question types</a>
+          <a href="#results">Results review</a>
+          <a href="#events">Socket events</a>
+          <a href="#states">Status states</a>
+
+          <h2>Operations</h2>
+          <a href="#deployment">Deployment</a>
+          <a href="#maintenance">Maintenance</a>
+          <a href="#troubleshooting">Troubleshooting</a>
+        </nav>
+      </aside>
+
+      <main>
+        <header>
+          <h1>Questly Technical Guide</h1>
+          <p>
+            A developer and operator reference for Questly, the self-hosted
+            real-time quiz application built with React, Vite, Socket.IO, and
+            TypeScript.
+          </p>
+          <div class="meta">
+            <span class="pill">Version 0.2.5</span>
+            <span class="pill">pnpm monorepo</span>
+            <span class="pill">React 19</span>
+            <span class="pill">Socket.IO 4</span>
+            <span class="pill">JSON file storage</span>
+          </div>
+        </header>
+
+        <section id="overview" class="panel">
+          <h2>Overview</h2>
+          <p>
+            Questly lets a host create and run quiz games while players join
+            with an invite code. The host uses the manager interface, players
+            use the party interface, and both communicate with a Socket.IO
+            server over the <code>/ws</code> path.
+          </p>
+
+          <div class="grid">
+            <div class="card">
+              <strong>Manager workflow</strong>
+              <span>
+                Authenticate, select or edit a quiz, create a room, control
+                rounds, view results, and review saved games.
+              </span>
+            </div>
+            <div class="card">
+              <strong>Player workflow</strong>
+              <span>
+                Enter room code, choose a name and mascot, answer questions,
+                view feedback, and track the leaderboard.
+              </span>
+            </div>
+            <div class="card">
+              <strong>Persistence</strong>
+              <span>
+                Quiz definitions, game config, and completed results are stored
+                as JSON files in the configured <code>config/</code> directory.
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section id="architecture" class="panel">
+          <h2>Architecture</h2>
+          <div class="architecture">
+            Browser |-- React SPA served by Vite/nginx |-- Socket.IO client
+            connects to /ws | v Socket server on port 3001 |-- handlers: game,
+            manager, quiz, results |-- services: registry, config, game engine
+            |-- in-memory active games | v config/ |-- game.json |-- quiz/*.json
+            |-- results/*.json
+          </div>
+
+          <p>
+            The repository is split into three workspace packages. Shared types,
+            constants, and validators live in <code>packages/common</code>. The
+            game engine and file persistence live in
+            <code>packages/socket</code>. The user interface lives in
+            <code>packages/web</code>.
+          </p>
+        </section>
+
+        <section id="setup" class="panel">
+          <h2>Setup</h2>
+          <h3>Prerequisites</h3>
+          <ul>
+            <li>Node.js 22 or newer, matching the project README.</li>
+            <li>pnpm 10.16 or newer.</li>
+            <li>Docker and Docker Compose if using the container workflow.</li>
+          </ul>
+
+          <h3>Install and run locally</h3>
+          <pre><code>pnpm install
+pnpm run dev</code></pre>
+
+          <p>
+            <code>pnpm run dev</code> starts the web and socket packages in
+            parallel. The web dev server runs on port <code>3000</code> and
+            proxies <code>/ws</code> to the socket server on port
+            <code>3001</code>.
+          </p>
+
+          <h3>Production build</h3>
+          <pre><code>pnpm run build
+pnpm start</code></pre>
+        </section>
+
+        <section id="configuration" class="panel">
+          <h2>Configuration</h2>
+          <p>
+            The socket service initializes the config directory through
+            <code>initConfig()</code>. Set <code>CONFIG_PATH</code> to control
+            where files are written.
+          </p>
+
+          <pre><code>config/
+  game.json
+  quiz/
+    example.json
+  results/
+    game-result-id.json</code></pre>
+
+          <table>
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>game.json</code></td>
+                <td>
+                  Stores <code>managerPassword</code>, the password required to
+                  access the manager interface.
+                </td>
+              </tr>
+              <tr>
+                <td><code>quiz/*.json</code></td>
+                <td>Stores editable quiz definitions.</td>
+              </tr>
+              <tr>
+                <td><code>results/*.json</code></td>
+                <td>Stores completed game results for later review.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="workspaces" class="panel">
+          <h2>Workspaces</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Workspace</th>
+                <th>Package name</th>
+                <th>Responsibility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>packages/common</code></td>
+                <td><code>@questly/common</code></td>
+                <td>
+                  Constants, Socket.IO event types, game types, validators.
+                </td>
+              </tr>
+              <tr>
+                <td><code>packages/socket</code></td>
+                <td><code>@questly/socket</code></td>
+                <td>Socket.IO server, active-game registry, game engine.</td>
+              </tr>
+              <tr>
+                <td><code>packages/web</code></td>
+                <td><code>@questly/web</code></td>
+                <td>React SPA, routes, manager UI, player UI, quiz editor.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="web" class="panel">
+          <h2>Web Package</h2>
+          <p>
+            The frontend is a React SPA built with Vite, TanStack Router,
+            Zustand, Tailwind CSS, i18next, and Socket.IO Client.
+          </p>
+
+          <h3>Important paths</h3>
+          <ul>
+            <li><code>src/pages</code>: file-based routes.</li>
+            <li>
+              <code>src/features/game</code>: player and manager game screens.
+            </li>
+            <li>
+              <code>src/features/manager</code>: configuration and results UI.
+            </li>
+            <li><code>src/features/quiz</code>: quiz editor UI.</li>
+            <li><code>src/locales</code>: translations.</li>
+          </ul>
+
+          <h3>Primary routes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Route</th>
+                <th>Use</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>/</code></td>
+                <td>Player join screen.</td>
+              </tr>
+              <tr>
+                <td><code>/party/$gameId</code></td>
+                <td>Player game session.</td>
+              </tr>
+              <tr>
+                <td><code>/manager</code></td>
+                <td>Manager authentication.</td>
+              </tr>
+              <tr>
+                <td><code>/manager/config</code></td>
+                <td>
+                  Manager dashboard for quiz selection, editing, and results.
+                </td>
+              </tr>
+              <tr>
+                <td><code>/party/manager/$gameId</code></td>
+                <td>Live manager game controls.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="socket" class="panel">
+          <h2>Socket Package</h2>
+          <p>
+            The socket package starts a Socket.IO server on port
+            <code>3001</code> with the path <code>/ws</code>. It registers
+            handlers for game, manager, quiz, and results events.
+          </p>
+
+          <h3>Core services</h3>
+          <ul>
+            <li>
+              <code>services/registry.ts</code>: tracks active games and invite
+              codes.
+            </li>
+            <li>
+              <code>services/game/index.ts</code>: owns a single game room,
+              manager state, player state, reconnect logic, and game actions.
+            </li>
+            <li>
+              <code>services/game/round-manager.ts</code>: controls countdowns,
+              question flow, answer collection, scoring, responses, leaderboard,
+              and saved result history.
+            </li>
+            <li>
+              <code>services/config.ts</code>: reads and writes config, quiz,
+              and result JSON files.
+            </li>
+          </ul>
+        </section>
+
+        <section id="common" class="panel">
+          <h2>Common Package</h2>
+          <p>
+            The common package is the contract between the server and the web
+            app. Change it carefully because both sides compile against these
+            types.
+          </p>
+
+          <pre><code>export type QuestionType =
+  | "single"
+  | "multiple"
+  | "truefalse"
+  | "shortanswer"
+  | "wordcloud"</code></pre>
+
+          <p>
+            Shared constants include <code>EVENTS</code>,
+            <code>NO_TIME_LIMIT</code>, <code>MEDIA_TYPES</code>,
+            <code>MASCOTS</code>, and <code>EXAMPLE_QUIZ</code>.
+          </p>
+        </section>
+
+        <section id="game-flow" class="panel">
+          <h2>Game Flow</h2>
+          <ol>
+            <li>
+              The manager authenticates with <code>managerPassword</code>.
+            </li>
+            <li>
+              The manager selects a quiz and emits <code>game:create</code>.
+            </li>
+            <li>
+              The server creates a <code>Game</code>, assigns a UUID and invite
+              code.
+            </li>
+            <li>Players join by invite code and choose a username.</li>
+            <li>The manager starts the game.</li>
+            <li>
+              Each round moves through prepare, question, answer, result,
+              responses, and leaderboard states.
+            </li>
+            <li>
+              When the last question is complete, the server saves a result JSON
+              file.
+            </li>
+          </ol>
+
+          <div class="callout good">
+            Active games are in memory. Completed games are persisted under
+            <code>config/results</code>.
+          </div>
+        </section>
+
+        <section id="question-types" class="panel">
+          <h2>Question Types</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Player input</th>
+                <th>Correctness</th>
+                <th>Review behavior</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>single</code></td>
+                <td>One option index.</td>
+                <td>
+                  Correct when selected index is in <code>solutions</code>.
+                </td>
+                <td>Shows correct or incorrect.</td>
+              </tr>
+              <tr>
+                <td><code>multiple</code></td>
+                <td>Array of option indices.</td>
+                <td>
+                  Correct when selected set exactly matches
+                  <code>solutions</code>.
+                </td>
+                <td>Shows correct or incorrect.</td>
+              </tr>
+              <tr>
+                <td><code>truefalse</code></td>
+                <td>One of two option indices.</td>
+                <td>Same as single choice.</td>
+                <td>Shows correct or incorrect.</td>
+              </tr>
+              <tr>
+                <td><code>shortanswer</code></td>
+                <td>Free text.</td>
+                <td>
+                  Correct when text matches one of <code>textSolutions</code>,
+                  case-insensitive and trimmed.
+                </td>
+                <td>Shows correct or incorrect.</td>
+              </tr>
+              <tr>
+                <td><code>wordcloud</code></td>
+                <td>Free text.</td>
+                <td>Ungraded participation response.</td>
+                <td>
+                  Should use a neutral state such as "Response" or "Submitted",
+                  not correct or incorrect.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Example quiz entry</h3>
+          <pre><code>{
+  "question": "Enter your favourite color in a rainbow",
+  "type": "wordcloud",
+  "answers": [],
+  "solutions": [],
+  "cooldown": 5,
+  "time": 20,
+  "media": {
+    "type": "image",
+    "url": "https://example.com/rainbow.jpg"
+  }
+}</code></pre>
+        </section>
+
+        <section id="results" class="panel">
+          <h2>Results Review</h2>
+          <p>
+            Completed games are saved as <code>GameResult</code> records. Each
+            question stores its original question fields plus
+            <code>playerAnswers</code>.
+          </p>
+
+          <pre><code>interface PlayerAnswerRecord {
+  playerName: string
+  answerId: number | number[] | string | null
+}</code></pre>
+
+          <h3>Correctness states</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>When to use</th>
+                <th>Suggested label</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Correct</td>
+                <td>
+                  Choice or short-answer response matches the configured
+                  solution.
+                </td>
+                <td><code>Correct</code></td>
+              </tr>
+              <tr>
+                <td>Incorrect</td>
+                <td>
+                  Choice or short-answer response does not match the configured
+                  solution.
+                </td>
+                <td><code>Incorrect</code></td>
+              </tr>
+              <tr>
+                <td>Neutral</td>
+                <td>
+                  Wordcloud response, because it is intentionally ungraded.
+                </td>
+                <td><code>Response</code> or <code>Submitted</code></td>
+              </tr>
+              <tr>
+                <td>No answer</td>
+                <td>
+                  The player did not submit anything before the timer ended.
+                </td>
+                <td><code>No answer</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout warn">
+            Wordcloud responses should not reduce correctness percentages or be
+            rendered as incorrect in the review table. They represent submitted
+            open-ended responses rather than graded answers.
+          </div>
+        </section>
+
+        <section id="events" class="panel">
+          <h2>Socket Events</h2>
+          <p>
+            Socket event names are centralized in
+            <code>packages/common/src/constants.ts</code>. Event payload types
+            are defined in
+            <code>packages/common/src/types/game/socket.ts</code>.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Namespace</th>
+                <th>Direction</th>
+                <th>Events</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>GAME</code></td>
+                <td><span class="tag s2c">server to client</span></td>
+                <td>
+                  <code>game:status</code>, <code>game:reset</code>,
+                  <code>game:updateQuestion</code>,
+                  <code>game:playerAnswer</code>
+                </td>
+              </tr>
+              <tr>
+                <td><code>PLAYER</code></td>
+                <td><span class="tag c2s">client to server</span></td>
+                <td>
+                  <code>player:join</code>, <code>player:login</code>,
+                  <code>player:selectedAnswer</code>,
+                  <code>player:selectedAnswers</code>,
+                  <code>player:textAnswer</code>,
+                  <code>player:changeMascot</code>
+                </td>
+              </tr>
+              <tr>
+                <td><code>MANAGER</code></td>
+                <td><span class="tag c2s">client to server</span></td>
+                <td>
+                  <code>manager:auth</code>, <code>manager:startGame</code>,
+                  <code>manager:nextQuestion</code>,
+                  <code>manager:showLeaderboard</code>,
+                  <code>manager:kickPlayer</code>
+                </td>
+              </tr>
+              <tr>
+                <td><code>QUIZ</code></td>
+                <td>Both</td>
+                <td>
+                  <code>quiz:get</code>, <code>quiz:data</code>,
+                  <code>quiz:save</code>, <code>quiz:update</code>,
+                  <code>quiz:delete</code>
+                </td>
+              </tr>
+              <tr>
+                <td><code>RESULTS</code></td>
+                <td>Both</td>
+                <td>
+                  <code>results:get</code>, <code>results:data</code>,
+                  <code>results:delete</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="states" class="panel">
+          <h2>Status States</h2>
+          <p>
+            The server drives the UI through <code>game:status</code>. Each
+            status maps to a player or manager component in
+            <code>features/game/utils/constants.ts</code>.
+          </p>
+
+          <p>
+            <span class="state">SHOW_ROOM</span>
+            <span class="state">SHOW_START</span>
+            <span class="state">SHOW_PREPARED</span>
+            <span class="state">SHOW_QUESTION</span>
+            <span class="state">SELECT_ANSWER</span>
+            <span class="state">SHOW_RESULT</span>
+            <span class="state">SHOW_RESPONSES</span>
+            <span class="state">SHOW_LEADERBOARD</span>
+            <span class="state">FINISHED</span>
+            <span class="state">WAIT</span>
+          </p>
+
+          <h3>Result feedback payload</h3>
+          <pre><code>type AnswerFeedback =
+  | { type: "choice"; items: ChoiceFeedback[] }
+  | { type: "shortanswer"; playerText: string | null; correctOptions: string[] }
+  | { type: "wordcloud"; playerText: string | null }</code></pre>
+        </section>
+
+        <section id="deployment" class="panel">
+          <h2>Deployment</h2>
+          <h3>Docker Compose</h3>
+          <pre><code>docker compose up -d</code></pre>
+
+          <h3>Manual build</h3>
+          <pre><code>pnpm install
+pnpm run build
+pnpm start</code></pre>
+
+          <h3>Ports and proxying</h3>
+          <ul>
+            <li>Web: port <code>3000</code>.</li>
+            <li>Socket server: port <code>3001</code>.</li>
+            <li>WebSocket path: <code>/ws</code>.</li>
+          </ul>
+        </section>
+
+        <section id="maintenance" class="panel">
+          <h2>Maintenance Commands</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>pnpm run dev</code></td>
+                <td>Run web and socket packages in development mode.</td>
+              </tr>
+              <tr>
+                <td><code>pnpm run build</code></td>
+                <td>Build socket and web packages.</td>
+              </tr>
+              <tr>
+                <td><code>pnpm run lint</code></td>
+                <td>Run TypeScript checks and oxlint.</td>
+              </tr>
+              <tr>
+                <td><code>pnpm run format</code></td>
+                <td>Check formatting with Prettier.</td>
+              </tr>
+              <tr>
+                <td><code>pnpm run format:fix</code></td>
+                <td>Rewrite files with Prettier.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="troubleshooting" class="panel">
+          <h2>Troubleshooting</h2>
+          <h3>Players cannot connect</h3>
+          <ul>
+            <li>
+              Confirm the socket server is running on port <code>3001</code>.
+            </li>
+            <li>
+              Confirm nginx or Vite proxies <code>/ws</code> to port
+              <code>3001</code>.
+            </li>
+            <li>
+              Check browser console and socket server logs for connection
+              errors.
+            </li>
+          </ul>
+
+          <h3>Manager cannot log in</h3>
+          <ul>
+            <li>Check <code>config/game.json</code>.</li>
+            <li>Use the <code>managerPassword</code> field.</li>
+            <li>
+              Confirm <code>CONFIG_PATH</code> points to the expected config
+              directory.
+            </li>
+          </ul>
+
+          <h3>Quiz does not appear</h3>
+          <ul>
+            <li>Ensure the file is in <code>config/quiz</code>.</li>
+            <li>Ensure it is valid JSON.</li>
+            <li>Ensure it passes the Zod quiz validator.</li>
+          </ul>
+
+          <h3>Wordcloud responses appear incorrect</h3>
+          <p>
+            Treat wordcloud as neutral in result review. A submitted wordcloud
+            answer is a response, not a graded answer. The review UI should
+            branch on <code>questionResult.type === "wordcloud"</code> and show
+            a third state.
+          </p>
+        </section>
+
+        <p class="footer">
+          Generated for the Questly codebase. Open this file directly in a
+          browser: docs/technical-manual.html.
+        </p>
+      </main>
+    </div>
+  </body>
+</html>

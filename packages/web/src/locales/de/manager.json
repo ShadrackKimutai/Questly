@@ -24,6 +24,7 @@
     "paginationOf": " von ",
     "stats": {
       "correctAnswers": "Richtige Antworten",
+      "participation": "Beteiligung",
       "playersAnswered": "Spieler haben geantwortet"
     },
     "table": {
@@ -31,6 +32,7 @@
       "correct": " Richtig",
       "correctIncorrect": "Richtig / Falsch",
       "incorrect": " Falsch",
+      "participated": " Teilgenommen",
       "player": "Spieler",
       "points": "Punkte"
     },

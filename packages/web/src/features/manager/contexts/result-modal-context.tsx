@@ -15,6 +15,8 @@ export type ResultView =
   | { type: "question" }
   | { type: "player"; name: string }
 
+export type AnswerStatus = "correct" | "incorrect" | "participated"
+
 interface ResultModalContextType {
   result: GameResult
   view: ResultView
@@ -25,9 +27,11 @@ interface ResultModalContextType {
   answeredCount: number
   correctCount: number
   correctPct: number
+  isWordCloud: boolean
   maxAnswerCount: number
   getAnswerCount: (_answerIndex: number) => number
   isAnswerCorrect: (_answer: PlayerAnswerRecord["answerId"]) => boolean
+  getAnswerStatus: (_answer: PlayerAnswerRecord["answerId"], _qType?: string) => AnswerStatus
   getPlayerPoints: (_name: string) => number
   getPlayerRank: (_name: string) => number
   questionCorrectPct: (_qIndex: number) => number
@@ -68,6 +72,7 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
     q: QuestionResult,
   ) => {
     if (answer === null) return false
+    if (q.type === "wordcloud") return typeof answer === "string" && answer.trim().length > 0
     if (typeof answer === "string") {
       return (
         q.textSolutions?.some(
@@ -81,6 +86,21 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
 
   const isAnswerCorrect = (answer: PlayerAnswerRecord["answerId"]) =>
     isAnswerCorrectForQuestion(answer, questionResult)
+
+  const getAnswerStatus = (
+    answer: PlayerAnswerRecord["answerId"],
+    qType?: string,
+  ): AnswerStatus => {
+    const type = qType ?? questionResult.type
+    if (type === "wordcloud") {
+      return typeof answer === "string" && answer.trim().length > 0
+        ? "participated"
+        : "incorrect"
+    }
+    return isAnswerCorrect(answer) ? "correct" : "incorrect"
+  }
+
+  const isWordCloud = questionResult.type === "wordcloud"
 
   const correctCount = questionResult.playerAnswers.filter((pa) =>
     isAnswerCorrect(pa.answerId),
@@ -139,9 +159,11 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
         answeredCount,
         correctCount,
         correctPct,
+        isWordCloud,
         maxAnswerCount,
         getAnswerCount,
         isAnswerCorrect,
+        getAnswerStatus,
         getPlayerPoints,
         getPlayerRank,
         questionCorrectPct,

@@ -14,9 +14,18 @@ Questly is a straightforward and open-source quiz platform, allowing users to ho
 > **Disclaimer**: Questly is an independent, open-source software project. It is not affiliated with, endorsed by, or sponsored by any third-party quiz platform or service. Any resemblance to other quiz platforms is purely incidental.
 
 <p align="center">
-  <img width="30%" src=".github/previews/1.png" alt="Login">
-  <img width="30%" src=".github/previews/2.png" alt="Manager Room">
-  <img width="30%" src=".github/previews/3.png" alt="Question Screen">
+  <img width="32%" src=".github/previews/1.png" alt="Player PIN Screen">
+  <img width="32%" src=".github/previews/2.png" alt="Manager Lobby">
+  <img width="32%" src=".github/previews/3.png" alt="Single Choice Question">
+</p>
+<p align="center">
+  <img width="32%" src=".github/previews/4.png" alt="Multiple Choice Question">
+  <img width="32%" src=".github/previews/5.png" alt="Word Cloud Question">
+  <img width="32%" src=".github/previews/6.png" alt="Word Cloud Results">
+</p>
+<p align="center">
+  <img width="32%" src=".github/previews/7.png" alt="Result Analytics">
+  <img width="32%" src=".github/previews/8.png" alt="Podium">
 </p>
 
 ## ⚙️ Prerequisites

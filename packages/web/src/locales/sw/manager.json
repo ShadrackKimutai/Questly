@@ -24,7 +24,8 @@
     "paginationOf": " kati ya ",
     "stats": {
       "correctAnswers": "Majibu sahihi",
-      "playersAnswered": "Wachezaji waliojibu"
+      "playersAnswered": "Wachezaji waliojibu",
+      "participation": "Ushiriki"
     },
     "table": {
       "answered": "Alijibu",
@@ -32,7 +33,8 @@
       "correctIncorrect": "Sahihi / Lisilo sahihi",
       "incorrect": " Lisilo sahihi",
       "player": "Mchezaji",
-      "points": "Pointi"
+      "points": "Pointi",
+      "participated": " Alishiriki"
     },
     "playerCount": "wachezaji {{count}}",
     "timeLimitSuffix": "s kikomo cha muda",

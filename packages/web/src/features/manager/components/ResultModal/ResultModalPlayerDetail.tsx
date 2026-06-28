@@ -4,7 +4,7 @@ import {
 } from "@questly/web/features/game/utils/constants"
 import { useResultModal } from "@questly/web/features/manager/contexts/result-modal-context"
 import clsx from "clsx"
-import { Check, Trophy, X } from "lucide-react"
+import { Check, Minus, Trophy, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 interface Props {
@@ -27,27 +27,36 @@ const ResultModalPlayerDetail = ({ playerName }: Props) => {
         )
       : 0
 
-  const isAnswerCorrectForQuestion = (
+  type AnswerStatus = "correct" | "incorrect" | "participated"
+
+  const getAnswerStatusForQuestion = (
     answerId: number | number[] | string | null,
     q: (typeof result.questions)[0],
-  ) => {
-    if (answerId === null) return false
+  ): AnswerStatus => {
+    if (q.type === "wordcloud") {
+      return typeof answerId === "string" && answerId.trim().length > 0
+        ? "participated"
+        : "incorrect"
+    }
+    if (answerId === null) return "incorrect"
     if (typeof answerId === "string") {
-      return (
-        q.textSolutions?.some(
-          (s) => s.toLowerCase().trim() === answerId.toLowerCase().trim(),
-        ) ?? false
-      )
+      return (q.textSolutions?.some(
+        (s) => s.toLowerCase().trim() === answerId.toLowerCase().trim(),
+      ) ?? false) ? "correct" : "incorrect"
     }
     if (Array.isArray(answerId)) {
       const sorted = (arr: number[]) => [...arr].sort((a, b) => a - b)
-      return (
-        JSON.stringify(sorted(answerId)) ===
-        JSON.stringify(sorted(q.solutions))
-      )
+      return JSON.stringify(sorted(answerId)) === JSON.stringify(sorted(q.solutions))
+        ? "correct"
+        : "incorrect"
     }
-    return q.solutions.includes(answerId)
+    return q.solutions.includes(answerId) ? "correct" : "incorrect"
   }
+
+  const isAnswerCorrectForQuestion = (
+    answerId: number | number[] | string | null,
+    q: (typeof result.questions)[0],
+  ) => getAnswerStatusForQuestion(answerId, q) === "correct"
 
   const playerCorrect = result.questions.filter((q) => {
     const pa = q.playerAnswers.find((a) => a.playerName === playerName)
@@ -109,7 +118,7 @@ const ResultModalPlayerDetail = ({ playerName }: Props) => {
           {result.questions.map((q, i) => {
             const pa = q.playerAnswers.find((a) => a.playerName === playerName)
             const answerId = pa?.answerId ?? null
-            const isCorrect = pa ? isAnswerCorrectForQuestion(answerId, q) : false
+            const status = pa ? getAnswerStatusForQuestion(answerId, q) : "incorrect"
             const classPct = questionCorrectPct(i)
 
             const answerDisplay =
@@ -146,9 +155,13 @@ const ResultModalPlayerDetail = ({ playerName }: Props) => {
                   )}
                 </td>
                 <td className="px-4 py-2.5">
-                  {isCorrect ? (
+                  {status === "correct" ? (
                     <span className="flex items-center gap-1 text-green-600">
                       <Check className="size-3.5" /> {t("manager:result.table.correct")}
+                    </span>
+                  ) : status === "participated" ? (
+                    <span className="flex items-center gap-1 text-violet-500">
+                      <Minus className="size-3.5" /> {t("manager:result.table.participated")}
                     </span>
                   ) : (
                     <span className="flex items-center gap-1 text-red-500">

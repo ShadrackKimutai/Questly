@@ -24,7 +24,8 @@
     "paginationOf": " sur ",
     "stats": {
       "correctAnswers": "Bonnes réponses",
-      "playersAnswered": "Joueurs ayant répondu"
+      "playersAnswered": "Joueurs ayant répondu",
+      "participation": "Participation"
     },
     "table": {
       "answered": "A répondu",
@@ -32,7 +33,8 @@
       "correctIncorrect": "Correct / Incorrect",
       "incorrect": " Incorrect",
       "player": "Joueur",
-      "points": "Points"
+      "points": "Points",
+      "participated": " A participé"
     },
     "playerCount": "{{count}} joueur(s)",
     "timeLimitSuffix": "s limite",

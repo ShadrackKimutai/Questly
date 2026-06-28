@@ -24,6 +24,7 @@
     "paginationOf": " of ",
     "stats": {
       "correctAnswers": "Correct answers",
+      "participation": "Participation",
       "playersAnswered": "Players answered"
     },
     "table": {
@@ -31,6 +32,7 @@
       "correct": " Correct",
       "correctIncorrect": "Correct / Incorrect",
       "incorrect": " Incorrect",
+      "participated": " Participated",
       "player": "Player",
       "points": "Points"
     },
