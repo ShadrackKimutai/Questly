@@ -67,8 +67,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       uuid:
-        specifier: ^14.0.0
-        version: 14.0.0
+        specifier: ^14.0.1
+        version: 14.0.1
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -173,8 +173,8 @@ importers:
         specifier: ^5.0.0
         version: 5.0.0(react@19.2.7)
       uuid:
-        specifier: ^14.0.0
-        version: 14.0.0
+        specifier: ^14.0.1
+        version: 14.0.1
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -1325,7 +1325,6 @@ packages:
   '@tanstack/router-plugin@1.168.18':
     resolution: {integrity: sha512-MofS28/axfnfnhOD2RSgJEaU882aX5RsAzhGz5Vc4XhAmvCjy919u9JrNs4QsTWFbTD1P7IJ8WFlFVsrg0pStg==}
     engines: {node: '>=20.19'}
-    hasBin: true
     peerDependencies:
       '@rsbuild/core': '>=1.0.2 || ^2.0.0'
       '@tanstack/react-router': ^1.170.15
@@ -1412,6 +1411,11 @@ packages:
 
   acorn@8.16.0:
     resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  acorn@8.17.0:
+    resolution: {integrity: sha512-xRQbDb9BnwDafYNn6Vwl839DYVjqXYb1XVGtWAZ1kcDc6iwAL4hg3B1dZlRiuENFeO2H53gFG3in621AdERVAg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -2228,8 +2232,8 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  uuid@14.0.0:
-    resolution: {integrity: sha512-Qo+uWgilfSmAhXCMav1uYFynlQO7fMFiMVZsQqZRMIXp0O7rR7qjkj+cPvBHLgBqi960QCoo/PH2/6ZtVqKvrg==}
+  uuid@14.0.1:
+    resolution: {integrity: sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==}
     hasBin: true
 
   vary@1.1.2:
@@ -3338,7 +3342,13 @@ snapshots:
     dependencies:
       acorn: 8.16.0
 
+  acorn-jsx@5.3.2(acorn@8.17.0):
+    dependencies:
+      acorn: 8.17.0
+
   acorn@8.16.0: {}
+
+  acorn@8.17.0: {}
 
   ajv@6.15.0:
     dependencies:
@@ -3565,8 +3575,8 @@ snapshots:
 
   espree@11.2.0:
     dependencies:
-      acorn: 8.16.0
-      acorn-jsx: 5.3.2(acorn@8.16.0)
+      acorn: 8.17.0
+      acorn-jsx: 5.3.2(acorn@8.17.0)
       eslint-visitor-keys: 5.0.1
 
   esquery@1.7.0:
@@ -4076,7 +4086,7 @@ snapshots:
     dependencies:
       react: 19.2.7
 
-  uuid@14.0.0: {}
+  uuid@14.0.1: {}
 
   vary@1.1.2: {}
 
