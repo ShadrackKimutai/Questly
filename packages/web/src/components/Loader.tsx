@@ -7,7 +7,7 @@ interface Props {
 const Loader = ({ className }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className={twMerge("text-[#fff4e4]", className)}
+    className={twMerge("text-purple-400", className)}
     viewBox="0 0 100 100"
     preserveAspectRatio="xMidYMid"
   >

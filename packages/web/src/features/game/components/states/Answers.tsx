@@ -23,13 +23,21 @@ interface Props {
 }
 
 const Answers = ({
-  data: { question, answers, media, time, totalPlayer, type },
+  data: { question, answers, media, time, totalPlayer, type, playerVariables },
 }: Props) => {
   const { socket } = useSocket()
   const { player, gameId } = usePlayerStore()
   const isMultiple = type === "multiple"
   const isShortAnswer = type === "shortanswer"
   const isWordCloud = type === "wordcloud"
+  const isCalculated = type === "calculated"
+
+  // Substitute {varName} placeholders with the player's randomised values
+  const renderedQuestion = isCalculated && playerVariables
+    ? question.replace(/\{(\w+)\}/g, (_, name) =>
+        name in playerVariables ? String(playerVariables[name]) : `{${name}}`,
+      )
+    : question
 
   const [cooldown, setCooldown] = useState(time)
   const [totalAnswer, setTotalAnswer] = useState(0)
@@ -71,7 +79,15 @@ const Answers = ({
   const handleSubmit = () => {
     if (!player || !gameId || submitted) return
 
-    if (isShortAnswer || isWordCloud) {
+    if (isCalculated) {
+      if (!textInput.trim()) return
+      const numVal = parseFloat(textInput)
+      if (isNaN(numVal)) return
+      socket.emit(EVENTS.PLAYER.TEXT_ANSWER, {
+        gameId,
+        data: { answerText: textInput.trim() },
+      })
+    } else if (isShortAnswer || isWordCloud) {
       if (!textInput.trim()) return
       socket.emit(EVENTS.PLAYER.TEXT_ANSWER, {
         gameId,
@@ -123,8 +139,21 @@ const Answers = ({
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="mx-auto inline-flex min-h-0 w-full max-w-7xl flex-1 flex-col items-center justify-center gap-5 overflow-y-auto px-4 py-4">
         <h2 className="text-center text-2xl font-bold text-white drop-shadow-lg md:text-4xl lg:text-5xl">
-          {question}
+          {renderedQuestion}
         </h2>
+
+        {isCalculated && playerVariables && Object.keys(playerVariables).length > 0 && (
+          <div className="flex flex-wrap justify-center gap-2">
+            {Object.entries(playerVariables).map(([name, val]) => (
+              <span
+                key={name}
+                className="rounded-xl bg-white/15 px-4 py-1.5 font-mono text-lg font-bold text-white backdrop-blur-sm drop-shadow"
+              >
+                {name} = {val}
+              </span>
+            ))}
+          </div>
+        )}
 
         {isWordCloud && (
           <p className="rounded-lg bg-black/30 px-4 py-1.5 text-sm font-semibold text-white drop-shadow">
@@ -155,7 +184,37 @@ const Answers = ({
           </div>
         </div>
 
-        {(isShortAnswer || isWordCloud) && player ? (
+        {isCalculated && player ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            <div className="mb-2 flex gap-2">
+              <input
+                ref={inputRef}
+                type="number"
+                inputMode="decimal"
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+                disabled={submitted}
+                placeholder={t("game:calculated.hint")}
+                className="flex-1 rounded-2xl bg-white/20 px-4 py-3 text-base font-semibold text-white placeholder-white/60 outline-none backdrop-blur-sm focus:bg-white/30 disabled:opacity-60"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitted || !textInput.trim()}
+              className="bg-primary w-full rounded-2xl py-3 text-base font-bold text-white shadow-lg transition-opacity disabled:opacity-40 md:py-4 md:text-lg"
+            >
+              {t("game:submitAnswer")}
+            </button>
+          </div>
+        ) : isCalculated ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 text-white/80 font-semibold">
+              {t("game:waitingForAnswers")}
+            </div>
+          </div>
+        ) : (isShortAnswer || isWordCloud) && player ? (
           <div className="mx-auto mb-3 w-full max-w-7xl px-2">
             <div className="mb-2 flex gap-2">
               <input

@@ -25,7 +25,20 @@ export interface QuestionMedia {
   url: string
 }
 
-export type QuestionType = 'single' | 'multiple' | 'truefalse' | 'shortanswer' | 'wordcloud'
+export type QuestionType =
+  | 'single'
+  | 'multiple'
+  | 'truefalse'
+  | 'shortanswer'
+  | 'wordcloud'
+  | 'calculated'
+
+export interface CalculatedVariable {
+  name: string
+  min: number
+  max: number
+  decimals: number
+}
 
 export interface Question {
   question: string
@@ -36,6 +49,12 @@ export interface Question {
   cooldown: number
   time: number
   type?: QuestionType
+  // calculated question fields
+  calculatedVariables?: CalculatedVariable[]
+  formula?: string
+  toleranceBase?: number    // % — default 5
+  tolerancePartial?: number // % — default 15
+  answerDecimals?: number   // decimal places for the expected answer display
 }
 
 export interface Quiz {

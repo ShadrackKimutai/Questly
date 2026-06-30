@@ -14,8 +14,8 @@ const Input = ({
   <input
     type={type}
     className={clsx(
-      "focus:outline-primary rounded-lg font-semibold outline-2 outline-gray-300",
-      variant === "md" && "p-2 text-lg",
+      "rounded-xl border-2 border-gray-200 bg-gray-50 font-semibold text-gray-800 outline-none transition-all placeholder:text-gray-400 focus:border-primary focus:bg-white focus:shadow-sm focus:shadow-primary/20",
+      variant === "md" && "p-3 text-lg",
       variant === "sm" && "px-3 py-2 text-sm",
       className,
     )}

@@ -66,31 +66,35 @@ const GameWrapper = ({
           src={background}
           alt="background"
         />
+        {/* Dark overlay for better contrast */}
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
       <div className="z-10 flex w-full flex-1 flex-col justify-between overflow-hidden">
         {!isConnected && !statusName ? (
           <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
             <Loader className="h-30" />
-            <h1 className="text-4xl font-bold text-white">
+            <h1 className="mt-4 text-4xl font-bold text-white drop-shadow-lg">
               {t("common:connecting")}
             </h1>
           </div>
         ) : (
           <>
-            <div className="flex w-full justify-between p-4">
+            <div className="flex w-full items-center justify-between p-4">
               {questionStates && (
-                <div className="flex items-center rounded-md bg-white p-2 px-4 text-lg font-bold text-black">
-                  {`${questionStates.current} / ${questionStates.total}`}
+                <div className="gradient-purple flex items-center gap-1.5 rounded-xl px-4 py-2 text-base font-bold text-white shadow-lg shadow-purple-900/40">
+                  <span className="opacity-70">{questionStates.current}</span>
+                  <span className="opacity-40">/</span>
+                  <span>{questionStates.total}</span>
                 </div>
               )}
 
               {manager && next && (
                 <Button
                   className={clsx(
-                    "bg-white px-4 text-black hover:bg-gray-200",
+                    "bg-white/15 border border-white/30 px-5 text-white backdrop-blur-sm hover:bg-white/25 shadow-none",
                     {
-                      "pointer-events-none": isDisabled,
+                      "pointer-events-none opacity-60": isDisabled,
                     },
                   )}
                   onClick={handleNext}
@@ -102,7 +106,7 @@ const GameWrapper = ({
               {manager && onBack && (
                 <Button
                   onClick={onBack}
-                  className="bg-white px-4 text-black hover:bg-gray-200"
+                  className="bg-white/15 border border-white/30 px-5 text-white backdrop-blur-sm hover:bg-white/25 shadow-none"
                 >
                   {t("common:exit")}
                 </Button>
@@ -112,9 +116,9 @@ const GameWrapper = ({
             {children}
 
             {!manager && (
-              <div className="z-50 flex items-center justify-between bg-white px-4 py-1">
-                <span className="text-4xl leading-none">{player?.mascot}</span>
-                <div className="rounded-lg bg-gray-800 px-3 py-1 text-lg font-bold text-white">
+              <div className="z-50 flex items-center justify-between border-t border-white/10 bg-black/40 px-4 py-2 backdrop-blur-sm">
+                <span className="text-4xl leading-none drop-shadow-md">{player?.mascot}</span>
+                <div className="gradient-primary rounded-xl px-4 py-1.5 text-lg font-bold text-white shadow-md shadow-orange-900/40">
                   {player?.points}
                 </div>
               </div>

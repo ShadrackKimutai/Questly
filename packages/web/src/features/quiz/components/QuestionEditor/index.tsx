@@ -11,9 +11,9 @@ const QuestionEditor = () => (
       <QuestionEditorMedia />
       <QuestionEditorAnswers />
 
-      <div className="fixed top-0 left-0 h-full w-full">
+      <div className="pointer-events-none fixed top-0 left-0 h-full w-full">
         <img
-          className="pointer-events-none h-full w-full object-cover select-none"
+          className="h-full w-full object-cover select-none"
           src={background}
           alt="background"
         />

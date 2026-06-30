@@ -17,6 +17,11 @@ import {
 } from "@questly/common/types/game/status"
 import { CooldownTimer } from "@questly/socket/services/game/cooldown-timer"
 import { PlayerManager } from "@questly/socket/services/game/player-manager"
+import {
+  checkTolerance,
+  evaluateFormula,
+  randomizeVariables,
+} from "@questly/socket/utils/calculated"
 import { orderToPoint, timeToPoint } from "@questly/socket/utils/game"
 import sleep from "@questly/socket/utils/sleep"
 import { nanoid } from "nanoid"
@@ -44,6 +49,11 @@ export interface RoundManagerOptions {
   onGameFinished: (_result: GameResult) => void
 }
 
+interface CalculatedPlayerData {
+  correctAnswer: number
+  variables: Record<string, number>
+}
+
 export class RoundManager {
   private readonly opts: RoundManagerOptions
   private started = false
@@ -53,6 +63,7 @@ export class RoundManager {
   private leaderboard: Player[] = []
   private tempOldLeaderboard: Player[] | null = null
   private questionsHistory: QuestionResult[] = []
+  private calculatedData = new Map<string, CalculatedPlayerData>()
 
   constructor(opts: RoundManagerOptions) {
     this.opts = opts
@@ -105,7 +116,10 @@ export class RoundManager {
     }
 
     const question = this.opts.quiz.questions[this.currentQuestion]
+    const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
+    const isCalculated = qType === "calculated"
 
+    this.calculatedData.clear()
     this.opts.onNewQuestion()
 
     this.opts.io.to(this.opts.gameId).emit(EVENTS.GAME.UPDATE_QUESTION, {
@@ -114,8 +128,9 @@ export class RoundManager {
     })
 
     this.opts.broadcast(STATUS.SHOW_PREPARED, {
-      totalAnswers: question.answers.length,
+      totalAnswers: isCalculated ? 0 : question.answers.length,
       questionNumber: this.currentQuestion + 1,
+      type: qType,
     })
 
     await sleep(2)
@@ -141,14 +156,47 @@ export class RoundManager {
 
     this.startTime = Date.now()
 
-    this.opts.broadcast(STATUS.SELECT_ANSWER, {
-      question: question.question,
-      answers: question.answers,
-      media: question.media,
-      time: question.time,
-      totalPlayer: this.opts.players.count(),
-      type: question.type ?? (question.solutions.length > 1 ? "multiple" : "single"),
-    })
+    if (isCalculated) {
+      // Send individualised SELECT_ANSWER to each player with their own variables
+      const players = this.opts.players.getAll()
+      const vars = question.calculatedVariables ?? []
+      const formula = question.formula ?? ""
+
+      for (const player of players) {
+        const variables = randomizeVariables(vars)
+        const correctAnswer = evaluateFormula(formula, variables)
+        this.calculatedData.set(player.id, { correctAnswer, variables })
+
+        this.opts.send(player.id, STATUS.SELECT_ANSWER, {
+          question: question.question,
+          answers: [],
+          media: question.media,
+          time: question.time,
+          totalPlayer: players.length,
+          type: "calculated",
+          playerVariables: variables,
+        })
+      }
+
+      // Manager sees the template without variables
+      this.opts.send(this.opts.getManagerId(), STATUS.SELECT_ANSWER, {
+        question: question.question,
+        answers: [],
+        media: question.media,
+        time: question.time,
+        totalPlayer: players.length,
+        type: "calculated",
+      })
+    } else {
+      this.opts.broadcast(STATUS.SELECT_ANSWER, {
+        question: question.question,
+        answers: question.answers,
+        media: question.media,
+        time: question.time,
+        totalPlayer: this.opts.players.count(),
+        type: qType,
+      })
+    }
 
     await this.opts.cooldown.start(question.time)
 
@@ -184,6 +232,13 @@ export class RoundManager {
     )
 
     const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
+    const isCalculated = qType === "calculated"
+
+    const toleranceBase = question.toleranceBase ?? 5
+    const tolerancePartial = question.tolerancePartial ?? 15
+
+    // Track calculated summary for the manager
+    const calcSummary = { full: 0, partial: 0, wrong: 0 }
 
     const sortedPlayers = currentPlayers
       .map((player) => {
@@ -191,29 +246,65 @@ export class RoundManager {
           (a) => a.playerId === player.id,
         )
 
-        const isCorrect = (() => {
-          if (!playerAnswer) return false
-          if (qType === "wordcloud") return true
-          const { answerId } = playerAnswer
-          if (typeof answerId === "string") {
-            return (question.textSolutions ?? []).some(
-              (s) => s.toLowerCase().trim() === answerId.toLowerCase().trim(),
+        let isCorrect = false
+        let isPartial = false
+        let earnedPoints = 0
+
+        if (isCalculated) {
+          const stored = this.calculatedData.get(player.id)
+          const rawText = typeof playerAnswer?.answerId === "string" ? playerAnswer.answerId : null
+          const playerNum = rawText !== null ? parseFloat(rawText) : NaN
+
+          if (stored && !isNaN(playerNum)) {
+            const tier = checkTolerance(
+              playerNum,
+              stored.correctAnswer,
+              toleranceBase,
+              tolerancePartial,
             )
+            if (tier === "full") {
+              isCorrect = true
+              earnedPoints = Math.round(playerAnswer?.points ?? 0)
+              calcSummary.full++
+            } else if (tier === "partial") {
+              isPartial = true
+              earnedPoints = Math.round((playerAnswer?.points ?? 0) * 0.5)
+              calcSummary.partial++
+            } else {
+              calcSummary.wrong++
+            }
+          } else {
+            calcSummary.wrong++
           }
-          if (Array.isArray(answerId)) {
-            const sorted = (arr: number[]) => [...arr].sort((a, b) => a - b)
-            return JSON.stringify(sorted(answerId)) === JSON.stringify(sorted(question.solutions))
-          }
-          return question.solutions.includes(answerId)
-        })()
+        } else {
+          isCorrect = (() => {
+            if (!playerAnswer) return false
+            if (qType === "wordcloud") return true
+            const { answerId } = playerAnswer
+            if (typeof answerId === "string") {
+              return (question.textSolutions ?? []).some(
+                (s) => s.toLowerCase().trim() === answerId.toLowerCase().trim(),
+              )
+            }
+            if (Array.isArray(answerId)) {
+              const sorted = (arr: number[]) => [...arr].sort((a, b) => a - b)
+              return JSON.stringify(sorted(answerId)) === JSON.stringify(sorted(question.solutions))
+            }
+            return question.solutions.includes(answerId)
+          })()
+          earnedPoints = playerAnswer && isCorrect ? Math.round(playerAnswer.points) : 0
+        }
 
-        const points =
-          playerAnswer && isCorrect ? Math.round(playerAnswer.points) : 0
-
-        player.points += points
+        player.points += earnedPoints
+        // Streak: full correct maintains, partial or wrong breaks
         player.streak = isCorrect ? player.streak + 1 : 0
 
-        return { ...player, lastCorrect: isCorrect, lastPoints: points }
+        return {
+          ...player,
+          lastCorrect: isCorrect,
+          lastPartial: isPartial,
+          lastPoints: earnedPoints,
+        }
       })
       .sort((a, b) => b.points - a.points)
 
@@ -226,36 +317,65 @@ export class RoundManager {
       const playerAnswer = this.playersAnswers.find((a) => a.playerId === player.id)
       const answerId = playerAnswer?.answerId ?? null
 
-      const answerFeedback: AnswerFeedback = qType === "wordcloud"
-        ? {
-            type: "wordcloud",
-            playerText: typeof answerId === "string" ? answerId : null,
-          }
-        : qType === "shortanswer"
-        ? {
-            type: "shortanswer",
-            playerText: typeof answerId === "string" ? answerId : null,
-            correctOptions: question.textSolutions ?? [],
-          }
-        : {
-            type: "choice",
-            items: question.answers.map((text, i) => {
-              const selectedIds = Array.isArray(answerId)
-                ? answerId
-                : typeof answerId === "number"
-                  ? [answerId]
-                  : []
-              return {
-                text,
-                selectedByPlayer: selectedIds.includes(i),
-                isCorrect: question.solutions.includes(i),
-              }
-            }),
-          }
+      let answerFeedback: AnswerFeedback
+
+      if (isCalculated) {
+        const stored = this.calculatedData.get(player.id)
+        const rawText = typeof answerId === "string" ? answerId : null
+        const playerNum = rawText !== null ? parseFloat(rawText) : null
+        const stored2 = this.calculatedData.get(player.id)
+
+        let resultTier: "full" | "partial" | "wrong" = "wrong"
+        if (stored2 && playerNum !== null && !isNaN(playerNum)) {
+          resultTier = checkTolerance(playerNum, stored2.correctAnswer, toleranceBase, tolerancePartial)
+        }
+
+        answerFeedback = {
+          type: "calculated",
+          playerAnswer: playerNum !== null && !isNaN(playerNum!) ? playerNum : null,
+          correctAnswer: stored?.correctAnswer ?? 0,
+          playerVariables: stored?.variables ?? {},
+          resultTier,
+        }
+      } else if (qType === "wordcloud") {
+        answerFeedback = {
+          type: "wordcloud",
+          playerText: typeof answerId === "string" ? answerId : null,
+        }
+      } else if (qType === "shortanswer") {
+        answerFeedback = {
+          type: "shortanswer",
+          playerText: typeof answerId === "string" ? answerId : null,
+          correctOptions: question.textSolutions ?? [],
+        }
+      } else {
+        answerFeedback = {
+          type: "choice",
+          items: question.answers.map((text, i) => {
+            const selectedIds = Array.isArray(answerId)
+              ? answerId
+              : typeof answerId === "number"
+                ? [answerId]
+                : []
+            return {
+              text,
+              selectedByPlayer: selectedIds.includes(i),
+              isCorrect: question.solutions.includes(i),
+            }
+          }),
+        }
+      }
+
+      const isPartial = (player as typeof player & { lastPartial?: boolean }).lastPartial ?? false
 
       this.opts.send(player.id, STATUS.SHOW_RESULT, {
         correct: player.lastCorrect,
-        message: player.lastCorrect ? "game:correct" : "game:wrong",
+        partial: isPartial || undefined,
+        message: player.lastCorrect
+          ? "game:correct"
+          : isPartial
+            ? "game:partial"
+            : "game:wrong",
         points: player.lastPoints,
         myPoints: player.points,
         rank,
@@ -280,6 +400,7 @@ export class RoundManager {
       responses: totalType,
       type: qType,
       wordResponses,
+      calculatedSummary: isCalculated ? calcSummary : undefined,
     })
 
     this.questionsHistory.push({

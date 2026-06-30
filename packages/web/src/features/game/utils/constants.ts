@@ -14,10 +14,10 @@ import Wait from "@questly/web/features/game/components/states/Wait"
 import { STATUS } from "@questly/common/types/game/status"
 
 export const ANSWERS_COLORS = [
-  "bg-[#E69F00] text-white",
-  "bg-[#56B4E9] text-white",
-  "bg-[#3DBFA0] text-white",
-  "bg-[#CC79A7] text-white",
+  "bg-[#F59E0B] text-white shadow-lg shadow-amber-900/30",
+  "bg-[#3B82F6] text-white shadow-lg shadow-blue-900/30",
+  "bg-[#10B981] text-white shadow-lg shadow-emerald-900/30",
+  "bg-[#EC4899] text-white shadow-lg shadow-pink-900/30",
 ]
 
 export const ANSWERS_LABELS = ["A", "B", "C", "D"]

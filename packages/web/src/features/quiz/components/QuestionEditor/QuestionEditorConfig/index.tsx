@@ -6,7 +6,7 @@ import ConfigNumberInput from "@questly/web/features/quiz/components/QuestionEdi
 import ConfigSection from "@questly/web/features/quiz/components/QuestionEditor/QuestionEditorConfig/ConfigSection"
 import { useQuizEditor } from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import clsx from "clsx"
-import { CheckSquare, Clock, Cloud, Keyboard, Square, Timer, ToggleLeft } from "lucide-react"
+import { Calculator, CheckSquare, Clock, Cloud, Keyboard, Square, Timer, ToggleLeft } from "lucide-react"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -20,6 +20,7 @@ const QUESTION_TYPES: { value: QuestionType; labelKey: string; icon: ReactNode }
   { value: "truefalse", labelKey: "quiz:question.config.typeTrueFalse", icon: <ToggleLeft className="size-4" /> },
   { value: "shortanswer", labelKey: "quiz:question.config.typeShortAnswer", icon: <Keyboard className="size-4" /> },
   { value: "wordcloud", labelKey: "quiz:question.config.typeWordCloud", icon: <Cloud className="size-4" /> },
+  { value: "calculated", labelKey: "quiz:question.config.typeCalculated", icon: <Calculator className="size-4" /> },
 ]
 
 const QuestionEditorConfig = () => {
@@ -45,8 +46,25 @@ const QuestionEditorConfig = () => {
       updateQuestion(currentIndex, { type: value, answers: [], solutions: [], textSolutions: [""] })
     } else if (value === "wordcloud") {
       updateQuestion(currentIndex, { type: value, answers: [], solutions: [], textSolutions: undefined })
-    } else if (questionType === "truefalse" || questionType === "shortanswer" || questionType === "wordcloud") {
-      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0], textSolutions: undefined })
+    } else if (value === "calculated") {
+      updateQuestion(currentIndex, {
+        type: value,
+        answers: [],
+        solutions: [],
+        textSolutions: undefined,
+        calculatedVariables: [{ name: "a", min: 1, max: 10, decimals: 0 }],
+        formula: "",
+        toleranceBase: 5,
+        tolerancePartial: 15,
+        answerDecimals: 2,
+      })
+    } else if (
+      questionType === "truefalse" ||
+      questionType === "shortanswer" ||
+      questionType === "wordcloud" ||
+      questionType === "calculated"
+    ) {
+      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0], textSolutions: undefined, calculatedVariables: undefined, formula: undefined })
     } else {
       updateQuestion(currentIndex, { type: value })
     }

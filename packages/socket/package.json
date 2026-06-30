@@ -13,6 +13,7 @@
   "dependencies": {
     "@questly/common": "workspace:*",
     "dayjs": "^1.11.21",
+    "mathjs": "^15.2.0",
     "nanoid": "^5.1.11",
     "socket.io": "^4.8.3",
     "typescript": "^6.0.3",

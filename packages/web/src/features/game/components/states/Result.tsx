@@ -17,6 +17,46 @@ interface Props {
 const FeedbackPanel = ({ feedback }: { feedback: AnswerFeedback }) => {
   const { t } = useTranslation()
 
+  if (feedback.type === "calculated") {
+    const tierColor =
+      feedback.resultTier === "full"
+        ? "bg-emerald-500/20 border border-emerald-500/40"
+        : feedback.resultTier === "partial"
+          ? "bg-amber-500/20 border border-amber-500/40"
+          : "bg-red-500/20 border border-red-500/40"
+
+    return (
+      <div className={`mt-2 w-full max-w-md space-y-3 rounded-2xl p-4 backdrop-blur-sm ${tierColor}`}>
+        {/* Variables row */}
+        {Object.keys(feedback.playerVariables).length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {Object.entries(feedback.playerVariables).map(([name, val]) => (
+              <span
+                key={name}
+                className="rounded-lg bg-white/10 px-2 py-0.5 font-mono text-sm font-bold text-white"
+              >
+                {name} = {val}
+              </span>
+            ))}
+          </div>
+        )}
+        {/* Answers */}
+        <div className="flex flex-col gap-1.5 text-sm font-semibold">
+          <div className="flex items-center justify-between">
+            <span className="text-white/60">{t("game:calculated.yourAnswer")}</span>
+            <span className="font-bold text-white">
+              {feedback.playerAnswer !== null ? feedback.playerAnswer : t("game:noAnswer")}
+            </span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-white/60">{t("game:calculated.correctAnswer")}</span>
+            <span className="font-bold text-emerald-300">{feedback.correctAnswer}</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   if (feedback.type === "wordcloud") {
     return (
       <div className="mt-2 w-full max-w-md space-y-2 rounded-2xl bg-black/30 p-4 backdrop-blur-sm">
@@ -126,7 +166,7 @@ const FeedbackPanel = ({ feedback }: { feedback: AnswerFeedback }) => {
 }
 
 const Result = ({
-  data: { correct, message, points, myPoints, rank, aheadOfMe, answerFeedback },
+  data: { correct, partial, message, points, myPoints, rank, aheadOfMe, answerFeedback },
 }: Props) => {
   const player = usePlayerStore()
   const { t } = useTranslation()
@@ -141,12 +181,14 @@ const Result = ({
 
   useEffect(() => {
     player.updatePoints(myPoints)
-
     const { pendingQuestion, appendHistory } = player
     if (pendingQuestion) {
       appendHistory({ question: pendingQuestion, correct, points })
     }
+    // oxlint-disable-next-line
+  }, [])
 
+  useEffect(() => {
     sfxResults()
     // oxlint-disable-next-line
   }, [sfxResults])
@@ -155,6 +197,10 @@ const Result = ({
     <section className="anim-show relative mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center gap-2 px-4">
       {correct ? (
         <CricleCheck className="aspect-square max-h-52 w-full" />
+      ) : partial ? (
+        <div className="flex aspect-square max-h-52 w-full items-center justify-center text-[10rem] leading-none">
+          🟡
+        </div>
       ) : (
         <CricleXmark className="aspect-square max-h-52 w-full" />
       )}

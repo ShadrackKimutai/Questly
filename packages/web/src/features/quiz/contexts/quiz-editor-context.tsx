@@ -39,6 +39,7 @@ const defaultQuestion = (): QuestionWithId => ({
 
 const inferType = (q: Question): QuestionType => {
   if (q.type) return q.type
+  if (q.formula) return "calculated"
   if (q.textSolutions && q.textSolutions.length > 0) return "shortanswer"
   if (q.solutions.length > 1) return "multiple"
   return "single"

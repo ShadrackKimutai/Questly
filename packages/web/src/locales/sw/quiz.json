@@ -20,7 +20,8 @@
       "typeMultiple": "Nyingi",
       "typeTrueFalse": "Kweli / Uongo",
       "typeShortAnswer": "Jibu Fupi",
-      "typeWordCloud": "Wingu la Maneno"
+      "typeWordCloud": "Wingu la Maneno",
+      "typeCalculated": "Hesabu"
     },
     "deleteQuestion": "Futa swali",
     "deleteQuestionConfirm": "Je, una uhakika unataka kufuta swali hili?",
@@ -35,5 +36,15 @@
   "quizSaved": "Maswali yamehifadhiwa",
   "quizUpdated": "Maswali yamefanyiwa mabadiliko",
   "titleQuizPlaceholder": "Kichwa cha maswali...",
-  "wordcloudHint": "Wachezaji wanaandika maneno au sentensi kwa uhuru. Majibu yote yanaonyeshwa kwenye wingu la maneno."
+  "wordcloudHint": "Wachezaji wanaandika maneno au sentensi kwa uhuru. Majibu yote yanaonyeshwa kwenye wingu la maneno.",
+  "calculated": {
+    "variables": "Variables",
+    "formula": "Formula",
+    "formulaPlaceholder": "e.g. a * (b + c)",
+    "formulaHint": "Use variable names: {{vars}}. Supports +, -, *, /, ^, sqrt(), etc.",
+    "toleranceFull": "Full XP (±%)",
+    "tolerancePartial": "Partial XP (±%)",
+    "answerDecimals": "Answer dp",
+    "preview": "Preview"
+  }
 }

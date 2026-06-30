@@ -1,9 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #ff9900;
-  --color-secondary: #1a140b;
+  --color-primary: #ff6b00;
+  --color-primary-dark: #e55a00;
+  --color-secondary: #260475;
+  --color-purple: #7c3aed;
+  --color-cyan: #06b6d4;
+  --color-pink: #ec4899;
+  --color-emerald: #10b981;
   --font-display: "Rubik Variable", sans-serif;
+}
+
+.gradient-primary {
+  background-image: linear-gradient(135deg, #ec6402 0%, #ff9a3c 100%);
+}
+
+.gradient-purple {
+  background-image: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+}
+
+.gradient-bg {
+  background-image: linear-gradient(
+    160deg,
+    #1a0533 0%,
+    #0d1340 50%,
+    #12082a 100%
+  );
 }
 
 button:not(:disabled),
@@ -84,12 +106,24 @@ button:not(:disabled),
 }
 
 @keyframes dance {
-  0%   { transform: translateY(0)    scale(1)    rotate(0deg); }
-  20%  { transform: translateY(-18px) scale(1.15) rotate(-10deg); }
-  40%  { transform: translateY(-4px)  scale(0.95) rotate(0deg); }
-  60%  { transform: translateY(-14px) scale(1.1)  rotate(10deg); }
-  80%  { transform: translateY(-2px)  scale(0.97) rotate(0deg); }
-  100% { transform: translateY(0)    scale(1)    rotate(0deg); }
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-18px) scale(1.15) rotate(-10deg);
+  }
+  40% {
+    transform: translateY(-4px) scale(0.95) rotate(0deg);
+  }
+  60% {
+    transform: translateY(-14px) scale(1.1) rotate(10deg);
+  }
+  80% {
+    transform: translateY(-2px) scale(0.97) rotate(0deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
 }
 
 @keyframes balanced {
@@ -181,4 +215,63 @@ button:not(:disabled),
   100% {
     transform: scale(1);
   }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.04);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-14px) rotate(3deg);
+  }
+  66% {
+    transform: translateY(8px) rotate(-2deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px 4px rgba(255, 107, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px 12px rgba(255, 107, 0, 0.7);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.anim-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.anim-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.anim-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.dot-grid {
+  background-image: radial-gradient(circle, white 1px, transparent 1px);
+  background-size: 32px 32px;
 }

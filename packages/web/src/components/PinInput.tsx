@@ -91,7 +91,13 @@ const PinInput = ({ value, onChange, length = 6, className }: Props) => {
           onChange={handleChange(i)}
           onKeyDown={handleKeyDown(i)}
           onPaste={handlePaste}
-          className="focus:border-primary w-10 flex-1 rounded-lg border-2 border-gray-300 p-2 text-center text-lg font-semibold outline-none"
+          className={clsx(
+            "w-10 flex-1 rounded-xl border-2 p-2.5 text-center text-xl font-bold outline-none transition-all",
+            digit
+              ? "border-primary bg-primary/5 text-primary shadow-sm shadow-primary/20"
+              : "border-gray-200 bg-gray-50 text-gray-800",
+            "focus:border-primary focus:bg-primary/5 focus:shadow-sm focus:shadow-primary/20",
+          )}
         />
       ))}
     </div>

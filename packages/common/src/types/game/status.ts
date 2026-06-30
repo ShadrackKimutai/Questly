@@ -4,6 +4,13 @@ export type AnswerFeedback =
   | { type: "shortanswer"; playerText: string | null; correctOptions: string[] }
   | { type: "choice"; items: { text: string; selectedByPlayer: boolean; isCorrect: boolean }[] }
   | { type: "wordcloud"; playerText: string | null }
+  | {
+      type: "calculated"
+      playerAnswer: number | null
+      correctAnswer: number
+      playerVariables: Record<string, number>
+      resultTier: "full" | "partial" | "wrong"
+    }
 
 export const STATUS = {
   SHOW_ROOM: "SHOW_ROOM",
@@ -22,7 +29,7 @@ export type Status = (typeof STATUS)[keyof typeof STATUS]
 
 export interface CommonStatusDataMap {
   SHOW_START: { time: number; subject: string }
-  SHOW_PREPARED: { totalAnswers: number; questionNumber: number }
+  SHOW_PREPARED: { totalAnswers: number; questionNumber: number; type?: QuestionType }
   SHOW_QUESTION: {
     question: string
     media?: QuestionMedia
@@ -35,9 +42,11 @@ export interface CommonStatusDataMap {
     time: number
     totalPlayer: number
     type?: QuestionType
+    playerVariables?: Record<string, number>
   }
   SHOW_RESULT: {
     correct: boolean
+    partial?: boolean
     message: string
     points: number
     myPoints: number
@@ -59,6 +68,7 @@ interface ManagerExtraStatus {
     media?: QuestionMedia
     type?: QuestionType
     wordResponses?: Record<string, number>
+    calculatedSummary?: { full: number; partial: number; wrong: number }
   }
   SHOW_LEADERBOARD: { oldLeaderboard: Player[]; leaderboard: Player[] }
 }
