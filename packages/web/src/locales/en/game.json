@@ -43,5 +43,15 @@
   "missed": "missed",
   "noAnswer": "No answer",
   "typeYourWord": "Type a word or phrase...",
-  "wordcloudHint": "Type any word or phrase — all responses count!"
+  "wordcloudHint": "Type any word or phrase — all responses count!",
+  "partial": "Almost!",
+  "calculated": {
+    "hint": "Enter your answer...",
+    "yourVariables": "Your variables",
+    "correctAnswer": "Correct answer",
+    "yourAnswer": "Your answer",
+    "fullCredit": "Full credit",
+    "partialCredit": "Partial credit",
+    "wrongAnswer": "Wrong answer"
+  }
 }

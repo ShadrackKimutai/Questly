@@ -46,7 +46,7 @@ const WordCloud = ({ wordResponses }: { wordResponses: Record<string, number> })
 }
 
 const Responses = ({
-  data: { question, answers, responses, solutions, type, wordResponses },
+  data: { question, answers, responses, solutions, type, wordResponses, calculatedSummary },
 }: Props) => {
   const [percentages, setPercentages] = useState<Record<string, string>>({})
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
@@ -82,6 +82,7 @@ const Responses = ({
   }, [playMusic, stopMusic])
 
   const isWordCloud = type === "wordcloud"
+  const isCalculated = type === "calculated"
 
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
@@ -90,7 +91,30 @@ const Responses = ({
           {question}
         </h2>
 
-        {isWordCloud ? (
+        {isCalculated ? (
+          <div className="mt-8 flex w-full max-w-xl flex-col gap-4 px-2">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="flex flex-col items-center gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/20 p-5 backdrop-blur-sm">
+                <span className="text-4xl font-bold text-emerald-300">
+                  {calculatedSummary?.full ?? 0}
+                </span>
+                <span className="text-sm font-semibold text-emerald-200/80">Full Credit</span>
+              </div>
+              <div className="flex flex-col items-center gap-2 rounded-2xl border border-amber-500/40 bg-amber-500/20 p-5 backdrop-blur-sm">
+                <span className="text-4xl font-bold text-amber-300">
+                  {calculatedSummary?.partial ?? 0}
+                </span>
+                <span className="text-sm font-semibold text-amber-200/80">Partial</span>
+              </div>
+              <div className="flex flex-col items-center gap-2 rounded-2xl border border-red-500/40 bg-red-500/20 p-5 backdrop-blur-sm">
+                <span className="text-4xl font-bold text-red-300">
+                  {calculatedSummary?.wrong ?? 0}
+                </span>
+                <span className="text-sm font-semibold text-red-200/80">Wrong</span>
+              </div>
+            </div>
+          </div>
+        ) : isWordCloud ? (
           <WordCloud wordResponses={wordResponses ?? {}} />
         ) : (
           <div
@@ -115,7 +139,7 @@ const Responses = ({
         )}
       </div>
 
-      {!isWordCloud && (
+      {!isWordCloud && !isCalculated && (
         <div>
           <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 rounded-full px-2 text-lg font-bold text-white md:text-xl">
             {answers.map((answer, key) => (

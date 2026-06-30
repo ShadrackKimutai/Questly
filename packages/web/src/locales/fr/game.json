@@ -35,5 +35,15 @@
   "missed": "missed",
   "noAnswer": "Pas de réponse",
   "typeYourWord": "Écris un mot ou une phrase...",
-  "wordcloudHint": "Écris n'importe quel mot ou phrase – toutes les réponses comptent !"
+  "wordcloudHint": "Écris n'importe quel mot ou phrase – toutes les réponses comptent !",
+  "partial": "Presque !",
+  "calculated": {
+    "hint": "Entrez votre réponse...",
+    "yourVariables": "Vos variables",
+    "correctAnswer": "Bonne réponse",
+    "yourAnswer": "Votre réponse",
+    "fullCredit": "Crédit complet",
+    "partialCredit": "Crédit partiel",
+    "wrongAnswer": "Mauvaise réponse"
+  }
 }

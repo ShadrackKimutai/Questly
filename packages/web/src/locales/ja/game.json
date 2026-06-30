@@ -35,5 +35,15 @@
   "missed": "missed",
   "noAnswer": "回答なし",
   "typeYourWord": "単語やフレーズを入力...",
-  "wordcloudHint": "どんな単語やフレーズでもOK — すべての回答が有効です！"
+  "wordcloudHint": "どんな単語やフレーズでもOK — すべての回答が有効です！",
+  "partial": "惜しい！",
+  "calculated": {
+    "hint": "答えを入力...",
+    "yourVariables": "あなたの変数",
+    "correctAnswer": "正解",
+    "yourAnswer": "あなたの答え",
+    "fullCredit": "満点",
+    "partialCredit": "部分点",
+    "wrongAnswer": "不正解"
+  }
 }

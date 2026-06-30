@@ -14,7 +14,8 @@
       "questionDisplay": "問題表示",
       "questionDisplayHint": "回答が表示されるまでの時間",
       "timings": "タイミング",
-      "typeWordCloud": "ワードクラウド"
+      "typeWordCloud": "ワードクラウド",
+      "typeCalculated": "計算式"
     },
     "deleteQuestion": "この質問を削除",
     "deleteQuestionConfirm": "この質問を削除してもよろしいですか？",
@@ -29,5 +30,15 @@
   "quizSaved": "クイズを保存しました",
   "quizUpdated": "クイズを更新しました",
   "titleQuizPlaceholder": "クイズのタイトル...",
-  "wordcloudHint": "プレイヤーが自由に単語やフレーズを入力します。すべての回答がワードクラウドに表示されます。"
+  "wordcloudHint": "プレイヤーが自由に単語やフレーズを入力します。すべての回答がワードクラウドに表示されます。",
+  "calculated": {
+    "variables": "変数",
+    "formula": "数式",
+    "formulaPlaceholder": "例: 0.333 * 3.14159 * a^2 * b",
+    "formulaHint": "変数名を使用: {{vars}}",
+    "toleranceFull": "満点許容 (±%)",
+    "tolerancePartial": "部分点許容 (±%)",
+    "answerDecimals": "小数点以下",
+    "preview": "プレビュー"
+  }
 }

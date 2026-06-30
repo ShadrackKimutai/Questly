@@ -39,5 +39,15 @@
   "missed": "ulipoteza",
   "noAnswer": "Hakuna jibu",
   "typeYourWord": "Andika neno au sentensi...",
-  "wordcloudHint": "Andika neno lolote au sentensi — majibu yote yanakubalika!"
+  "wordcloudHint": "Andika neno lolote au sentensi — majibu yote yanakubalika!",
+  "partial": "Karibu!",
+  "calculated": {
+    "hint": "Ingiza jibu lako...",
+    "yourVariables": "Vigeuzi vyako",
+    "correctAnswer": "Jibu sahihi",
+    "yourAnswer": "Jibu lako",
+    "fullCredit": "Alama kamili",
+    "partialCredit": "Alama za sehemu",
+    "wrongAnswer": "Jibu lisilo sahihi"
+  }
 }

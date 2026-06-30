@@ -20,7 +20,8 @@
       "typeMultiple": "Multiple",
       "typeTrueFalse": "True / False",
       "typeShortAnswer": "Short Answer",
-      "typeWordCloud": "Word Cloud"
+      "typeWordCloud": "Word Cloud",
+      "typeCalculated": "Calculated"
     },
     "deleteQuestion": "Delete question",
     "deleteQuestionConfirm": "Are you sure you want to delete this question?",
@@ -35,5 +36,15 @@
   "wordcloudHint": "Players type free-form words or phrases. All responses are accepted and shown in a word cloud.",
   "quizSaved": "Quiz saved successfully",
   "quizUpdated": "Quiz updated successfully",
-  "titleQuizPlaceholder": "Quiz title..."
+  "titleQuizPlaceholder": "Quiz title...",
+  "calculated": {
+    "variables": "Variables",
+    "formula": "Formula",
+    "formulaPlaceholder": "e.g. 0.333 * 3.14159 * a^2 * b",
+    "formulaHint": "Use variable names: {{vars}}",
+    "toleranceFull": "Full credit (±%)",
+    "tolerancePartial": "Partial (±%)",
+    "answerDecimals": "Answer dp",
+    "preview": "Preview"
+  }
 }

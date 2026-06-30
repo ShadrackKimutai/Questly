@@ -14,7 +14,8 @@
       "questionDisplay": "Visualizzazione domanda",
       "questionDisplayHint": "Durata prima che appaiano le risposte",
       "timings": "Tempi",
-      "typeWordCloud": "Nuvola di parole"
+      "typeWordCloud": "Nuvola di parole",
+      "typeCalculated": "Calcolata"
     },
     "deleteQuestion": "Elimina domanda",
     "deleteQuestionConfirm": "Sei sicuro di voler eliminare questa domanda?",
@@ -29,5 +30,15 @@
   "quizSaved": "Quiz salvato con successo",
   "quizUpdated": "Quiz aggiornato con successo",
   "titleQuizPlaceholder": "Titolo del quiz...",
-  "wordcloudHint": "I giocatori digitano parole o frasi libere. Tutte le risposte vengono mostrate in una nuvola di parole."
+  "wordcloudHint": "I giocatori digitano parole o frasi libere. Tutte le risposte vengono mostrate in una nuvola di parole.",
+  "calculated": {
+    "variables": "Variabili",
+    "formula": "Formula",
+    "formulaPlaceholder": "es. 0.333 * 3.14159 * a^2 * b",
+    "formulaHint": "Usa i nomi delle variabili: {{vars}}",
+    "toleranceFull": "Credito pieno (±%)",
+    "tolerancePartial": "Parziale (±%)",
+    "answerDecimals": "Decimali",
+    "preview": "Anteprima"
+  }
 }

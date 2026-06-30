@@ -35,5 +35,15 @@
   "missed": "missed",
   "noAnswer": "Keine Antwort",
   "typeYourWord": "Schreibe ein Wort oder eine Phrase...",
-  "wordcloudHint": "Schreibe ein beliebiges Wort oder eine Phrase – alle Antworten zählen!"
+  "wordcloudHint": "Schreibe ein beliebiges Wort oder eine Phrase – alle Antworten zählen!",
+  "partial": "Fast!",
+  "calculated": {
+    "hint": "Antwort eingeben...",
+    "yourVariables": "Deine Variablen",
+    "correctAnswer": "Richtige Antwort",
+    "yourAnswer": "Deine Antwort",
+    "fullCredit": "Volle Punktzahl",
+    "partialCredit": "Teilpunktzahl",
+    "wrongAnswer": "Falsche Antwort"
+  }
 }
