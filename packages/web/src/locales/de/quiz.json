@@ -1,44 +1,44 @@
 {
-    "addAnswerPlaceholder": "Antwort hinzufügen...",
-    "addQuestion": "Frage hinzufügen",
-    "answersCountSuffix": " Antworten",
-    "deleteQuestion": "Frage löschen",
-    "noQuestionYet": "Noch keine Fragen",
-    "question": {
-        "addMediaHint": "Füge ein Bild, Video oder Audio zu deiner Frage hinzu",
-        "config": {
-            "answerTime": "Antwortzeit",
-            "answerTimeHint": "Zeit, die Spieler zum Antworten haben",
-            "noTimeLimit": "Kein Zeitlimit",
-            "noTimeLimitHint": "Punkte werden nach Antwortreihenfolge vergeben. Es gibt kein Zeitlimit zum Antworten.",
-            "questionDisplay": "Frageanzeige",
-            "questionDisplayHint": "Dauer bevor Antworten erscheinen",
-            "timings": "Zeiten",
-            "typeWordCloud": "Wortwolke",
-            "typeCalculated": "Calculated"
-        },
-        "deleteQuestion": "Frage löschen",
-        "deleteQuestionConfirm": "Möchtest du diese Frage wirklich löschen?",
-        "media": {
-            "audio": "Audio",
-            "image": "Bild",
-            "video": "Video"
-        },
-        "mediaUrlPlaceholder": "URL eingeben...",
-        "placeholder": "Beginne deine Frage zu tippen..."
+  "addAnswerPlaceholder": "Antwort hinzufügen...",
+  "addQuestion": "Frage hinzufügen",
+  "answersCountSuffix": " Antworten",
+  "deleteQuestion": "Frage löschen",
+  "noQuestionYet": "Noch keine Fragen",
+  "question": {
+    "addMediaHint": "Füge ein Bild, Video oder Audio zu deiner Frage hinzu",
+    "config": {
+      "answerTime": "Antwortzeit",
+      "answerTimeHint": "Zeit, die Spieler zum Antworten haben",
+      "noTimeLimit": "Kein Zeitlimit",
+      "noTimeLimitHint": "Punkte werden nach Antwortreihenfolge vergeben. Es gibt kein Zeitlimit zum Antworten.",
+      "questionDisplay": "Frageanzeige",
+      "questionDisplayHint": "Dauer bevor Antworten erscheinen",
+      "timings": "Zeiten",
+      "typeWordCloud": "Wortwolke",
+      "typeCalculated": "Berechnet"
     },
-    "quizSaved": "Quiz erfolgreich gespeichert",
-    "quizUpdated": "Quiz erfolgreich aktualisiert",
-    "titleQuizPlaceholder": "Quiz-Titel...",
-    "wordcloudHint": "Spieler tippen freie Wörter oder Phrasen. Alle Antworten werden in einer Wortwolke angezeigt.",
-    "calculated": {
-        "variables": "Variables",
-        "formula": "Formula",
-        "formulaPlaceholder": "e.g. a * (b + c)",
-        "formulaHint": "Use variable names: {{vars}}. Supports +, -, *, /, ^, sqrt(), etc.",
-        "toleranceFull": "Full XP (±%)",
-        "tolerancePartial": "Partial XP (±%)",
-        "answerDecimals": "Answer dp",
-        "preview": "Preview"
-    }
+    "deleteQuestion": "Frage löschen",
+    "deleteQuestionConfirm": "Möchtest du diese Frage wirklich löschen?",
+    "media": {
+      "audio": "Audio",
+      "image": "Bild",
+      "video": "Video"
+    },
+    "mediaUrlPlaceholder": "URL eingeben...",
+    "placeholder": "Beginne deine Frage zu tippen..."
+  },
+  "quizSaved": "Quiz erfolgreich gespeichert",
+  "quizUpdated": "Quiz erfolgreich aktualisiert",
+  "titleQuizPlaceholder": "Quiz-Titel...",
+  "wordcloudHint": "Spieler tippen freie Wörter oder Phrasen. Alle Antworten werden in einer Wortwolke angezeigt.",
+  "calculated": {
+    "variables": "Variablen",
+    "formula": "Formel",
+    "formulaPlaceholder": "z.B. 0.333 * 3.14159 * a^2 * b",
+    "formulaHint": "Variablennamen verwenden: {{vars}}",
+    "toleranceFull": "Volle Punkte (±%)",
+    "tolerancePartial": "Teilpunkte (±%)",
+    "answerDecimals": "Dezimalstellen",
+    "preview": "Vorschau"
+  }
 }

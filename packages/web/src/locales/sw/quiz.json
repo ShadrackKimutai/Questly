@@ -38,13 +38,13 @@
   "titleQuizPlaceholder": "Kichwa cha maswali...",
   "wordcloudHint": "Wachezaji wanaandika maneno au sentensi kwa uhuru. Majibu yote yanaonyeshwa kwenye wingu la maneno.",
   "calculated": {
-    "variables": "Variables",
-    "formula": "Formula",
-    "formulaPlaceholder": "e.g. a * (b + c)",
-    "formulaHint": "Use variable names: {{vars}}. Supports +, -, *, /, ^, sqrt(), etc.",
-    "toleranceFull": "Full XP (±%)",
-    "tolerancePartial": "Partial XP (±%)",
-    "answerDecimals": "Answer dp",
-    "preview": "Preview"
+    "variables": "Vigeuzi",
+    "formula": "Fomula",
+    "formulaPlaceholder": "mfano: 0.333 * 3.14159 * a^2 * b",
+    "formulaHint": "Tumia majina ya vigeuzi: {{vars}}",
+    "toleranceFull": "Alama kamili (±%)",
+    "tolerancePartial": "Sehemu (±%)",
+    "answerDecimals": "Desimali",
+    "preview": "Hakikisho"
   }
 }

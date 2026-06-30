@@ -32,12 +32,12 @@ const Answers = ({
   const isWordCloud = type === "wordcloud"
   const isCalculated = type === "calculated"
 
-  // Substitute {varName} placeholders with the player's randomised values
-  const renderedQuestion = isCalculated && playerVariables
-    ? question.replace(/\{(\w+)\}/g, (_, name) =>
-        name in playerVariables ? String(playerVariables[name]) : `{${name}}`,
-      )
-    : question
+  const renderedQuestion =
+    isCalculated && playerVariables
+      ? question.replace(/\{(\w+)\}/g, (_, name) =>
+          name in playerVariables ? String(playerVariables[name]) : `{${name}}`,
+        )
+      : question
 
   const [cooldown, setCooldown] = useState(time)
   const [totalAnswer, setTotalAnswer] = useState(0)
@@ -210,7 +210,7 @@ const Answers = ({
           </div>
         ) : isCalculated ? (
           <div className="mx-auto mb-3 w-full max-w-7xl px-2">
-            <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 text-white/80 font-semibold">
+            <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 font-semibold text-white/80">
               {t("game:waitingForAnswers")}
             </div>
           </div>
@@ -239,7 +239,7 @@ const Answers = ({
           </div>
         ) : (isShortAnswer || isWordCloud) ? (
           <div className="mx-auto mb-3 w-full max-w-7xl px-2">
-            <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 text-white/80 font-semibold">
+            <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 font-semibold text-white/80">
               {t("game:waitingForAnswers")}
             </div>
           </div>

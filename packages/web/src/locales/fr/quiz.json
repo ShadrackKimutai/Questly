@@ -1,44 +1,44 @@
 {
-    "addAnswerPlaceholder": "Ajouter une réponse...",
-    "addQuestion": "Ajouter une question",
-    "answersCountSuffix": " réponses",
-    "deleteQuestion": "Supprimer la question",
-    "noQuestionYet": "Aucune question pour l'instant",
-    "question": {
-        "addMediaHint": "Ajoutez une image, une vidéo ou un audio à votre question",
-        "config": {
-            "answerTime": "Temps de réponse",
-            "answerTimeHint": "Temps accordé aux joueurs pour répondre",
-            "noTimeLimit": "Pas de limite de temps",
-            "noTimeLimitHint": "Les points sont attribués selon l'ordre de réponse. Il n'y a pas de limite de temps pour répondre.",
-            "questionDisplay": "Affichage de la question",
-            "questionDisplayHint": "Délai avant l'apparition des réponses",
-            "timings": "Durées",
-            "typeWordCloud": "Nuage de mots",
-            "typeCalculated": "Calculated"
-        },
-        "deleteQuestion": "Supprimer la question",
-        "deleteQuestionConfirm": "Êtes-vous sûr de vouloir supprimer cette question ?",
-        "media": {
-            "audio": "Audio",
-            "image": "Image",
-            "video": "Vidéo"
-        },
-        "mediaUrlPlaceholder": "Entrez l'URL...",
-        "placeholder": "Commencez à écrire votre question..."
+  "addAnswerPlaceholder": "Ajouter une réponse...",
+  "addQuestion": "Ajouter une question",
+  "answersCountSuffix": " réponses",
+  "deleteQuestion": "Supprimer la question",
+  "noQuestionYet": "Aucune question pour l'instant",
+  "question": {
+    "addMediaHint": "Ajoutez une image, une vidéo ou un audio à votre question",
+    "config": {
+      "answerTime": "Temps de réponse",
+      "answerTimeHint": "Temps accordé aux joueurs pour répondre",
+      "noTimeLimit": "Pas de limite de temps",
+      "noTimeLimitHint": "Les points sont attribués selon l'ordre de réponse. Il n'y a pas de limite de temps pour répondre.",
+      "questionDisplay": "Affichage de la question",
+      "questionDisplayHint": "Délai avant l'apparition des réponses",
+      "timings": "Durées",
+      "typeWordCloud": "Nuage de mots",
+      "typeCalculated": "Calculée"
     },
-    "quizSaved": "Quiz enregistré avec succès",
-    "quizUpdated": "Quiz mis à jour avec succès",
-    "titleQuizPlaceholder": "Titre du quiz...",
-    "wordcloudHint": "Les joueurs tapent des mots ou phrases libres. Toutes les réponses sont affichées dans un nuage de mots.",
-    "calculated": {
-        "variables": "Variables",
-        "formula": "Formula",
-        "formulaPlaceholder": "e.g. a * (b + c)",
-        "formulaHint": "Use variable names: {{vars}}. Supports +, -, *, /, ^, sqrt(), etc.",
-        "toleranceFull": "Full XP (±%)",
-        "tolerancePartial": "Partial XP (±%)",
-        "answerDecimals": "Answer dp",
-        "preview": "Preview"
-    }
+    "deleteQuestion": "Supprimer la question",
+    "deleteQuestionConfirm": "Êtes-vous sûr de vouloir supprimer cette question ?",
+    "media": {
+      "audio": "Audio",
+      "image": "Image",
+      "video": "Vidéo"
+    },
+    "mediaUrlPlaceholder": "Entrez l'URL...",
+    "placeholder": "Commencez à écrire votre question..."
+  },
+  "quizSaved": "Quiz enregistré avec succès",
+  "quizUpdated": "Quiz mis à jour avec succès",
+  "titleQuizPlaceholder": "Titre du quiz...",
+  "wordcloudHint": "Les joueurs tapent des mots ou phrases libres. Toutes les réponses sont affichées dans un nuage de mots.",
+  "calculated": {
+    "variables": "Variables",
+    "formula": "Formule",
+    "formulaPlaceholder": "ex. 0.333 * 3.14159 * a^2 * b",
+    "formulaHint": "Utiliser les noms de variables : {{vars}}",
+    "toleranceFull": "Crédit complet (±%)",
+    "tolerancePartial": "Partiel (±%)",
+    "answerDecimals": "Décimales",
+    "preview": "Aperçu"
+  }
 }

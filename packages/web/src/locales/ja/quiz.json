@@ -1,44 +1,44 @@
 {
-    "addAnswerPlaceholder": "回答を追加...",
-    "addQuestion": "質問を追加",
-    "answersCountSuffix": "件の回答",
-    "deleteQuestion": "質問を削除",
-    "noQuestionYet": "まだ質問がありません",
-    "question": {
-        "addMediaHint": "質問に画像、動画、音声を追加できます",
-        "config": {
-            "answerTime": "回答時間",
-            "answerTimeHint": "プレイヤーが回答できる時間",
-            "noTimeLimit": "制限時間なし",
-            "noTimeLimitHint": "ポイントは回答順に付与されます。回答に制限時間はありません。",
-            "questionDisplay": "問題表示",
-            "questionDisplayHint": "回答が表示されるまでの時間",
-            "timings": "タイミング",
-            "typeWordCloud": "ワードクラウド",
-            "typeCalculated": "Calculated"
-        },
-        "deleteQuestion": "この質問を削除",
-        "deleteQuestionConfirm": "この質問を削除してもよろしいですか？",
-        "media": {
-            "audio": "音声",
-            "image": "画像",
-            "video": "動画"
-        },
-        "mediaUrlPlaceholder": "URLを入力...",
-        "placeholder": "質問を入力してください..."
+  "addAnswerPlaceholder": "回答を追加...",
+  "addQuestion": "質問を追加",
+  "answersCountSuffix": "件の回答",
+  "deleteQuestion": "質問を削除",
+  "noQuestionYet": "まだ質問がありません",
+  "question": {
+    "addMediaHint": "質問に画像、動画、音声を追加できます",
+    "config": {
+      "answerTime": "回答時間",
+      "answerTimeHint": "プレイヤーが回答できる時間",
+      "noTimeLimit": "制限時間なし",
+      "noTimeLimitHint": "ポイントは回答順に付与されます。回答に制限時間はありません。",
+      "questionDisplay": "問題表示",
+      "questionDisplayHint": "回答が表示されるまでの時間",
+      "timings": "タイミング",
+      "typeWordCloud": "ワードクラウド",
+      "typeCalculated": "計算式"
     },
-    "quizSaved": "クイズを保存しました",
-    "quizUpdated": "クイズを更新しました",
-    "titleQuizPlaceholder": "クイズのタイトル...",
-    "wordcloudHint": "プレイヤーが自由に単語やフレーズを入力します。すべての回答がワードクラウドに表示されます。",
-    "calculated": {
-        "variables": "Variables",
-        "formula": "Formula",
-        "formulaPlaceholder": "e.g. a * (b + c)",
-        "formulaHint": "Use variable names: {{vars}}. Supports +, -, *, /, ^, sqrt(), etc.",
-        "toleranceFull": "Full XP (±%)",
-        "tolerancePartial": "Partial XP (±%)",
-        "answerDecimals": "Answer dp",
-        "preview": "Preview"
-    }
+    "deleteQuestion": "この質問を削除",
+    "deleteQuestionConfirm": "この質問を削除してもよろしいですか？",
+    "media": {
+      "audio": "音声",
+      "image": "画像",
+      "video": "動画"
+    },
+    "mediaUrlPlaceholder": "URLを入力...",
+    "placeholder": "質問を入力してください..."
+  },
+  "quizSaved": "クイズを保存しました",
+  "quizUpdated": "クイズを更新しました",
+  "titleQuizPlaceholder": "クイズのタイトル...",
+  "wordcloudHint": "プレイヤーが自由に単語やフレーズを入力します。すべての回答がワードクラウドに表示されます。",
+  "calculated": {
+    "variables": "変数",
+    "formula": "数式",
+    "formulaPlaceholder": "例: 0.333 * 3.14159 * a^2 * b",
+    "formulaHint": "変数名を使用: {{vars}}",
+    "toleranceFull": "満点許容 (±%)",
+    "tolerancePartial": "部分点許容 (±%)",
+    "answerDecimals": "小数点以下",
+    "preview": "プレビュー"
+  }
 }

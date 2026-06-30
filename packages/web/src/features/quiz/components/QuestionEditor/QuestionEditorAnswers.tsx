@@ -9,8 +9,6 @@ import { Check, Cloud, Minus, Plus, Calculator, AlertCircle } from "lucide-react
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 
-// Safe client-side formula preview using Function constructor is avoided.
-// We do a simple regex-based evaluation for preview only.
 const previewFormula = (
   formula: string,
   variables: CalculatedVariable[],
@@ -22,14 +20,11 @@ const previewFormula = (
       scope[v.name] = v.min + Math.random() * (v.max - v.min)
       scope[v.name] = parseFloat(scope[v.name].toFixed(v.decimals))
     }
-    // Replace variable names with their values in the formula string
     let expr = formula
-    // Sort by name length descending to avoid partial replacements
     const names = Object.keys(scope).sort((a, b) => b.length - a.length)
     for (const name of names) {
       expr = expr.replace(new RegExp(`\\b${name}\\b`, "g"), String(scope[name]))
     }
-    // Only allow safe characters
     if (/[^0-9+\-*/^().% ]/.test(expr)) return "?"
     // eslint-disable-next-line no-new-func
     const result = Function(`"use strict"; return (${expr})`)() as number
@@ -50,7 +45,6 @@ const QuestionEditorAnswers = () => {
   const isWordCloud = currentQuestion.type === "wordcloud"
   const isCalculated = currentQuestion.type === "calculated"
 
-  // --- Choice / TrueFalse helpers ---
   const updateAnswer = (index: number, value: string) => {
     const next = [...currentQuestion.answers]
     next[index] = value
@@ -87,7 +81,6 @@ const QuestionEditorAnswers = () => {
     }
   }
 
-  // --- Short answer helpers ---
   const updateTextSolution = (index: number, value: string) => {
     const next = [...(currentQuestion.textSolutions ?? [])]
     next[index] = value
@@ -103,7 +96,6 @@ const QuestionEditorAnswers = () => {
     updateQuestion(currentIndex, { textSolutions: next.length > 0 ? next : [""] })
   }
 
-  // --- Calculated helpers ---
   const variables = currentQuestion.calculatedVariables ?? []
 
   const updateVariable = (index: number, patch: Partial<CalculatedVariable>) => {
@@ -117,10 +109,7 @@ const QuestionEditorAnswers = () => {
     const letters = "abcdefghijklmnopqrstuvwxyz".split("")
     const next = letters.find((l) => !usedNames.has(l)) ?? `v${variables.length}`
     updateQuestion(currentIndex, {
-      calculatedVariables: [
-        ...variables,
-        { name: next, min: 1, max: 10, decimals: 0 },
-      ],
+      calculatedVariables: [...variables, { name: next, min: 1, max: 10, decimals: 0 }],
     })
   }
 
@@ -134,8 +123,6 @@ const QuestionEditorAnswers = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentQuestion.formula, currentQuestion.calculatedVariables],
   )
-
-  // ── Renders ─────────────────────────────────────────────────────────────
 
   if (isWordCloud) {
     return (
@@ -173,7 +160,6 @@ const QuestionEditorAnswers = () => {
               key={i}
               className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2 backdrop-blur-sm"
             >
-              {/* name */}
               <input
                 className="w-10 rounded-lg bg-purple-600 py-1 text-center text-sm font-bold text-white outline-none"
                 value={v.name}
@@ -181,7 +167,6 @@ const QuestionEditorAnswers = () => {
                 onChange={(e) => updateVariable(i, { name: e.target.value })}
                 title="Variable name"
               />
-              {/* min */}
               <div className="flex flex-col items-center">
                 <span className="text-[10px] font-semibold text-white/50">min</span>
                 <input
@@ -194,7 +179,6 @@ const QuestionEditorAnswers = () => {
                 />
               </div>
               <span className="text-white/40">–</span>
-              {/* max */}
               <div className="flex flex-col items-center">
                 <span className="text-[10px] font-semibold text-white/50">max</span>
                 <input
@@ -206,7 +190,6 @@ const QuestionEditorAnswers = () => {
                   onChange={(e) => updateVariable(i, { max: parseFloat(e.target.value) || 0 })}
                 />
               </div>
-              {/* decimals */}
               <div className="flex flex-col items-center">
                 <span className="text-[10px] font-semibold text-white/50">dp</span>
                 <input
