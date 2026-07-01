@@ -39,6 +39,17 @@ const Answers = ({
         )
       : question
 
+  const shouldShuffle = type === "single" || type === "multiple"
+  const [shuffleOrder] = useState<number[]>(() => {
+    const order = answers.map((_, i) => i)
+    if (!shouldShuffle) return order
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[order[i], order[j]] = [order[j], order[i]]
+    }
+    return order
+  })
+
   const [cooldown, setCooldown] = useState(time)
   const [totalAnswer, setTotalAnswer] = useState(0)
   const [submitted, setSubmitted] = useState(false)
@@ -246,24 +257,24 @@ const Answers = ({
         ) : (
           <>
             <div className="mx-auto mb-2 grid w-full max-w-7xl grid-cols-2 gap-1 px-2 font-bold text-white">
-              {answers.map((answer, key) => {
-                const isSelected = selectedKeys.includes(key)
+              {shuffleOrder.map((originalKey, displayKey) => {
+                const isSelected = selectedKeys.includes(originalKey)
 
                 return (
                   <AnswerButton
-                    key={key}
+                    key={originalKey}
                     className={clsx(
-                      ANSWERS_COLORS[key],
+                      ANSWERS_COLORS[displayKey],
                       submitted && "opacity-60 cursor-not-allowed",
                     )}
-                    label={ANSWERS_LABELS[key]}
+                    label={ANSWERS_LABELS[displayKey]}
                     selected={isSelected}
                     showRadio={!isMultiple}
                     showCheckbox={isMultiple}
-                    onClick={handleSelect(key)}
+                    onClick={handleSelect(originalKey)}
                     disabled={submitted}
                   >
-                    {answer}
+                    {answers[originalKey]}
                   </AnswerButton>
                 )
               })}
