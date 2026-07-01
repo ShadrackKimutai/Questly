@@ -23,7 +23,7 @@ interface Props {
 }
 
 const Answers = ({
-  data: { question, answers, media, time, totalPlayer, type, playerVariables },
+  data: { question, answers, media, time, totalPlayer, type, playerVariables, dotType, totalDots },
 }: Props) => {
   const { socket } = useSocket()
   const { player, gameId } = usePlayerStore()
@@ -31,6 +31,8 @@ const Answers = ({
   const isShortAnswer = type === "shortanswer"
   const isWordCloud = type === "wordcloud"
   const isCalculated = type === "calculated"
+  const isDotmocracy = type === "dotmocracy"
+  const dotBudget = totalDots ?? 5
 
   const renderedQuestion =
     isCalculated && playerVariables
@@ -38,6 +40,29 @@ const Answers = ({
           name in playerVariables ? String(playerVariables[name]) : `{${name}}`,
         )
       : question
+
+  const [dots, setDots] = useState<number[]>(() => answers.map(() => 0))
+  const dotsPlaced = dots.reduce((s, d) => s + d, 0)
+  const dotsRemaining = dotBudget - dotsPlaced
+
+  const handleDotClick = (colIdx: number, slotIdx: number) => {
+    if (submitted) return
+    const newDots = [...dots]
+    if (dotType === "multiple") {
+      const colDots = dots[colIdx]
+      if (slotIdx < colDots) {
+        newDots[colIdx] = slotIdx
+      } else {
+        const needed = slotIdx + 1 - colDots
+        if (needed <= dotsRemaining) newDots[colIdx] = slotIdx + 1
+      }
+    } else {
+      const hadDot = dots[colIdx] > 0
+      newDots.fill(0)
+      if (!hadDot) newDots[colIdx] = 1
+    }
+    setDots(newDots)
+  }
 
   const shouldShuffle = type === "single" || type === "multiple"
   const [shuffleOrder] = useState<number[]>(() => {
@@ -90,7 +115,12 @@ const Answers = ({
   const handleSubmit = () => {
     if (!player || !gameId || submitted) return
 
-    if (isCalculated) {
+    if (isDotmocracy) {
+      socket.emit(EVENTS.PLAYER.TEXT_ANSWER, {
+        gameId,
+        data: { answerText: JSON.stringify(dots) },
+      })
+    } else if (isCalculated) {
       if (!textInput.trim()) return
       const numVal = parseFloat(textInput)
       if (isNaN(numVal)) return
@@ -195,7 +225,65 @@ const Answers = ({
           </div>
         </div>
 
-        {isCalculated && player ? (
+        {isDotmocracy && player ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            {dotType === "multiple" && (
+              <p className="mb-3 text-center text-sm font-bold text-white/80">
+                {t("game:dotmocracy.dotsRemaining", { count: dotsRemaining, total: dotBudget })}
+              </p>
+            )}
+            <div className="flex flex-wrap justify-center gap-4">
+              {answers.map((label, colIdx) => {
+                const colDots = dots[colIdx]
+                const slots = dotType === "multiple" ? dotBudget : 1
+                return (
+                  <div key={colIdx} className="flex flex-col items-center gap-2">
+                    <div className="flex flex-col-reverse gap-1.5">
+                      {Array.from({ length: slots }).map((_, slotIdx) => {
+                        const filled = slotIdx < colDots
+                        return (
+                          <button
+                            key={slotIdx}
+                            type="button"
+                            title={`${label} — slot ${slotIdx + 1}`}
+                            disabled={submitted}
+                            onClick={() => handleDotClick(colIdx, slotIdx)}
+                            className={clsx(
+                              "size-8 rounded-full border-2 transition-all",
+                              filled
+                                ? "border-violet-400 bg-violet-400 shadow-lg shadow-violet-900/40"
+                                : "border-white/30 bg-white/10 hover:border-violet-400/60",
+                              submitted && "cursor-not-allowed",
+                            )}
+                          />
+                        )
+                      })}
+                    </div>
+                    <span className="max-w-20 text-center text-xs font-semibold text-white/80 leading-tight">
+                      {label}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+            <div className="mt-3">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={submitted || (dotType === "multiple" ? dotsRemaining !== 0 : dotsPlaced !== 1)}
+                className="bg-primary w-full rounded-2xl py-3 text-base font-bold text-white shadow-lg transition-opacity disabled:opacity-40 md:py-4 md:text-lg"
+              >
+                {t("game:submitAnswer")}
+              </button>
+            </div>
+          </div>
+        ) : isDotmocracy ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 font-semibold text-white/80">
+              {t("game:waitingForAnswers")}
+            </div>
+          </div>
+        ) : isCalculated && player ? (
           <div className="mx-auto mb-3 w-full max-w-7xl px-2">
             <div className="mb-2 flex gap-2">
               <input

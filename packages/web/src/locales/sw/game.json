@@ -49,5 +49,9 @@
     "fullCredit": "Alama kamili",
     "partialCredit": "Alama za sehemu",
     "wrongAnswer": "Jibu lisilo sahihi"
+  },
+  "dotmocracy": {
+    "dotsRemaining": "{{count}} kati ya {{total}} nukta zilizobaki",
+    "voteRecorded": "Umeshiriki!"
   }
 }

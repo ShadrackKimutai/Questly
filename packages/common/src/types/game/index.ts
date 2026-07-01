@@ -32,6 +32,7 @@ export type QuestionType =
   | 'shortanswer'
   | 'wordcloud'
   | 'calculated'
+  | 'dotmocracy'
 
 export interface CalculatedVariable {
   name: string
@@ -52,9 +53,12 @@ export interface Question {
   // calculated question fields
   calculatedVariables?: CalculatedVariable[]
   formula?: string
-  toleranceBase?: number    // % — default 5
-  tolerancePartial?: number // % — default 15
-  answerDecimals?: number   // decimal places for the expected answer display
+  toleranceBase?: number
+  tolerancePartial?: number
+  answerDecimals?: number
+  // dotmocracy fields
+  dotType?: 'single' | 'multiple'
+  totalDots?: number
 }
 
 export interface Quiz {

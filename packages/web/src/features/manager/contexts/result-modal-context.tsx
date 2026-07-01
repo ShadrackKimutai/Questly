@@ -72,7 +72,7 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
     q: QuestionResult,
   ) => {
     if (answer === null) return false
-    if (q.type === "wordcloud") return typeof answer === "string" && answer.trim().length > 0
+    if (q.type === "wordcloud" || q.type === "dotmocracy") return typeof answer === "string" && answer.trim().length > 0
     if (typeof answer === "string") {
       return (
         q.textSolutions?.some(
@@ -92,7 +92,7 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
     qType?: string,
   ): AnswerStatus => {
     const type = qType ?? questionResult.type
-    if (type === "wordcloud") {
+    if (type === "wordcloud" || type === "dotmocracy") {
       return typeof answer === "string" && answer.trim().length > 0
         ? "participated"
         : "incorrect"

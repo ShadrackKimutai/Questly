@@ -118,6 +118,7 @@ export class RoundManager {
     const question = this.opts.quiz.questions[this.currentQuestion]
     const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
     const isCalculated = qType === "calculated"
+    const isDotmocracy = qType === "dotmocracy"
 
     this.calculatedData.clear()
     this.opts.onNewQuestion()
@@ -128,7 +129,7 @@ export class RoundManager {
     })
 
     this.opts.broadcast(STATUS.SHOW_PREPARED, {
-      totalAnswers: isCalculated ? 0 : question.answers.length,
+      totalAnswers: (isCalculated || isDotmocracy) ? 0 : question.answers.length,
       questionNumber: this.currentQuestion + 1,
       type: qType,
     })
@@ -187,6 +188,17 @@ export class RoundManager {
         totalPlayer: players.length,
         type: "calculated",
       })
+    } else if (isDotmocracy) {
+      this.opts.broadcast(STATUS.SELECT_ANSWER, {
+        question: question.question,
+        answers: question.answers,
+        media: question.media,
+        time: question.time,
+        totalPlayer: this.opts.players.count(),
+        type: qType,
+        dotType: question.dotType ?? "single",
+        totalDots: question.totalDots ?? 5,
+      })
     } else {
       this.opts.broadcast(STATUS.SELECT_ANSWER, {
         question: question.question,
@@ -233,6 +245,7 @@ export class RoundManager {
 
     const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
     const isCalculated = qType === "calculated"
+    const isDotmocracy = qType === "dotmocracy"
 
     const toleranceBase = question.toleranceBase ?? 5
     const tolerancePartial = question.tolerancePartial ?? 15
@@ -250,7 +263,10 @@ export class RoundManager {
         let isPartial = false
         let earnedPoints = 0
 
-        if (isCalculated) {
+        if (isDotmocracy || qType === "wordcloud") {
+          isCorrect = !!playerAnswer
+          earnedPoints = playerAnswer ? 100 : 0
+        } else if (isCalculated) {
           const stored = this.calculatedData.get(player.id)
           const rawText = typeof playerAnswer?.answerId === "string" ? playerAnswer.answerId : null
           const playerNum = rawText !== null ? parseFloat(rawText) : NaN
@@ -319,7 +335,19 @@ export class RoundManager {
 
       let answerFeedback: AnswerFeedback
 
-      if (isCalculated) {
+      if (isDotmocracy) {
+        let playerVotes: number[]
+        try {
+          playerVotes = typeof answerId === "string" ? (JSON.parse(answerId) as number[]) : question.answers.map(() => 0)
+        } catch {
+          playerVotes = question.answers.map(() => 0)
+        }
+        answerFeedback = {
+          type: "dotmocracy",
+          votes: playerVotes,
+          options: question.answers,
+        }
+      } else if (isCalculated) {
         const stored = this.calculatedData.get(player.id)
         const rawText = typeof answerId === "string" ? answerId : null
         const playerNum = rawText !== null ? parseFloat(rawText) : null
@@ -371,11 +399,13 @@ export class RoundManager {
       this.opts.send(player.id, STATUS.SHOW_RESULT, {
         correct: player.lastCorrect,
         partial: isPartial || undefined,
-        message: player.lastCorrect
-          ? "game:correct"
-          : isPartial
-            ? "game:partial"
-            : "game:wrong",
+        message: isDotmocracy
+          ? "game:dotmocracy.voteRecorded"
+          : player.lastCorrect
+            ? "game:correct"
+            : isPartial
+              ? "game:partial"
+              : "game:wrong",
         points: player.lastPoints,
         myPoints: player.points,
         rank,
@@ -395,12 +425,28 @@ export class RoundManager {
           }, {})
         : undefined
 
+    const dotVotes: Record<number, number> | undefined = isDotmocracy
+      ? this.playersAnswers.reduce<Record<number, number>>((acc, { answerId }) => {
+          if (typeof answerId !== "string") return acc
+          try {
+            const votes = JSON.parse(answerId) as number[]
+            votes.forEach((count, i) => {
+              acc[i] = (acc[i] ?? 0) + count
+            })
+          } catch {
+            // ignore malformed
+          }
+          return acc
+        }, {})
+      : undefined
+
     this.opts.send(this.opts.getManagerId(), STATUS.SHOW_RESPONSES, {
       ...question,
       responses: totalType,
       type: qType,
       wordResponses,
       calculatedSummary: isCalculated ? calcSummary : undefined,
+      dotVotes,
     })
 
     this.questionsHistory.push({

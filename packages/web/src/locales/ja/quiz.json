@@ -15,7 +15,8 @@
       "questionDisplayHint": "回答が表示されるまでの時間",
       "timings": "タイミング",
       "typeWordCloud": "ワードクラウド",
-      "typeCalculated": "計算式"
+      "typeCalculated": "計算式",
+      "typeDotmocracy": "ドット投票"
     },
     "deleteQuestion": "この質問を削除",
     "deleteQuestionConfirm": "この質問を削除してもよろしいですか？",
@@ -40,5 +41,11 @@
     "tolerancePartial": "部分点許容 (±%)",
     "answerDecimals": "小数点以下",
     "preview": "プレビュー"
+  },
+  "dotmocracy": {
+    "options": "オプション",
+    "single": "1ドット",
+    "multiple": "ドット予算",
+    "totalDots": "学習者あたりのドット数"
   }
 }

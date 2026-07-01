@@ -46,7 +46,7 @@ const WordCloud = ({ wordResponses }: { wordResponses: Record<string, number> })
 }
 
 const Responses = ({
-  data: { question, answers, responses, solutions, type, wordResponses, calculatedSummary },
+  data: { question, answers, responses, solutions, type, wordResponses, calculatedSummary, dotVotes },
 }: Props) => {
   const [percentages, setPercentages] = useState<Record<string, string>>({})
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
@@ -83,6 +83,7 @@ const Responses = ({
 
   const isWordCloud = type === "wordcloud"
   const isCalculated = type === "calculated"
+  const isDotmocracy = type === "dotmocracy"
 
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
@@ -91,7 +92,22 @@ const Responses = ({
           {question}
         </h2>
 
-        {isCalculated ? (
+        {isDotmocracy ? (
+          <div className="mt-6 flex w-full max-w-3xl flex-wrap justify-center gap-4 px-4">
+            {answers.map((label, i) => {
+              const count = dotVotes?.[i] ?? 0
+              return (
+                <div
+                  key={i}
+                  className="flex min-w-24 flex-col items-center gap-2 rounded-2xl border border-violet-500/40 bg-violet-500/20 p-5 backdrop-blur-sm"
+                >
+                  <span className="text-4xl font-bold text-violet-300">{count}</span>
+                  <span className="text-sm font-semibold text-violet-200/80">{label}</span>
+                </div>
+              )
+            })}
+          </div>
+        ) : isCalculated ? (
           <div className="mt-8 flex w-full max-w-xl flex-col gap-4 px-2">
             <div className="grid grid-cols-3 gap-4">
               <div className="flex flex-col items-center gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/20 p-5 backdrop-blur-sm">
@@ -139,7 +155,7 @@ const Responses = ({
         )}
       </div>
 
-      {!isWordCloud && !isCalculated && (
+      {!isWordCloud && !isCalculated && !isDotmocracy && (
         <div>
           <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 rounded-full px-2 text-lg font-bold text-white md:text-xl">
             {answers.map((answer, key) => (

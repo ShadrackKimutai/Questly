@@ -6,7 +6,7 @@ import ConfigNumberInput from "@questly/web/features/quiz/components/QuestionEdi
 import ConfigSection from "@questly/web/features/quiz/components/QuestionEditor/QuestionEditorConfig/ConfigSection"
 import { useQuizEditor } from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import clsx from "clsx"
-import { Calculator, CheckSquare, Clock, Cloud, Keyboard, Square, Timer, ToggleLeft } from "lucide-react"
+import { Calculator, CheckSquare, Clock, Cloud, Keyboard, Square, Timer, ToggleLeft, Vote } from "lucide-react"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -21,6 +21,7 @@ const QUESTION_TYPES: { value: QuestionType; labelKey: string; icon: ReactNode }
   { value: "shortanswer", labelKey: "quiz:question.config.typeShortAnswer", icon: <Keyboard className="size-4" /> },
   { value: "wordcloud", labelKey: "quiz:question.config.typeWordCloud", icon: <Cloud className="size-4" /> },
   { value: "calculated", labelKey: "quiz:question.config.typeCalculated", icon: <Calculator className="size-4" /> },
+  { value: "dotmocracy", labelKey: "quiz:question.config.typeDotmocracy", icon: <Vote className="size-4" /> },
 ]
 
 const QuestionEditorConfig = () => {
@@ -58,13 +59,25 @@ const QuestionEditorConfig = () => {
         tolerancePartial: 15,
         answerDecimals: 2,
       })
+    } else if (value === "dotmocracy") {
+      updateQuestion(currentIndex, {
+        type: value,
+        answers: ["Option A", "Option B", "Option C"],
+        solutions: [],
+        textSolutions: undefined,
+        calculatedVariables: undefined,
+        formula: undefined,
+        dotType: "single",
+        totalDots: 5,
+      })
     } else if (
       questionType === "truefalse" ||
       questionType === "shortanswer" ||
       questionType === "wordcloud" ||
-      questionType === "calculated"
+      questionType === "calculated" ||
+      questionType === "dotmocracy"
     ) {
-      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0], textSolutions: undefined, calculatedVariables: undefined, formula: undefined })
+      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0], textSolutions: undefined, calculatedVariables: undefined, formula: undefined, dotType: undefined, totalDots: undefined })
     } else {
       updateQuestion(currentIndex, { type: value })
     }

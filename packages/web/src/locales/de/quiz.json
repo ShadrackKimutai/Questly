@@ -15,7 +15,8 @@
       "questionDisplayHint": "Dauer bevor Antworten erscheinen",
       "timings": "Zeiten",
       "typeWordCloud": "Wortwolke",
-      "typeCalculated": "Berechnet"
+      "typeCalculated": "Berechnet",
+      "typeDotmocracy": "Dot-Abstimmung"
     },
     "deleteQuestion": "Frage löschen",
     "deleteQuestionConfirm": "Möchtest du diese Frage wirklich löschen?",
@@ -40,5 +41,11 @@
     "tolerancePartial": "Teilpunkte (±%)",
     "answerDecimals": "Dezimalstellen",
     "preview": "Vorschau"
+  },
+  "dotmocracy": {
+    "options": "Optionen",
+    "single": "Einzelner Punkt",
+    "multiple": "Punktbudget",
+    "totalDots": "Punkte pro Lernenden"
   }
 }

@@ -53,5 +53,9 @@
     "fullCredit": "Full credit",
     "partialCredit": "Partial credit",
     "wrongAnswer": "Wrong answer"
+  },
+  "dotmocracy": {
+    "dotsRemaining": "{{count}} of {{total}} dots remaining",
+    "voteRecorded": "Participated!"
   }
 }

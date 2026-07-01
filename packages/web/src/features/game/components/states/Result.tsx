@@ -17,6 +17,26 @@ interface Props {
 const FeedbackPanel = ({ feedback }: { feedback: AnswerFeedback }) => {
   const { t } = useTranslation()
 
+  if (feedback.type === "dotmocracy") {
+    return (
+      <div className="mt-2 w-full max-w-md rounded-2xl bg-black/30 p-4 backdrop-blur-sm">
+        <p className="mb-3 text-xs font-semibold tracking-wide text-white/50 uppercase">
+          {t("game:yourAnswer")}
+        </p>
+        <div className="flex flex-wrap gap-3">
+          {feedback.options.map((option, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <span className="min-w-7 rounded-lg bg-violet-500/30 px-2 py-0.5 text-center text-sm font-bold text-violet-300">
+                {feedback.votes[i] ?? 0}
+              </span>
+              <span className="text-sm text-white/70">{option}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   if (feedback.type === "calculated") {
     const tierColor =
       feedback.resultTier === "full"
@@ -195,7 +215,11 @@ const Result = ({
 
   return (
     <section className="anim-show relative mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center gap-2 px-4">
-      {correct ? (
+      {answerFeedback.type === "dotmocracy" ? (
+        <div className="flex aspect-square max-h-52 w-full items-center justify-center text-[8rem] leading-none">
+          🗳️
+        </div>
+      ) : correct ? (
         <CricleCheck className="aspect-square max-h-52 w-full" />
       ) : partial ? (
         <div className="flex aspect-square max-h-52 w-full items-center justify-center text-[10rem] leading-none">
@@ -221,7 +245,7 @@ const Result = ({
         </span>
       )}
 
-      {answerFeedback && (answerFeedback.type === "wordcloud" || !correct) && (
+      {answerFeedback && (answerFeedback.type === "wordcloud" || answerFeedback.type === "dotmocracy" || !correct) && (
         <FeedbackPanel feedback={answerFeedback} />
       )}
     </section>

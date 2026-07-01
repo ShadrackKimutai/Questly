@@ -15,7 +15,8 @@
       "questionDisplayHint": "Duración antes de que aparezcan las respuestas",
       "timings": "Tiempos",
       "typeWordCloud": "Nube de palabras",
-      "typeCalculated": "Calculada"
+      "typeCalculated": "Calculada",
+      "typeDotmocracy": "Votación por puntos"
     },
     "deleteQuestion": "Eliminar pregunta",
     "deleteQuestionConfirm": "¿Estás seguro de que quieres eliminar esta pregunta?",
@@ -40,5 +41,11 @@
     "tolerancePartial": "Parcial (±%)",
     "answerDecimals": "Decimales",
     "preview": "Vista previa"
+  },
+  "dotmocracy": {
+    "options": "Opciones",
+    "single": "Punto único",
+    "multiple": "Presupuesto de puntos",
+    "totalDots": "Puntos por estudiante"
   }
 }

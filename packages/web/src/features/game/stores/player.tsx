@@ -15,6 +15,7 @@ export interface AnswerHistoryEntry {
   question: string
   correct: boolean
   points: number
+  participated?: boolean
 }
 
 interface PlayerStore<T> {

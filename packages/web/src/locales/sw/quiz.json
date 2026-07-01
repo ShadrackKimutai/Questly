@@ -21,7 +21,8 @@
       "typeTrueFalse": "Kweli / Uongo",
       "typeShortAnswer": "Jibu Fupi",
       "typeWordCloud": "Wingu la Maneno",
-      "typeCalculated": "Hesabu"
+      "typeCalculated": "Hesabu",
+      "typeDotmocracy": "Kura ya Nukta"
     },
     "deleteQuestion": "Futa swali",
     "deleteQuestionConfirm": "Je, una uhakika unataka kufuta swali hili?",
@@ -46,5 +47,11 @@
     "tolerancePartial": "Sehemu (±%)",
     "answerDecimals": "Desimali",
     "preview": "Hakikisho"
+  },
+  "dotmocracy": {
+    "options": "Chaguo",
+    "single": "Nukta moja",
+    "multiple": "Bajeti ya nukta",
+    "totalDots": "Nukta kwa mwanafunzi"
   }
 }

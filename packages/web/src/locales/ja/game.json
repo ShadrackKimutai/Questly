@@ -45,5 +45,9 @@
     "fullCredit": "満点",
     "partialCredit": "部分点",
     "wrongAnswer": "不正解"
+  },
+  "dotmocracy": {
+    "dotsRemaining": "残り{{count}}/{{total}}ドット",
+    "voteRecorded": "参加しました！"
   }
 }

@@ -21,7 +21,8 @@
       "typeTrueFalse": "True / False",
       "typeShortAnswer": "Short Answer",
       "typeWordCloud": "Word Cloud",
-      "typeCalculated": "Calculated"
+      "typeCalculated": "Calculated",
+      "typeDotmocracy": "Dot Vote"
     },
     "deleteQuestion": "Delete question",
     "deleteQuestionConfirm": "Are you sure you want to delete this question?",
@@ -46,5 +47,11 @@
     "tolerancePartial": "Partial (±%)",
     "answerDecimals": "Answer dp",
     "preview": "Preview"
+  },
+  "dotmocracy": {
+    "options": "Options",
+    "single": "Single dot",
+    "multiple": "Dot budget",
+    "totalDots": "Dots per learner"
   }
 }

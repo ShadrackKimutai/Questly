@@ -33,7 +33,7 @@ const ResultModalPlayerDetail = ({ playerName }: Props) => {
     answerId: number | number[] | string | null,
     q: (typeof result.questions)[0],
   ): AnswerStatus => {
-    if (q.type === "wordcloud") {
+    if (q.type === "wordcloud" || q.type === "dotmocracy") {
       return typeof answerId === "string" && answerId.trim().length > 0
         ? "participated"
         : "incorrect"
@@ -134,6 +134,16 @@ const ResultModalPlayerDetail = ({ playerName }: Props) => {
                       color: "bg-gray-700",
                       text: answerId.map((id) => q.answers[id]).join(", "),
                     }
+                  : typeof answerId === "string" && q.type === "dotmocracy"
+                    ? (() => {
+                        try {
+                          const votes = JSON.parse(answerId) as number[]
+                          const text = votes.map((n, i) => `${ANSWERS_LABELS[i % 4]}:${n}`).join(" ")
+                          return { label: "🗳️", color: "bg-violet-600", text }
+                        } catch {
+                          return { label: null, color: "bg-violet-600", text: answerId }
+                        }
+                      })()
                   : typeof answerId === "string"
                     ? { label: null, color: "bg-gray-700", text: answerId }
                     : null

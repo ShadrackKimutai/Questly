@@ -45,5 +45,9 @@
     "fullCredit": "Credito pieno",
     "partialCredit": "Credito parziale",
     "wrongAnswer": "Risposta sbagliata"
+  },
+  "dotmocracy": {
+    "dotsRemaining": "{{count}} di {{total}} punti rimanenti",
+    "voteRecorded": "Partecipato!"
   }
 }

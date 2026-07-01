@@ -10,7 +10,7 @@ interface Props {
   data: CommonStatusDataMap["SHOW_PREPARED"]
 }
 
-const Prepared = ({ data: { totalAnswers, questionNumber } }: Props) => {
+const Prepared = ({ data: { totalAnswers, questionNumber, type } }: Props) => {
   const { t } = useTranslation()
 
   return (
@@ -19,21 +19,36 @@ const Prepared = ({ data: { totalAnswers, questionNumber } }: Props) => {
         {t("game:questionPrefix")}
         {questionNumber}
       </h2>
-      <div className="anim-quiz grid aspect-square w-60 grid-cols-2 gap-4 rounded-2xl bg-gray-700 p-5 md:w-60">
-        {Array.from({ length: totalAnswers }).map((_, key) => (
-          <div
-            key={key}
-            className={clsx(
-              "button shadow-inset flex aspect-square h-full w-full items-center justify-center rounded-2xl",
-              ANSWERS_COLORS[key],
-            )}
-          >
-            <span className="text-2xl font-bold text-white md:text-3xl">
-              {ANSWERS_LABELS[key]}
-            </span>
-          </div>
-        ))}
-      </div>
+      {type === "dotmocracy" ? (
+        <div className="anim-quiz flex gap-5 rounded-2xl bg-gray-700 p-6">
+          {[0, 1, 2].map((col) => (
+            <div key={col} className="flex flex-col-reverse gap-2">
+              {[0, 1, 2].map((row) => (
+                <div
+                  key={row}
+                  className="size-8 rounded-full bg-violet-400/30 border-2 border-violet-400/50"
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="anim-quiz grid aspect-square w-60 grid-cols-2 gap-4 rounded-2xl bg-gray-700 p-5 md:w-60">
+          {Array.from({ length: totalAnswers }).map((_, key) => (
+            <div
+              key={key}
+              className={clsx(
+                "button shadow-inset flex aspect-square h-full w-full items-center justify-center rounded-2xl",
+                ANSWERS_COLORS[key],
+              )}
+            >
+              <span className="text-2xl font-bold text-white md:text-3xl">
+                {ANSWERS_LABELS[key]}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   )
 }

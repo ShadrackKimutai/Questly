@@ -11,6 +11,7 @@ export type AnswerFeedback =
       playerVariables: Record<string, number>
       resultTier: "full" | "partial" | "wrong"
     }
+  | { type: "dotmocracy"; votes: number[]; options: string[] }
 
 export const STATUS = {
   SHOW_ROOM: "SHOW_ROOM",
@@ -43,6 +44,8 @@ export interface CommonStatusDataMap {
     totalPlayer: number
     type?: QuestionType
     playerVariables?: Record<string, number>
+    dotType?: 'single' | 'multiple'
+    totalDots?: number
   }
   SHOW_RESULT: {
     correct: boolean
@@ -69,6 +72,7 @@ interface ManagerExtraStatus {
     type?: QuestionType
     wordResponses?: Record<string, number>
     calculatedSummary?: { full: number; partial: number; wrong: number }
+    dotVotes?: Record<number, number>
   }
   SHOW_LEADERBOARD: { oldLeaderboard: Player[]; leaderboard: Player[] }
 }
