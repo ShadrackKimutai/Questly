@@ -33,6 +33,7 @@ export type QuestionType =
   | 'wordcloud'
   | 'calculated'
   | 'dotmocracy'
+  | 'grid2x2'
 
 export interface CalculatedVariable {
   name: string
@@ -58,7 +59,9 @@ export interface Question {
   answerDecimals?: number
   // dotmocracy fields
   dotType?: 'single' | 'multiple'
-  totalDots?: number
+  // grid2x2 fields
+  gridXLabel?: string
+  gridYLabel?: string
 }
 
 export interface Quiz {

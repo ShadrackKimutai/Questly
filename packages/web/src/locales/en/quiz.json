@@ -22,7 +22,8 @@
       "typeShortAnswer": "Short Answer",
       "typeWordCloud": "Word Cloud",
       "typeCalculated": "Calculated",
-      "typeDotmocracy": "Dot Vote"
+      "typeDotmocracy": "Dot Vote",
+      "typeGrid2x2": "2x2 Grid"
     },
     "deleteQuestion": "Delete question",
     "deleteQuestionConfirm": "Are you sure you want to delete this question?",
@@ -53,5 +54,10 @@
     "single": "Single dot",
     "multiple": "Dot budget",
     "totalDots": "Dots per learner"
+  },
+  "grid2x2": {
+    "items": "Items",
+    "xAxisLabel": "X-axis label",
+    "yAxisLabel": "Y-axis label"
   }
 }

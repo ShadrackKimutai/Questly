@@ -12,6 +12,7 @@ export type AnswerFeedback =
       resultTier: "full" | "partial" | "wrong"
     }
   | { type: "dotmocracy"; votes: number[]; options: string[] }
+  | { type: "grid2x2"; items: { label: string; x: number | null; y: number | null }[] }
 
 export const STATUS = {
   SHOW_ROOM: "SHOW_ROOM",
@@ -45,7 +46,8 @@ export interface CommonStatusDataMap {
     type?: QuestionType
     playerVariables?: Record<string, number>
     dotType?: 'single' | 'multiple'
-    totalDots?: number
+    gridXLabel?: string
+    gridYLabel?: string
   }
   SHOW_RESULT: {
     correct: boolean
@@ -73,6 +75,9 @@ interface ManagerExtraStatus {
     wordResponses?: Record<string, number>
     calculatedSummary?: { full: number; partial: number; wrong: number }
     dotVotes?: Record<number, number>
+    gridPlacements?: { itemIndex: number; x: number; y: number }[]
+    gridXLabel?: string
+    gridYLabel?: string
   }
   SHOW_LEADERBOARD: { oldLeaderboard: Player[]; leaderboard: Player[] }
 }

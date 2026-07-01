@@ -16,7 +16,8 @@
       "timings": "タイミング",
       "typeWordCloud": "ワードクラウド",
       "typeCalculated": "計算式",
-      "typeDotmocracy": "ドット投票"
+      "typeDotmocracy": "ドット投票",
+      "typeGrid2x2": "2x2グリッド"
     },
     "deleteQuestion": "この質問を削除",
     "deleteQuestionConfirm": "この質問を削除してもよろしいですか？",
@@ -47,5 +48,10 @@
     "single": "1ドット",
     "multiple": "ドット予算",
     "totalDots": "学習者あたりのドット数"
+  },
+  "grid2x2": {
+    "items": "項目",
+    "xAxisLabel": "X軸ラベル",
+    "yAxisLabel": "Y軸ラベル"
   }
 }

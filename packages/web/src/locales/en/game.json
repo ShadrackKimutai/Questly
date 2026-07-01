@@ -57,5 +57,10 @@
   "dotmocracy": {
     "dotsRemaining": "{{count}} of {{total}} dots remaining",
     "voteRecorded": "Participated!"
+  },
+  "grid2x2": {
+    "tapToPlace": "Tap the grid to place \"{{item}}\"",
+    "allPlaced": "All items placed!",
+    "placementRecorded": "Participated!"
   }
 }

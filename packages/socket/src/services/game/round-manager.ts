@@ -119,6 +119,7 @@ export class RoundManager {
     const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
     const isCalculated = qType === "calculated"
     const isDotmocracy = qType === "dotmocracy"
+    const isGrid2x2 = qType === "grid2x2"
 
     this.calculatedData.clear()
     this.opts.onNewQuestion()
@@ -129,7 +130,7 @@ export class RoundManager {
     })
 
     this.opts.broadcast(STATUS.SHOW_PREPARED, {
-      totalAnswers: (isCalculated || isDotmocracy) ? 0 : question.answers.length,
+      totalAnswers: (isCalculated || isDotmocracy || isGrid2x2) ? 0 : question.answers.length,
       questionNumber: this.currentQuestion + 1,
       type: qType,
     })
@@ -197,7 +198,6 @@ export class RoundManager {
         totalPlayer: this.opts.players.count(),
         type: qType,
         dotType: question.dotType ?? "single",
-        totalDots: question.totalDots ?? 5,
       })
     } else {
       this.opts.broadcast(STATUS.SELECT_ANSWER, {
@@ -207,6 +207,8 @@ export class RoundManager {
         time: question.time,
         totalPlayer: this.opts.players.count(),
         type: qType,
+        gridXLabel: question.gridXLabel,
+        gridYLabel: question.gridYLabel,
       })
     }
 
@@ -246,6 +248,7 @@ export class RoundManager {
     const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
     const isCalculated = qType === "calculated"
     const isDotmocracy = qType === "dotmocracy"
+    const isGrid2x2 = qType === "grid2x2"
 
     const toleranceBase = question.toleranceBase ?? 5
     const tolerancePartial = question.tolerancePartial ?? 15
@@ -263,7 +266,7 @@ export class RoundManager {
         let isPartial = false
         let earnedPoints = 0
 
-        if (isDotmocracy || qType === "wordcloud") {
+        if (isDotmocracy || qType === "wordcloud" || isGrid2x2) {
           isCorrect = !!playerAnswer
           earnedPoints = playerAnswer ? 100 : 0
         } else if (isCalculated) {
@@ -365,6 +368,21 @@ export class RoundManager {
           playerVariables: stored?.variables ?? {},
           resultTier,
         }
+      } else if (isGrid2x2) {
+        let placements: ({ x: number; y: number } | null)[]
+        try {
+          placements = typeof answerId === "string" ? (JSON.parse(answerId) as ({ x: number; y: number } | null)[]) : question.answers.map(() => null)
+        } catch {
+          placements = question.answers.map(() => null)
+        }
+        answerFeedback = {
+          type: "grid2x2",
+          items: question.answers.map((label, i) => ({
+            label,
+            x: placements[i]?.x ?? null,
+            y: placements[i]?.y ?? null,
+          })),
+        }
       } else if (qType === "wordcloud") {
         answerFeedback = {
           type: "wordcloud",
@@ -401,11 +419,13 @@ export class RoundManager {
         partial: isPartial || undefined,
         message: isDotmocracy
           ? "game:dotmocracy.voteRecorded"
-          : player.lastCorrect
-            ? "game:correct"
-            : isPartial
-              ? "game:partial"
-              : "game:wrong",
+          : isGrid2x2
+            ? "game:grid2x2.placementRecorded"
+            : player.lastCorrect
+              ? "game:correct"
+              : isPartial
+                ? "game:partial"
+                : "game:wrong",
         points: player.lastPoints,
         myPoints: player.points,
         rank,
@@ -440,6 +460,21 @@ export class RoundManager {
         }, {})
       : undefined
 
+    const gridPlacements: { itemIndex: number; x: number; y: number }[] | undefined = isGrid2x2
+      ? this.playersAnswers.reduce<{ itemIndex: number; x: number; y: number }[]>((acc, { answerId }) => {
+          if (typeof answerId !== "string") return acc
+          try {
+            const placements = JSON.parse(answerId) as ({ x: number; y: number } | null)[]
+            placements.forEach((p, itemIndex) => {
+              if (p) acc.push({ itemIndex, x: p.x, y: p.y })
+            })
+          } catch {
+            // ignore malformed
+          }
+          return acc
+        }, [])
+      : undefined
+
     this.opts.send(this.opts.getManagerId(), STATUS.SHOW_RESPONSES, {
       ...question,
       responses: totalType,
@@ -447,6 +482,7 @@ export class RoundManager {
       wordResponses,
       calculatedSummary: isCalculated ? calcSummary : undefined,
       dotVotes,
+      gridPlacements,
     })
 
     this.questionsHistory.push({

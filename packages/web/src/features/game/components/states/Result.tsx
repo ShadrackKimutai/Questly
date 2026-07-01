@@ -2,6 +2,7 @@ import type { AnswerFeedback } from "@questly/common/types/game/status"
 import type { CommonStatusDataMap } from "@questly/common/types/game/status"
 import CricleCheck from "@questly/web/features/game/components/icons/CricleCheck"
 import CricleXmark from "@questly/web/features/game/components/icons/CricleXmark"
+import Grid2x2 from "@questly/web/features/game/components/Grid2x2"
 import { usePlayerStore } from "@questly/web/features/game/stores/player"
 import { SFX } from "@questly/web/features/game/utils/constants"
 import clsx from "clsx"
@@ -31,6 +32,33 @@ const FeedbackPanel = ({ feedback }: { feedback: AnswerFeedback }) => {
               </span>
               <span className="text-sm text-white/70">{option}</span>
             </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (feedback.type === "grid2x2") {
+    const placed = feedback.items.filter(
+      (item): item is { label: string; x: number; y: number } => item.x !== null && item.y !== null,
+    )
+
+    return (
+      <div className="mt-2 w-full max-w-md rounded-2xl bg-black/30 p-4 backdrop-blur-sm">
+        <p className="mb-3 text-xs font-semibold tracking-wide text-white/50 uppercase">
+          {t("game:yourAnswer")}
+        </p>
+        <div className="mx-auto max-w-xs">
+          <Grid2x2
+            points={placed.map((item, i) => ({ index: i, label: item.label, x: item.x, y: item.y }))}
+            disabled
+          />
+        </div>
+        <div className="mt-3 flex flex-wrap gap-3">
+          {feedback.items.map((item, i) => (
+            <span key={i} className="text-sm text-white/70">
+              {i + 1}. {item.label}
+            </span>
           ))}
         </div>
       </div>
@@ -219,6 +247,10 @@ const Result = ({
         <div className="flex aspect-square max-h-52 w-full items-center justify-center text-[8rem] leading-none">
           🗳️
         </div>
+      ) : answerFeedback.type === "grid2x2" ? (
+        <div className="flex aspect-square max-h-52 w-full items-center justify-center text-[8rem] leading-none">
+          🎯
+        </div>
       ) : correct ? (
         <CricleCheck className="aspect-square max-h-52 w-full" />
       ) : partial ? (
@@ -245,7 +277,7 @@ const Result = ({
         </span>
       )}
 
-      {answerFeedback && (answerFeedback.type === "wordcloud" || answerFeedback.type === "dotmocracy" || !correct) && (
+      {answerFeedback && (answerFeedback.type === "wordcloud" || answerFeedback.type === "dotmocracy" || answerFeedback.type === "grid2x2" || !correct) && (
         <FeedbackPanel feedback={answerFeedback} />
       )}
     </section>

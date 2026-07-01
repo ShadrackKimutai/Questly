@@ -45,6 +45,7 @@ const QuestionEditorAnswers = () => {
   const isWordCloud = currentQuestion.type === "wordcloud"
   const isCalculated = currentQuestion.type === "calculated"
   const isDotmocracy = currentQuestion.type === "dotmocracy"
+  const isGrid2x2 = currentQuestion.type === "grid2x2"
 
   const updateAnswer = (index: number, value: string) => {
     const next = [...currentQuestion.answers]
@@ -193,28 +194,91 @@ const QuestionEditorAnswers = () => {
           ))}
         </div>
 
-        {/* Total dots (multiple only) */}
-        {dotTypeValue === "multiple" && (
-          <div className="flex items-center gap-3 px-1">
-            <span className="text-sm font-semibold text-white/70">
-              {t("quiz:dotmocracy.totalDots")}
-            </span>
-            <div className="flex items-center gap-1 rounded-xl bg-violet-600/20 px-3 py-1.5">
-              <input
-                type="number"
-                min={1}
-                max={20}
-                title="Total dots per learner"
-                className="w-14 bg-transparent text-sm font-bold text-white outline-none"
-                value={currentQuestion.totalDots ?? 5}
-                onChange={(e) =>
-                  updateQuestion(currentIndex, { totalDots: parseInt(e.target.value) || 5 })
-                }
-              />
-              <span className="text-sm text-white/50">dots</span>
-            </div>
+      </div>
+    )
+  }
+
+  if (isGrid2x2) {
+    const addGridItem = () => {
+      if (currentQuestion.answers.length >= 6) return
+      updateQuestion(currentIndex, {
+        answers: [...currentQuestion.answers, `Item ${currentQuestion.answers.length + 1}`],
+      })
+    }
+
+    const removeGridItem = () => {
+      if (currentQuestion.answers.length <= 1) return
+      updateQuestion(currentIndex, { answers: currentQuestion.answers.slice(0, -1) })
+    }
+
+    return (
+      <div className="relative z-10 flex flex-col gap-4">
+        <div className="flex flex-col gap-1.5 px-1">
+          <span className="text-sm font-semibold text-white/70">
+            {t("quiz:grid2x2.xAxisLabel")}
+          </span>
+          <input
+            className="rounded-xl bg-white/10 px-3 py-2 text-sm font-semibold text-white outline-none backdrop-blur-sm placeholder-white/40"
+            placeholder={t("quiz:grid2x2.xAxisLabel")}
+            value={currentQuestion.gridXLabel ?? ""}
+            onChange={(e) => updateQuestion(currentIndex, { gridXLabel: e.target.value })}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1.5 px-1">
+          <span className="text-sm font-semibold text-white/70">
+            {t("quiz:grid2x2.yAxisLabel")}
+          </span>
+          <input
+            className="rounded-xl bg-white/10 px-3 py-2 text-sm font-semibold text-white outline-none backdrop-blur-sm placeholder-white/40"
+            placeholder={t("quiz:grid2x2.yAxisLabel")}
+            value={currentQuestion.gridYLabel ?? ""}
+            onChange={(e) => updateQuestion(currentIndex, { gridYLabel: e.target.value })}
+          />
+        </div>
+
+        <div className="flex items-center justify-between px-1">
+          <div className="rounded-lg bg-white px-2 py-1 text-sm font-semibold text-gray-500">
+            {t("quiz:grid2x2.items")}
           </div>
-        )}
+          <div className="flex gap-2">
+            <button
+              type="button"
+              title="Remove item"
+              onClick={removeGridItem}
+              disabled={currentQuestion.answers.length <= 1}
+              className="flex size-7 items-center justify-center rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-40"
+            >
+              <Minus className="size-4" />
+            </button>
+            <button
+              type="button"
+              title="Add item"
+              onClick={addGridItem}
+              disabled={currentQuestion.answers.length >= 6}
+              className="flex size-7 items-center justify-center rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 disabled:opacity-40"
+            >
+              <Plus className="size-4" />
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          {currentQuestion.answers.map((answer, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 rounded-2xl border border-violet-400/30 bg-violet-600/20 px-4 py-3"
+            >
+              <span className="text-violet-300">{i + 1}</span>
+              <input
+                className="flex-1 bg-transparent text-sm font-semibold text-white placeholder-white/50 outline-none"
+                placeholder={t("quiz:addAnswerPlaceholder")}
+                value={answer}
+                onChange={(e) => updateAnswer(i, e.target.value)}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     )
   }

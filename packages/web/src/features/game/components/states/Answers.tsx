@@ -3,6 +3,7 @@ import type { QuestionMediaType } from "@questly/common/types/game"
 import type { CommonStatusDataMap } from "@questly/common/types/game/status"
 import QuestionMedia from "@questly/web/components/QuestionMedia"
 import AnswerButton from "@questly/web/features/game/components/AnswerButton"
+import Grid2x2 from "@questly/web/features/game/components/Grid2x2"
 import {
   useEvent,
   useSocket,
@@ -23,7 +24,7 @@ interface Props {
 }
 
 const Answers = ({
-  data: { question, answers, media, time, totalPlayer, type, playerVariables, dotType, totalDots },
+  data: { question, answers, media, time, totalPlayer, type, playerVariables, dotType, gridXLabel, gridYLabel },
 }: Props) => {
   const { socket } = useSocket()
   const { player, gameId } = usePlayerStore()
@@ -32,7 +33,7 @@ const Answers = ({
   const isWordCloud = type === "wordcloud"
   const isCalculated = type === "calculated"
   const isDotmocracy = type === "dotmocracy"
-  const dotBudget = totalDots ?? 5
+  const isGrid2x2 = type === "grid2x2"
 
   const renderedQuestion =
     isCalculated && playerVariables
@@ -43,25 +44,31 @@ const Answers = ({
 
   const [dots, setDots] = useState<number[]>(() => answers.map(() => 0))
   const dotsPlaced = dots.reduce((s, d) => s + d, 0)
-  const dotsRemaining = dotBudget - dotsPlaced
 
-  const handleDotClick = (colIdx: number, slotIdx: number) => {
+  const handleDotClick = (colIdx: number) => {
     if (submitted) return
     const newDots = [...dots]
     if (dotType === "multiple") {
-      const colDots = dots[colIdx]
-      if (slotIdx < colDots) {
-        newDots[colIdx] = slotIdx
-      } else {
-        const needed = slotIdx + 1 - colDots
-        if (needed <= dotsRemaining) newDots[colIdx] = slotIdx + 1
-      }
+      newDots[colIdx] = newDots[colIdx] > 0 ? 0 : 1
     } else {
       const hadDot = dots[colIdx] > 0
       newDots.fill(0)
       if (!hadDot) newDots[colIdx] = 1
     }
     setDots(newDots)
+  }
+
+  const [placements, setPlacements] = useState<({ x: number; y: number } | null)[]>(
+    () => answers.map(() => null),
+  )
+  const activeItem = placements.findIndex((p) => p === null)
+  const allPlaced = activeItem === -1
+
+  const handleGridPlace = (x: number, y: number) => {
+    if (submitted || activeItem === -1) return
+    const next = [...placements]
+    next[activeItem] = { x, y }
+    setPlacements(next)
   }
 
   const shouldShuffle = type === "single" || type === "multiple"
@@ -119,6 +126,12 @@ const Answers = ({
       socket.emit(EVENTS.PLAYER.TEXT_ANSWER, {
         gameId,
         data: { answerText: JSON.stringify(dots) },
+      })
+    } else if (isGrid2x2) {
+      if (!allPlaced) return
+      socket.emit(EVENTS.PLAYER.TEXT_ANSWER, {
+        gameId,
+        data: { answerText: JSON.stringify(placements) },
       })
     } else if (isCalculated) {
       if (!textInput.trim()) return
@@ -229,36 +242,27 @@ const Answers = ({
           <div className="mx-auto mb-3 w-full max-w-7xl px-2">
             {dotType === "multiple" && (
               <p className="mb-3 text-center text-sm font-bold text-white/80">
-                {t("game:dotmocracy.dotsRemaining", { count: dotsRemaining, total: dotBudget })}
+                {t("game:selectAllThatApply")}
               </p>
             )}
             <div className="flex flex-wrap justify-center gap-4">
               {answers.map((label, colIdx) => {
-                const colDots = dots[colIdx]
-                const slots = dotType === "multiple" ? dotBudget : 1
+                const filled = dots[colIdx] > 0
                 return (
                   <div key={colIdx} className="flex flex-col items-center gap-2">
-                    <div className="flex flex-col-reverse gap-1.5">
-                      {Array.from({ length: slots }).map((_, slotIdx) => {
-                        const filled = slotIdx < colDots
-                        return (
-                          <button
-                            key={slotIdx}
-                            type="button"
-                            title={`${label} — slot ${slotIdx + 1}`}
-                            disabled={submitted}
-                            onClick={() => handleDotClick(colIdx, slotIdx)}
-                            className={clsx(
-                              "size-8 rounded-full border-2 transition-all",
-                              filled
-                                ? "border-violet-400 bg-violet-400 shadow-lg shadow-violet-900/40"
-                                : "border-white/30 bg-white/10 hover:border-violet-400/60",
-                              submitted && "cursor-not-allowed",
-                            )}
-                          />
-                        )
-                      })}
-                    </div>
+                    <button
+                      type="button"
+                      title={label}
+                      disabled={submitted}
+                      onClick={() => handleDotClick(colIdx)}
+                      className={clsx(
+                        "size-10 rounded-full border-2 transition-all",
+                        filled
+                          ? "border-violet-400 bg-violet-400 shadow-lg shadow-violet-900/40"
+                          : "border-white/30 bg-white/10 hover:border-violet-400/60",
+                        submitted && "cursor-not-allowed",
+                      )}
+                    />
                     <span className="max-w-20 text-center text-xs font-semibold text-white/80 leading-tight">
                       {label}
                     </span>
@@ -270,7 +274,7 @@ const Answers = ({
               <button
                 type="button"
                 onClick={handleSubmit}
-                disabled={submitted || (dotType === "multiple" ? dotsRemaining !== 0 : dotsPlaced !== 1)}
+                disabled={submitted || dotsPlaced === 0}
                 className="bg-primary w-full rounded-2xl py-3 text-base font-bold text-white shadow-lg transition-opacity disabled:opacity-40 md:py-4 md:text-lg"
               >
                 {t("game:submitAnswer")}
@@ -278,6 +282,58 @@ const Answers = ({
             </div>
           </div>
         ) : isDotmocracy ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 font-semibold text-white/80">
+              {t("game:waitingForAnswers")}
+            </div>
+          </div>
+        ) : isGrid2x2 && player ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            <p className="mb-3 text-center text-sm font-bold text-white/80">
+              {allPlaced
+                ? t("game:grid2x2.allPlaced")
+                : t("game:grid2x2.tapToPlace", { item: answers[activeItem] })}
+            </p>
+            <div className="mx-auto max-w-md">
+              <Grid2x2
+                xLabel={gridXLabel}
+                yLabel={gridYLabel}
+                points={placements
+                  .map((p, i) => (p ? { index: i, label: answers[i], x: p.x, y: p.y } : null))
+                  .filter((p): p is NonNullable<typeof p> => p !== null)}
+                onPlace={handleGridPlace}
+                disabled={submitted}
+              />
+            </div>
+            <div className="mt-3 flex flex-wrap justify-center gap-2">
+              {answers.map((label, i) => (
+                <span
+                  key={i}
+                  className={clsx(
+                    "rounded-lg px-2 py-1 text-xs font-semibold",
+                    i === activeItem
+                      ? "bg-violet-500 text-white"
+                      : placements[i]
+                        ? "bg-white/10 text-white/50 line-through"
+                        : "bg-white/10 text-white/70",
+                  )}
+                >
+                  {i + 1}. {label}
+                </span>
+              ))}
+            </div>
+            <div className="mt-3">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={submitted || !allPlaced}
+                className="bg-primary w-full rounded-2xl py-3 text-base font-bold text-white shadow-lg transition-opacity disabled:opacity-40 md:py-4 md:text-lg"
+              >
+                {t("game:submitAnswer")}
+              </button>
+            </div>
+          </div>
+        ) : isGrid2x2 ? (
           <div className="mx-auto mb-3 w-full max-w-7xl px-2">
             <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 font-semibold text-white/80">
               {t("game:waitingForAnswers")}

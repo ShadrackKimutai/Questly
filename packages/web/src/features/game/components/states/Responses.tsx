@@ -1,5 +1,6 @@
 import type { ManagerStatusDataMap } from "@questly/common/types/game/status"
 import AnswerButton from "@questly/web/features/game/components/AnswerButton"
+import Grid2x2, { GRID_DOT_COLORS } from "@questly/web/features/game/components/Grid2x2"
 import {
   ANSWERS_COLORS,
   ANSWERS_LABELS,
@@ -46,7 +47,7 @@ const WordCloud = ({ wordResponses }: { wordResponses: Record<string, number> })
 }
 
 const Responses = ({
-  data: { question, answers, responses, solutions, type, wordResponses, calculatedSummary, dotVotes },
+  data: { question, answers, responses, solutions, type, wordResponses, calculatedSummary, dotVotes, gridPlacements, gridXLabel, gridYLabel },
 }: Props) => {
   const [percentages, setPercentages] = useState<Record<string, string>>({})
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
@@ -84,6 +85,7 @@ const Responses = ({
   const isWordCloud = type === "wordcloud"
   const isCalculated = type === "calculated"
   const isDotmocracy = type === "dotmocracy"
+  const isGrid2x2 = type === "grid2x2"
 
   return (
     <div className="flex h-full flex-1 flex-col justify-between">
@@ -106,6 +108,35 @@ const Responses = ({
                 </div>
               )
             })}
+          </div>
+        ) : isGrid2x2 ? (
+          <div className="mt-6 flex w-full max-w-md flex-col gap-4 px-4">
+            <Grid2x2
+              xLabel={gridXLabel}
+              yLabel={gridYLabel}
+              points={(gridPlacements ?? []).map((p) => ({
+                index: p.itemIndex,
+                label: answers[p.itemIndex],
+                x: p.x,
+                y: p.y,
+              }))}
+              disabled
+            />
+            <div className="flex flex-wrap justify-center gap-3">
+              {answers.map((label, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <span
+                    className={clsx(
+                      "flex size-5 items-center justify-center rounded-full text-[10px] font-bold text-white",
+                      GRID_DOT_COLORS[i % GRID_DOT_COLORS.length],
+                    )}
+                  >
+                    {i + 1}
+                  </span>
+                  <span className="text-sm font-semibold text-white/80">{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
         ) : isCalculated ? (
           <div className="mt-8 flex w-full max-w-xl flex-col gap-4 px-2">
@@ -155,7 +186,7 @@ const Responses = ({
         )}
       </div>
 
-      {!isWordCloud && !isCalculated && !isDotmocracy && (
+      {!isWordCloud && !isCalculated && !isDotmocracy && !isGrid2x2 && (
         <div>
           <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 rounded-full px-2 text-lg font-bold text-white md:text-xl">
             {answers.map((answer, key) => (

@@ -6,7 +6,7 @@ import ConfigNumberInput from "@questly/web/features/quiz/components/QuestionEdi
 import ConfigSection from "@questly/web/features/quiz/components/QuestionEditor/QuestionEditorConfig/ConfigSection"
 import { useQuizEditor } from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import clsx from "clsx"
-import { Calculator, CheckSquare, Clock, Cloud, Keyboard, Square, Timer, ToggleLeft, Vote } from "lucide-react"
+import { Calculator, CheckSquare, Clock, Cloud, Grid2x2, Keyboard, Square, Timer, ToggleLeft, Vote } from "lucide-react"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -22,6 +22,7 @@ const QUESTION_TYPES: { value: QuestionType; labelKey: string; icon: ReactNode }
   { value: "wordcloud", labelKey: "quiz:question.config.typeWordCloud", icon: <Cloud className="size-4" /> },
   { value: "calculated", labelKey: "quiz:question.config.typeCalculated", icon: <Calculator className="size-4" /> },
   { value: "dotmocracy", labelKey: "quiz:question.config.typeDotmocracy", icon: <Vote className="size-4" /> },
+  { value: "grid2x2", labelKey: "quiz:question.config.typeGrid2x2", icon: <Grid2x2 className="size-4" /> },
 ]
 
 const QuestionEditorConfig = () => {
@@ -68,16 +69,30 @@ const QuestionEditorConfig = () => {
         calculatedVariables: undefined,
         formula: undefined,
         dotType: "single",
-        totalDots: 5,
+        gridXLabel: undefined,
+        gridYLabel: undefined,
+      })
+    } else if (value === "grid2x2") {
+      updateQuestion(currentIndex, {
+        type: value,
+        answers: ["Item 1", "Item 2", "Item 3", "Item 4"],
+        solutions: [],
+        textSolutions: undefined,
+        calculatedVariables: undefined,
+        formula: undefined,
+        dotType: undefined,
+        gridXLabel: undefined,
+        gridYLabel: undefined,
       })
     } else if (
       questionType === "truefalse" ||
       questionType === "shortanswer" ||
       questionType === "wordcloud" ||
       questionType === "calculated" ||
-      questionType === "dotmocracy"
+      questionType === "dotmocracy" ||
+      questionType === "grid2x2"
     ) {
-      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0], textSolutions: undefined, calculatedVariables: undefined, formula: undefined, dotType: undefined, totalDots: undefined })
+      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0], textSolutions: undefined, calculatedVariables: undefined, formula: undefined, dotType: undefined, gridXLabel: undefined, gridYLabel: undefined })
     } else {
       updateQuestion(currentIndex, { type: value })
     }

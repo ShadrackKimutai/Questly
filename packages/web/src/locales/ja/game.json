@@ -49,5 +49,10 @@
   "dotmocracy": {
     "dotsRemaining": "残り{{count}}/{{total}}ドット",
     "voteRecorded": "参加しました！"
+  },
+  "grid2x2": {
+    "tapToPlace": "「{{item}}」を配置する場所をタップ",
+    "allPlaced": "すべて配置されました！",
+    "placementRecorded": "参加しました！"
   }
 }

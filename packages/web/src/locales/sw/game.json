@@ -53,5 +53,10 @@
   "dotmocracy": {
     "dotsRemaining": "{{count}} kati ya {{total}} nukta zilizobaki",
     "voteRecorded": "Umeshiriki!"
+  },
+  "grid2x2": {
+    "tapToPlace": "Gusa gridi kuweka \"{{item}}\"",
+    "allPlaced": "Vipengele vyote vimewekwa!",
+    "placementRecorded": "Umeshiriki!"
   }
 }

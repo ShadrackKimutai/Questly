@@ -49,5 +49,10 @@
   "dotmocracy": {
     "dotsRemaining": "{{count}} von {{total}} Punkten verbleibend",
     "voteRecorded": "Teilgenommen!"
+  },
+  "grid2x2": {
+    "tapToPlace": "Tippe auf das Raster, um \"{{item}}\" zu platzieren",
+    "allPlaced": "Alle Elemente platziert!",
+    "placementRecorded": "Teilgenommen!"
   }
 }

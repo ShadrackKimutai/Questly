@@ -16,7 +16,8 @@
       "timings": "Durées",
       "typeWordCloud": "Nuage de mots",
       "typeCalculated": "Calculée",
-      "typeDotmocracy": "Vote par points"
+      "typeDotmocracy": "Vote par points",
+      "typeGrid2x2": "Grille 2x2"
     },
     "deleteQuestion": "Supprimer la question",
     "deleteQuestionConfirm": "Êtes-vous sûr de vouloir supprimer cette question ?",
@@ -47,5 +48,10 @@
     "single": "Point unique",
     "multiple": "Budget de points",
     "totalDots": "Points par apprenant"
+  },
+  "grid2x2": {
+    "items": "Éléments",
+    "xAxisLabel": "Étiquette de l'axe X",
+    "yAxisLabel": "Étiquette de l'axe Y"
   }
 }
