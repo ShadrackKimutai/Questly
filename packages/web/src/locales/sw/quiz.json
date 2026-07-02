@@ -22,8 +22,7 @@
       "typeShortAnswer": "Jibu Fupi",
       "typeWordCloud": "Wingu la Maneno",
       "typeCalculated": "Hesabu",
-      "typeDotmocracy": "Kura ya Nukta",
-      "typeGrid2x2": "Gridi 2x2"
+      "typeDotmocracy": "Kura ya Nukta"
     },
     "deleteQuestion": "Futa swali",
     "deleteQuestionConfirm": "Je, una uhakika unataka kufuta swali hili?",
@@ -54,10 +53,5 @@
     "single": "Nukta moja",
     "multiple": "Bajeti ya nukta",
     "totalDots": "Nukta kwa mwanafunzi"
-  },
-  "grid2x2": {
-    "items": "Vipengele",
-    "xAxisLabel": "Lebo ya mhimili wa X",
-    "yAxisLabel": "Lebo ya mhimili wa Y"
   }
 }

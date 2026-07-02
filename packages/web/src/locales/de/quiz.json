@@ -16,8 +16,7 @@
       "timings": "Zeiten",
       "typeWordCloud": "Wortwolke",
       "typeCalculated": "Berechnet",
-      "typeDotmocracy": "Dot-Abstimmung",
-      "typeGrid2x2": "2x2-Raster"
+      "typeDotmocracy": "Dot-Abstimmung"
     },
     "deleteQuestion": "Frage löschen",
     "deleteQuestionConfirm": "Möchtest du diese Frage wirklich löschen?",
@@ -48,10 +47,5 @@
     "single": "Einzelner Punkt",
     "multiple": "Punktbudget",
     "totalDots": "Punkte pro Lernenden"
-  },
-  "grid2x2": {
-    "items": "Elemente",
-    "xAxisLabel": "X-Achsen-Beschriftung",
-    "yAxisLabel": "Y-Achsen-Beschriftung"
   }
 }

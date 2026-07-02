@@ -59,7 +59,7 @@ const GameWrapper = ({
   }
 
   return (
-    <section className="relative flex min-h-dvh">
+    <section className="relative flex h-dvh">
       <div className="fixed top-0 left-0 h-full w-full">
         <img
           className="pointer-events-none h-full w-full object-cover select-none"
