@@ -2,6 +2,16 @@
   "configurationsTitle": "Konfigurationen",
   "logout": "Abmelden",
   "passwordPlaceholder": "Passwort",
+  "create": {
+    "title": "Was möchtest du erstellen?",
+    "quizTitle": "Quiz",
+    "quizDescription": "Ein Live-Multiplayer-Quiz mit Echtzeit-Bewertung und Rangliste.",
+    "quizAction": "Weiter",
+    "presentationTitle": "Präsentation",
+    "presentationDescription": "Teile Folien und Inhalte mit deinem Publikum.",
+    "presentationComingSoon": "Demnächst verfügbar",
+    "presentationToast": "Präsentationen sind bald verfügbar!"
+  },
   "quiz": {
     "create": "Quiz erstellen",
     "delete": "Quiz löschen",

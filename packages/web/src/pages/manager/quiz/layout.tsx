@@ -28,7 +28,7 @@ function RouteComponent() {
   })
 
   useEvent(EVENTS.MANAGER.UNAUTHORIZED, () => {
-    navigate({ to: "/manager" })
+    navigate({ to: "/manager/login" })
   })
 
   if (!isConnected || !config) {

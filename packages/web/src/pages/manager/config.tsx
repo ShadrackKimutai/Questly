@@ -37,7 +37,7 @@ const ManagerConfigPage = () => {
   }
 
   if (!config) {
-    return navigate({ to: "/manager" })
+    return navigate({ to: "/manager/login" })
   }
 
   return (

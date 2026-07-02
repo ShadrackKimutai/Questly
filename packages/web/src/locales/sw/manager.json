@@ -2,6 +2,16 @@
   "configurationsTitle": "Mipangilio",
   "logout": "Toka",
   "passwordPlaceholder": "Nenosiri",
+  "create": {
+    "title": "Ungependa kuunda nini?",
+    "quizTitle": "Maswali",
+    "quizDescription": "Maswali ya moja kwa moja ya wachezaji wengi yenye alama za wakati halisi na ubao wa alama.",
+    "quizAction": "Endelea",
+    "presentationTitle": "Uwasilishaji",
+    "presentationDescription": "Shiriki slaidi na maudhui na hadhira yako.",
+    "presentationComingSoon": "Inakuja hivi karibuni",
+    "presentationToast": "Uwasilishaji unakuja hivi karibuni!"
+  },
   "quiz": {
     "create": "Unda Maswali",
     "delete": "Futa maswali",

@@ -2,6 +2,16 @@
   "configurationsTitle": "Configurations",
   "logout": "Déconnexion",
   "passwordPlaceholder": "Mot de passe",
+  "create": {
+    "title": "Que souhaitez-vous créer ?",
+    "quizTitle": "Quiz",
+    "quizDescription": "Un quiz multijoueur en direct avec notation en temps réel et classement.",
+    "quizAction": "Continuer",
+    "presentationTitle": "Présentation",
+    "presentationDescription": "Partagez des diapositives et du contenu avec votre public.",
+    "presentationComingSoon": "Bientôt disponible",
+    "presentationToast": "Les présentations arrivent bientôt !"
+  },
   "quiz": {
     "create": "Créer un quiz",
     "delete": "Supprimer le quiz",

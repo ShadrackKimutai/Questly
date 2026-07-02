@@ -7,7 +7,8 @@ import {
   useSocket,
 } from "@questly/web/features/game/contexts/socket-context"
 import { usePlayerStore } from "@questly/web/features/game/stores/player"
-import { useSearch } from "@tanstack/react-router"
+import { Link, useSearch } from "@tanstack/react-router"
+import { PenLine } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -37,13 +38,23 @@ const Room = () => {
   }, [pin, isConnected, socket])
 
   return (
-    <Card>
-      <p className="mb-2 text-lg font-semibold">{t("game:pinLabel")}</p>
-      <PinInput value={invitation} onChange={setInvitation} />
-      <Button className="mt-4" onClick={handleJoin}>
-        {t("common:submit")}
-      </Button>
-    </Card>
+    <div className="z-10 flex flex-col items-center gap-4">
+      <Card>
+        <p className="mb-2 text-lg font-semibold">{t("game:pinLabel")}</p>
+        <PinInput value={invitation} onChange={setInvitation} />
+        <Button className="mt-4" onClick={handleJoin}>
+          {t("common:submit")}
+        </Button>
+      </Card>
+
+      <Link
+        to="/manager"
+        className="flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/80 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white"
+      >
+        <PenLine className="size-4" />
+        {t("common:makeQuiz")}
+      </Link>
+    </div>
   )
 }
 

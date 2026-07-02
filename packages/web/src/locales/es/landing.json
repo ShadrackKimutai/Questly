@@ -1,0 +1,41 @@
+{
+  "badge": "Gratis y de código abierto",
+  "joinGame": "Unirse a una partida",
+  "heroTitle": "Convierte cualquier sala en un show de preguntas en vivo",
+  "heroSubtitle": "Questly es una plataforma de cuestionarios en tiempo real para aulas, equipos y eventos. Organiza sesiones atractivas en segundos: los jugadores se unen al instante desde su teléfono, sin necesidad de una app.",
+  "cta": "Crear ahora",
+  "features": [
+    {
+      "title": "Tiempo real de principio a fin",
+      "description": "Las preguntas, respuestas y clasificaciones se actualizan en vivo para cada jugador en cuanto avanzas."
+    },
+    {
+      "title": "Preparado para cualquier tipo de pregunta",
+      "description": "Opción única y múltiple, verdadero/falso, respuesta corta, nube de palabras, respuestas calculadas y más."
+    },
+    {
+      "title": "Sin app, sin fricción",
+      "description": "Los jugadores se unen en segundos desde cualquier navegador de teléfono u ordenador con un PIN de partida sencillo."
+    },
+    {
+      "title": "Habla tu idioma",
+      "description": "Soporte integrado para 7 idiomas, para que cada jugador se sienta como en casa."
+    }
+  ],
+  "howItWorksTitle": "Cómo funciona",
+  "steps": [
+    {
+      "title": "Crea tu cuestionario",
+      "description": "Elabora tus preguntas en el editor — elige entre varios tipos de pregunta."
+    },
+    {
+      "title": "Comparte el PIN",
+      "description": "Los jugadores se unen en questly.co.ke en segundos, sin necesidad de registro."
+    },
+    {
+      "title": "Jueguen juntos, en vivo",
+      "description": "Organiza la sesión y observa la clasificación actualizarse en tiempo real."
+    }
+  ],
+  "footerCtaTitle": "¿Listo para organizar tu primera sesión?"
+}

@@ -1,0 +1,41 @@
+{
+  "badge": "Kostenlos & Open Source",
+  "joinGame": "Spiel beitreten",
+  "heroTitle": "Verwandle jeden Raum in eine Live-Quizshow",
+  "heroSubtitle": "Questly ist eine Echtzeit-Quiz-Plattform für Klassenzimmer, Teams und Events. Starte fesselnde Sitzungen in Sekunden — Spieler treten sofort über ihr Handy bei, keine App nötig.",
+  "cta": "Jetzt erstellen",
+  "features": [
+    {
+      "title": "Echtzeit von Anfang bis Ende",
+      "description": "Fragen, Antworten und Ranglisten aktualisieren sich live für jeden Spieler, sobald du weitergehst."
+    },
+    {
+      "title": "Für jede Art von Frage",
+      "description": "Einzel- & Mehrfachauswahl, Wahr/Falsch, Kurzantwort, Wortwolken, berechnete Antworten und mehr."
+    },
+    {
+      "title": "Keine App, keine Hürden",
+      "description": "Spieler treten in Sekunden über jeden Browser auf Handy oder Laptop mit einer einfachen Spiel-PIN bei."
+    },
+    {
+      "title": "Spricht deine Sprache",
+      "description": "Integrierte Unterstützung für 7 Sprachen, damit sich jeder Spieler zu Hause fühlt."
+    }
+  ],
+  "howItWorksTitle": "So funktioniert's",
+  "steps": [
+    {
+      "title": "Erstelle dein Quiz",
+      "description": "Baue deine Fragen im Editor — wähle aus mehreren Fragetypen."
+    },
+    {
+      "title": "Teile die PIN",
+      "description": "Spieler treten in Sekunden auf questly.co.ke bei, keine Anmeldung nötig."
+    },
+    {
+      "title": "Gemeinsam live spielen",
+      "description": "Starte die Sitzung und beobachte die Rangliste in Echtzeit."
+    }
+  ],
+  "footerCtaTitle": "Bereit für deine erste Sitzung?"
+}

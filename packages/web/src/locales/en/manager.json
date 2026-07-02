@@ -2,6 +2,16 @@
   "configurationsTitle": "Configurations",
   "logout": "Logout",
   "passwordPlaceholder": "Password",
+  "create": {
+    "title": "What would you like to create?",
+    "quizTitle": "Quiz",
+    "quizDescription": "A live multiplayer quiz with real-time scoring and a leaderboard.",
+    "quizAction": "Continue",
+    "presentationTitle": "Presentation",
+    "presentationDescription": "Share slides and content with your audience.",
+    "presentationComingSoon": "Coming soon",
+    "presentationToast": "Presentations are coming soon!"
+  },
   "quiz": {
     "create": "Create Quiz",
     "delete": "Delete quiz",

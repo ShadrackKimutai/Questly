@@ -2,6 +2,16 @@
   "configurationsTitle": "Configuraciones",
   "logout": "Cerrar sesión",
   "passwordPlaceholder": "Contraseña",
+  "create": {
+    "title": "¿Qué te gustaría crear?",
+    "quizTitle": "Cuestionario",
+    "quizDescription": "Un cuestionario multijugador en vivo con puntuación en tiempo real y clasificación.",
+    "quizAction": "Continuar",
+    "presentationTitle": "Presentación",
+    "presentationDescription": "Comparte diapositivas y contenido con tu audiencia.",
+    "presentationComingSoon": "Próximamente",
+    "presentationToast": "¡Las presentaciones estarán disponibles pronto!"
+  },
   "quiz": {
     "create": "Crear cuestionario",
     "delete": "Eliminar cuestionario",

@@ -1,0 +1,41 @@
+{
+  "badge": "Bure na Chanzo Huria",
+  "joinGame": "Jiunge na mchezo",
+  "heroTitle": "Geuza chumba chochote kuwa onyesho la maswali la moja kwa moja",
+  "heroSubtitle": "Questly ni jukwaa la maswali la wakati halisi kwa madarasa, timu, na matukio. Endesha vipindi vinavyovutia kwa sekunde — wachezaji hujiunga papo hapo kutoka simu zao, bila programu inayohitajika.",
+  "cta": "Unda Sasa",
+  "features": [
+    {
+      "title": "Wakati halisi kutoka mwanzo hadi mwisho",
+      "description": "Maswali, majibu, na ubao wa alama husasishwa papo hapo kwa kila mchezaji unapoendelea."
+    },
+    {
+      "title": "Imeundwa kwa aina zote za maswali",
+      "description": "Chaguo moja na nyingi, kweli/uongo, jibu fupi, mawingu ya maneno, majibu ya kihesabu, na zaidi."
+    },
+    {
+      "title": "Hakuna programu, hakuna usumbufu",
+      "description": "Wachezaji hujiunga kwa sekunde kutoka kivinjari chochote cha simu au kompyuta kwa kutumia PIN rahisi ya mchezo."
+    },
+    {
+      "title": "Huzungumza lugha yako",
+      "description": "Msaada wa lugha 7 umejengwa ndani, ili kila mchezaji ajisikie nyumbani."
+    }
+  ],
+  "howItWorksTitle": "Jinsi inavyofanya kazi",
+  "steps": [
+    {
+      "title": "Unda maswali yako",
+      "description": "Tengeneza maswali yako kwenye kihariri — chagua kutoka aina kadhaa za maswali."
+    },
+    {
+      "title": "Shiriki PIN",
+      "description": "Wachezaji hujiunga kwenye questly.co.ke kwa sekunde, bila kujisajili."
+    },
+    {
+      "title": "Chezeni pamoja, moja kwa moja",
+      "description": "Endesha kipindi na uangalie ubao wa alama ukisasishwa kwa wakati halisi."
+    }
+  ],
+  "footerCtaTitle": "Uko tayari kuendesha kipindi chako cha kwanza?"
+}

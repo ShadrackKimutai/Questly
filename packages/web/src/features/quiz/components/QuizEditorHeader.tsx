@@ -58,7 +58,7 @@ const QuizEditorHeader = () => {
       <div className="flex gap-2">
         <Button
           className="text-md bg-gray-200 px-4 py-2 font-semibold text-gray-600"
-          onClick={() => navigate({ to: "/manager" })}
+          onClick={() => navigate({ to: "/manager/config" })}
         >
           {t("common:exit")}
         </Button>

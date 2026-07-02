@@ -1,0 +1,41 @@
+{
+  "badge": "Free & Open Source",
+  "joinGame": "Join a game",
+  "heroTitle": "Turn any room into a live quiz show",
+  "heroSubtitle": "Questly is a real-time quiz platform for classrooms, teams, and events. Host engaging sessions in seconds — players join instantly from their phones, no app required.",
+  "cta": "Create Now",
+  "features": [
+    {
+      "title": "Real-time from start to finish",
+      "description": "Questions, answers, and leaderboards update live for every player the instant you move forward."
+    },
+    {
+      "title": "Built for every kind of question",
+      "description": "Single & multiple choice, true/false, short answer, word clouds, calculated answers, and more."
+    },
+    {
+      "title": "No app, no friction",
+      "description": "Players join in seconds from any phone or laptop browser using a simple game PIN."
+    },
+    {
+      "title": "Speaks your language",
+      "description": "Built-in support for 7 languages, so every player feels at home."
+    }
+  ],
+  "howItWorksTitle": "How it works",
+  "steps": [
+    {
+      "title": "Create your quiz",
+      "description": "Build your questions in the editor — pick from several question types."
+    },
+    {
+      "title": "Share the PIN",
+      "description": "Players join at questly.co.ke in seconds, no signup needed."
+    },
+    {
+      "title": "Play together, live",
+      "description": "Host the session and watch the leaderboard update in real time."
+    }
+  ],
+  "footerCtaTitle": "Ready to host your first session?"
+}

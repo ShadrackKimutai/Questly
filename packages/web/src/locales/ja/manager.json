@@ -2,6 +2,16 @@
   "configurationsTitle": "設定",
   "logout": "ログアウト",
   "passwordPlaceholder": "パスワード",
+  "create": {
+    "title": "何を作成しますか？",
+    "quizTitle": "クイズ",
+    "quizDescription": "リアルタイム採点とランキング付きのライブマルチプレイヤークイズ。",
+    "quizAction": "続ける",
+    "presentationTitle": "プレゼンテーション",
+    "presentationDescription": "スライドやコンテンツを視聴者と共有します。",
+    "presentationComingSoon": "近日公開",
+    "presentationToast": "プレゼンテーション機能は近日公開予定です！"
+  },
   "quiz": {
     "create": "クイズを作成",
     "delete": "クイズを削除",

@@ -8,7 +8,7 @@ import ManagerPassword from "@questly/web/features/manager/components/ManagerPas
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useEffect } from "react"
 
-const ManagerAuthPage = () => {
+const ManagerLoginPage = () => {
   const { setConfig } = useManagerStore()
   const navigate = useNavigate()
   const { socket, isConnected } = useSocket()
@@ -24,7 +24,7 @@ const ManagerAuthPage = () => {
 
   useEvent(EVENTS.MANAGER.CONFIG, (data) => {
     setConfig(data)
-    navigate({ to: "/manager/config" })
+    navigate({ to: "/manager/create" })
   })
 
   const handleAuth = (password: string) => {
@@ -34,6 +34,6 @@ const ManagerAuthPage = () => {
   return <ManagerPassword onSubmit={handleAuth} />
 }
 
-export const Route = createFileRoute("/(auth)/manager/")({
-  component: ManagerAuthPage,
+export const Route = createFileRoute("/(auth)/manager/login")({
+  component: ManagerLoginPage,
 })
