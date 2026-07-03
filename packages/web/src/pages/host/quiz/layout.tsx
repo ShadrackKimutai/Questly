@@ -8,7 +8,7 @@ import { useManagerStore } from "@questly/web/features/game/stores/manager"
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router"
 import { useEffect } from "react"
 
-export const Route = createFileRoute("/manager/quiz")({
+export const Route = createFileRoute("/host/quiz")({
   component: RouteComponent,
 })
 
@@ -28,7 +28,7 @@ function RouteComponent() {
   })
 
   useEvent(EVENTS.MANAGER.UNAUTHORIZED, () => {
-    navigate({ to: "/manager/login" })
+    navigate({ to: "/host/login" })
   })
 
   if (!isConnected || !config) {

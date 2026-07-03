@@ -55,7 +55,7 @@ const ConfigManageQuiz = () => {
       <div className="mb-4 flex shrink-0 gap-2">
         <Button
           className="flex-1"
-          onClick={() => navigate({ to: "/manager/quiz" })}
+          onClick={() => navigate({ to: "/host/quiz" })}
         >
           {t("manager:quiz.create")}
         </Button>
@@ -86,7 +86,7 @@ const ConfigManageQuiz = () => {
                 className="rounded-sm p-2 text-gray-600 hover:bg-gray-600/10"
                 onClick={() =>
                   navigate({
-                    to: "/manager/quiz/$quizId",
+                    to: "/host/quiz/$quizId",
                     params: { quizId: q.id },
                   })
                 }

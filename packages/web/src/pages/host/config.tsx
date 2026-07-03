@@ -37,7 +37,7 @@ const ManagerConfigPage = () => {
   }
 
   if (!config) {
-    return navigate({ to: "/manager/login" })
+    return navigate({ to: "/host/login" })
   }
 
   return (
@@ -47,6 +47,6 @@ const ManagerConfigPage = () => {
   )
 }
 
-export const Route = createFileRoute("/manager/config")({
+export const Route = createFileRoute("/host/config")({
   component: ManagerConfigPage,
 })

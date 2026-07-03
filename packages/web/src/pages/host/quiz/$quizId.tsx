@@ -48,6 +48,6 @@ const QuizEditPage = () => {
   )
 }
 
-export const Route = createFileRoute("/manager/quiz/$quizId")({
+export const Route = createFileRoute("/host/quiz/$quizId")({
   component: QuizEditPage,
 })

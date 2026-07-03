@@ -48,6 +48,7 @@
     },
     "playerCount": "{{count}}人",
     "timeLimitSuffix": "秒制限",
+    "exportPdf": "PDFとしてエクスポート",
     "viewResults": "View Results"
   },
   "tabs": {

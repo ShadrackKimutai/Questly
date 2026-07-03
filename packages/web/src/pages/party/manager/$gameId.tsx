@@ -70,7 +70,7 @@ const ManagerGamePage = () => {
   )
 
   useEvent(EVENTS.GAME.RESET, (message) => {
-    navigate({ to: "/manager/config" })
+    navigate({ to: "/host/config" })
     reset()
     setQuestionStates(null)
     toast.error(t(message))
@@ -79,7 +79,7 @@ const ManagerGamePage = () => {
   const exitGame = () => {
     setShowResults(false)
     setPendingResult(null)
-    navigate({ to: "/manager/config" })
+    navigate({ to: "/host/config" })
     reset()
     setQuestionStates(null)
   }
@@ -109,7 +109,7 @@ const ManagerGamePage = () => {
   }
 
   const handleBack = () => {
-    navigate({ to: "/manager/config" })
+    navigate({ to: "/host/config" })
     reset()
     setQuestionStates(null)
   }

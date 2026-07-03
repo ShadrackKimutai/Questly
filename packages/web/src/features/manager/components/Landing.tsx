@@ -1,6 +1,7 @@
 import logo from "@questly/web/assets/logo.svg"
 import GithubIcon from "@questly/web/components/GithubIcon"
 import LanguageSwitcher from "@questly/web/components/LanguageSwitcher"
+import { useManagerStore } from "@questly/web/features/game/stores/manager"
 import { Link } from "@tanstack/react-router"
 import {
   Languages,
@@ -11,13 +12,40 @@ import {
   Users,
   Zap,
 } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 const FEATURE_ICONS = [Zap, ListChecks, Smartphone, Languages]
 const STEP_ICONS = [PenLine, Users, Trophy]
 
+const JOIN_WIGGLE_INITIAL_DELAY_MS = 4000
+const JOIN_WIGGLE_DURATION_MS = 3000
+const JOIN_WIGGLE_PAUSE_MS = 10000
+
 const Landing = () => {
   const { t } = useTranslation()
+  const { config } = useManagerStore()
+  const [wiggleJoin, setWiggleJoin] = useState(false)
+
+  useEffect(() => {
+    if (config) return
+
+    let timer: ReturnType<typeof setTimeout>
+
+    const wiggleOff = () => {
+      setWiggleJoin(false)
+      timer = setTimeout(wiggleOn, JOIN_WIGGLE_PAUSE_MS)
+    }
+
+    const wiggleOn = () => {
+      setWiggleJoin(true)
+      timer = setTimeout(wiggleOff, JOIN_WIGGLE_DURATION_MS)
+    }
+
+    timer = setTimeout(wiggleOn, JOIN_WIGGLE_INITIAL_DELAY_MS)
+
+    return () => clearTimeout(timer)
+  }, [config])
 
   const features = t("landing:features", { returnObjects: true }) as {
     title: string
@@ -44,7 +72,9 @@ const Landing = () => {
         <div className="flex items-center gap-3">
           <Link
             to="/"
-            className="hidden text-sm font-semibold text-white/70 transition-colors hover:text-white sm:block"
+            className={`rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white/90 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white ${
+              wiggleJoin ? "anim-wiggle" : ""
+            }`}
           >
             {t("landing:joinGame")}
           </Link>
@@ -66,16 +96,10 @@ const Landing = () => {
           </p>
           <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row">
             <Link
-              to="/manager/login"
+              to="/host/login"
               className="gradient-primary rounded-xl px-8 py-3.5 text-lg font-bold text-white shadow-lg shadow-orange-500/30 transition-all hover:shadow-orange-500/50 hover:brightness-110 active:scale-95"
             >
               {t("landing:cta")}
-            </Link>
-            <Link
-              to="/"
-              className="rounded-xl border border-white/20 bg-white/10 px-8 py-3.5 text-lg font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:hidden"
-            >
-              {t("landing:joinGame")}
             </Link>
           </div>
         </section>
@@ -87,7 +111,7 @@ const Landing = () => {
             return (
               <div
                 key={feature.title}
-                className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+                className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:scale-105 hover:border-white/20 hover:bg-white/10 hover:shadow-2xl hover:shadow-black/40"
               >
                 <div className="gradient-primary flex size-11 items-center justify-center rounded-xl">
                   {Icon && <Icon className="size-5 text-white" />}
@@ -129,7 +153,7 @@ const Landing = () => {
             {t("landing:footerCtaTitle")}
           </h2>
           <Link
-            to="/manager/login"
+            to="/host/login"
             className="gradient-primary rounded-xl px-8 py-3.5 text-lg font-bold text-white shadow-lg shadow-orange-500/30 transition-all hover:shadow-orange-500/50 hover:brightness-110 active:scale-95"
           >
             {t("landing:cta")}

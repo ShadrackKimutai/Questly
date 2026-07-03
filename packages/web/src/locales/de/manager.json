@@ -48,6 +48,7 @@
     },
     "playerCount": "{{count}} Spieler",
     "timeLimitSuffix": "s Zeitlimit",
+    "exportPdf": "Als PDF exportieren",
     "viewResults": "View Results"
   },
   "tabs": {

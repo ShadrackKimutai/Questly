@@ -48,6 +48,7 @@
     },
     "playerCount": "wachezaji {{count}}",
     "timeLimitSuffix": "s kikomo cha muda",
+    "exportPdf": "Hamisha kama PDF",
     "viewResults": "View Results"
   },
   "tabs": {

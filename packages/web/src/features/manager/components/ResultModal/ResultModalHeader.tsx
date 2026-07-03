@@ -1,5 +1,6 @@
 import { useResultModal } from "@questly/web/features/manager/contexts/result-modal-context"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import { exportResultPdf } from "@questly/web/features/manager/utils/exportResultPdf"
+import { ChevronLeft, ChevronRight, Download, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
 
 const ResultModalHeader = () => {
@@ -63,6 +64,15 @@ const ResultModalHeader = () => {
           </button>
         </div>
       )}
+
+      <button
+        type="button"
+        title={t("manager:result.exportPdf")}
+        onClick={() => exportResultPdf(result)}
+        className="shrink-0 rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+      >
+        <Download className="size-5" />
+      </button>
 
       <button
         type="button"

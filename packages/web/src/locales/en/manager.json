@@ -53,6 +53,7 @@
     "prevQuestion": "Previous question",
     "nextQuestion": "Next question",
     "closeResults": "Close results",
+    "exportPdf": "Export as PDF",
     "overview": {
       "overallAccuracy": "Overall accuracy",
       "players": "Players",

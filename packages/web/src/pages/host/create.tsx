@@ -25,7 +25,7 @@ const ManagerCreatePage = () => {
   const handleLogout = () => {
     socket.emit(EVENTS.MANAGER.LOGOUT)
     reset()
-    navigate({ to: "/manager" })
+    navigate({ to: "/host" })
   }
 
   const handlePresentation = () => {
@@ -41,7 +41,7 @@ const ManagerCreatePage = () => {
   }
 
   if (!config) {
-    return navigate({ to: "/manager/login" })
+    return navigate({ to: "/host/login" })
   }
 
   return (
@@ -66,7 +66,7 @@ const ManagerCreatePage = () => {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <button
             type="button"
-            onClick={() => navigate({ to: "/manager/config" })}
+            onClick={() => navigate({ to: "/host/config" })}
             className="group flex flex-col items-start gap-3 rounded-2xl border border-white/20 bg-white/95 p-6 text-left shadow-2xl shadow-black/30 backdrop-blur-md transition-transform hover:-translate-y-1"
           >
             <div className="gradient-primary flex size-12 items-center justify-center rounded-xl">
@@ -107,6 +107,6 @@ const ManagerCreatePage = () => {
   )
 }
 
-export const Route = createFileRoute("/manager/create")({
+export const Route = createFileRoute("/host/create")({
   component: ManagerCreatePage,
 })

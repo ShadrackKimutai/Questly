@@ -24,7 +24,7 @@ const ManagerLoginPage = () => {
 
   useEvent(EVENTS.MANAGER.CONFIG, (data) => {
     setConfig(data)
-    navigate({ to: "/manager/create" })
+    navigate({ to: "/host/create" })
   })
 
   const handleAuth = (password: string) => {
@@ -34,6 +34,6 @@ const ManagerLoginPage = () => {
   return <ManagerPassword onSubmit={handleAuth} />
 }
 
-export const Route = createFileRoute("/(auth)/manager/login")({
+export const Route = createFileRoute("/(auth)/host/login")({
   component: ManagerLoginPage,
 })
