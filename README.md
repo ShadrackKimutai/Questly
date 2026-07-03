@@ -2,6 +2,7 @@
   <img width="450" height="120" align="center" src=".github/logo.svg">
   <br>
   <div align="center">
+    ![Version](https://img.shields.io/badge/version-v.2.0-orange)
     <img alt="Visitor Badge" src="https://api.visitorbadge.io/api/visitors?path=https://github.com/questly-co/Questly/edit/main/README.md&countColor=%23FF9900">
     <img src="https://img.shields.io/docker/pulls/questly-co/questly?style=for-the-badge&color=FF9900" alt="Docker Pulls">
   </div>
