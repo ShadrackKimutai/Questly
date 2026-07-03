@@ -12,7 +12,7 @@
     "noPlayersConnected": "Hakuna wachezaji waliounganishwa",
     "notFound": "Mchezo haukupatikana",
     "playerAlreadyConnected": "Mchezaji ameshaungana",
-    "roomFull": "The room is full"
+    "roomFull": "Nafasi za Mchezo zimejaa"
   },
   "manager": {
     "failedToReadConfig": "Imeshindwa kusoma mipangilio ya mchezo",
@@ -41,6 +41,6 @@
   "route": {
     "back": "Rudi nyumbani",
     "description": "Hitilafu isiyotarajiwa imetokea. Tafadhali jaribu tena.",
-    "title": "Kitu kimekwenda vibaya"
+    "title": "Kuna kasoro mahali"
   }
 }

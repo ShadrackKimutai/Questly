@@ -72,7 +72,7 @@ const Landing = () => {
         <div className="flex items-center gap-3">
           <Link
             to="/"
-            className={`rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-semibold text-white/90 backdrop-blur-sm transition-colors hover:bg-white/20 hover:text-white ${
+            className={`rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 px-4 py-1.5 text-sm font-bold text-gray-900 shadow-lg shadow-yellow-500/40 transition-all hover:shadow-yellow-500/60 hover:brightness-110 active:scale-95 ${
               wiggleJoin ? "anim-wiggle" : ""
             }`}
           >
