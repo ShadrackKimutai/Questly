@@ -16,7 +16,8 @@
       "timings": "Durées",
       "typeWordCloud": "Nuage de mots",
       "typeCalculated": "Calculée",
-      "typeDotmocracy": "Vote par points"
+      "typeDotmocracy": "Vote par points",
+      "typeEstimate": "Estimation"
     },
     "deleteQuestion": "Supprimer la question",
     "deleteQuestionConfirm": "Êtes-vous sûr de vouloir supprimer cette question ?",
@@ -47,5 +48,9 @@
     "single": "Point unique",
     "multiple": "Budget de points",
     "totalDots": "Points par apprenant"
+  },
+  "estimate": {
+    "tolerance": "Tolérance",
+    "toleranceHint": "0 % = réponse exacte uniquement, 20 % = marge généreuse"
   }
 }

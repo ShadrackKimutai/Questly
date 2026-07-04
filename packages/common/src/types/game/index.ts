@@ -33,12 +33,18 @@ export type QuestionType =
   | 'wordcloud'
   | 'calculated'
   | 'dotmocracy'
+  | 'estimate'
 
 export interface CalculatedVariable {
   name: string
   min: number
   max: number
   decimals: number
+}
+
+export interface EstimateVariable {
+  name: string
+  value: number
 }
 
 export interface Question {
@@ -50,12 +56,16 @@ export interface Question {
   cooldown: number
   time: number
   type?: QuestionType
-  // calculated question fields
-  calculatedVariables?: CalculatedVariable[]
+  // calculated / estimate question fields (shared)
   formula?: string
+  answerDecimals?: number
+  // calculated-only fields
+  calculatedVariables?: CalculatedVariable[]
   toleranceBase?: number
   tolerancePartial?: number
-  answerDecimals?: number
+  // estimate-only fields — variables are fixed values (no randomized range)
+  estimateVariables?: EstimateVariable[]
+  estimateTolerancePercent?: number
   // dotmocracy fields
   dotType?: 'single' | 'multiple'
 }
@@ -80,16 +90,23 @@ export interface GameUpdateQuestion {
 export interface PlayerAnswerRecord {
   playerName: string
   answerId: number | number[] | string | null
+  // estimate-only fields, populated at scoring time
+  numericAnswer?: number
+  offset?: number
+  accuracyFraction?: number
 }
 
 export type QuestionResult = Question & {
   playerAnswers: PlayerAnswerRecord[]
+  // estimate-only: the single correct answer rolled for this question, shared by all players
+  estimateCorrectAnswer?: number
 }
 
 export interface GameResultPlayer {
   username: string
   points: number
   rank: number
+  mascot: string
 }
 
 export interface GameResult {

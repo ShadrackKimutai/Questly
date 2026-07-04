@@ -53,5 +53,11 @@
   "dotmocracy": {
     "dotsRemaining": "{{count}} kati ya {{total}} nukta zilizobaki",
     "voteRecorded": "Umeshiriki!"
+  },
+  "estimate": {
+    "hint": "Buruta kukadiria, kisha tuma",
+    "yourGuess": "Kadirio lako",
+    "correctAnswer": "Jibu sahihi",
+    "offset": "Tofauti"
   }
 }

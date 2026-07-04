@@ -49,7 +49,11 @@
     "playerCount": "{{count}} Spieler",
     "timeLimitSuffix": "s Zeitlimit",
     "exportPdf": "Als PDF exportieren",
-    "viewResults": "View Results"
+    "viewResults": "View Results",
+    "estimate": {
+      "correctAnswer": "Richtige Antwort: {{answer}}",
+      "noAnswerCount": "{{count}} Spieler haben nicht geantwortet"
+    }
   },
   "tabs": {
     "play": "Spielen",

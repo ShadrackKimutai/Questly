@@ -49,5 +49,11 @@
   "dotmocracy": {
     "dotsRemaining": "{{count}} de {{total}} puntos restantes",
     "voteRecorded": "¡Participado!"
+  },
+  "estimate": {
+    "hint": "Arrastra para adivinar y luego envía",
+    "yourGuess": "Tu estimación",
+    "correctAnswer": "Respuesta correcta",
+    "offset": "Diferencia"
   }
 }

@@ -57,5 +57,11 @@
   "dotmocracy": {
     "dotsRemaining": "{{count}} of {{total}} dots remaining",
     "voteRecorded": "Participated!"
+  },
+  "estimate": {
+    "hint": "Drag to guess, then submit",
+    "yourGuess": "Your guess",
+    "correctAnswer": "Correct answer",
+    "offset": "Offset"
   }
 }

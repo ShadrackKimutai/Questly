@@ -6,7 +6,7 @@ import ConfigNumberInput from "@questly/web/features/quiz/components/QuestionEdi
 import ConfigSection from "@questly/web/features/quiz/components/QuestionEditor/QuestionEditorConfig/ConfigSection"
 import { useQuizEditor } from "@questly/web/features/quiz/contexts/quiz-editor-context"
 import clsx from "clsx"
-import { Calculator, CheckSquare, Clock, Cloud, Keyboard, Square, Timer, ToggleLeft, Vote } from "lucide-react"
+import { Calculator, CheckSquare, Clock, Cloud, Keyboard, Square, Target, Timer, ToggleLeft, Vote } from "lucide-react"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -22,6 +22,7 @@ const QUESTION_TYPES: { value: QuestionType; labelKey: string; icon: ReactNode }
   { value: "wordcloud", labelKey: "quiz:question.config.typeWordCloud", icon: <Cloud className="size-4" /> },
   { value: "calculated", labelKey: "quiz:question.config.typeCalculated", icon: <Calculator className="size-4" /> },
   { value: "dotmocracy", labelKey: "quiz:question.config.typeDotmocracy", icon: <Vote className="size-4" /> },
+  { value: "estimate", labelKey: "quiz:question.config.typeEstimate", icon: <Target className="size-4" /> },
 ]
 
 const QuestionEditorConfig = () => {
@@ -53,11 +54,26 @@ const QuestionEditorConfig = () => {
         answers: [],
         solutions: [],
         textSolutions: undefined,
-        calculatedVariables: [{ name: "a", min: 1, max: 10, decimals: 0 }],
-        formula: "",
+        calculatedVariables: currentQuestion.calculatedVariables ?? [{ name: "a", min: 1, max: 10, decimals: 0 }],
+        estimateVariables: undefined,
+        formula: currentQuestion.formula ?? "",
         toleranceBase: 5,
         tolerancePartial: 15,
         answerDecimals: 2,
+        estimateTolerancePercent: undefined,
+      })
+    } else if (value === "estimate") {
+      updateQuestion(currentIndex, {
+        type: value,
+        answers: [],
+        solutions: [],
+        textSolutions: undefined,
+        calculatedVariables: undefined,
+        estimateVariables: currentQuestion.estimateVariables ?? [{ name: "a", value: 10 }],
+        formula: currentQuestion.formula ?? "",
+        estimateTolerancePercent: 5,
+        toleranceBase: undefined,
+        tolerancePartial: undefined,
       })
     } else if (value === "dotmocracy") {
       updateQuestion(currentIndex, {
@@ -66,6 +82,7 @@ const QuestionEditorConfig = () => {
         solutions: [],
         textSolutions: undefined,
         calculatedVariables: undefined,
+        estimateVariables: undefined,
         formula: undefined,
         dotType: "single",
       })
@@ -74,9 +91,22 @@ const QuestionEditorConfig = () => {
       questionType === "shortanswer" ||
       questionType === "wordcloud" ||
       questionType === "calculated" ||
+      questionType === "estimate" ||
       questionType === "dotmocracy"
     ) {
-      updateQuestion(currentIndex, { type: value, answers: ["", ""], solutions: [0], textSolutions: undefined, calculatedVariables: undefined, formula: undefined, dotType: undefined })
+      updateQuestion(currentIndex, {
+        type: value,
+        answers: ["", ""],
+        solutions: [0],
+        textSolutions: undefined,
+        calculatedVariables: undefined,
+        estimateVariables: undefined,
+        formula: undefined,
+        toleranceBase: undefined,
+        tolerancePartial: undefined,
+        estimateTolerancePercent: undefined,
+        dotType: undefined,
+      })
     } else {
       updateQuestion(currentIndex, { type: value })
     }

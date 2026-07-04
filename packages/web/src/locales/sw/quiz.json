@@ -22,7 +22,8 @@
       "typeShortAnswer": "Jibu Fupi",
       "typeWordCloud": "Wingu la Maneno",
       "typeCalculated": "Hesabu",
-      "typeDotmocracy": "Kura ya Nukta"
+      "typeDotmocracy": "Kura ya Nukta",
+      "typeEstimate": "Makadirio"
     },
     "deleteQuestion": "Futa swali",
     "deleteQuestionConfirm": "Je, una uhakika unataka kufuta swali hili?",
@@ -53,5 +54,9 @@
     "single": "Nukta moja",
     "multiple": "Bajeti ya nukta",
     "totalDots": "Nukta kwa mwanafunzi"
+  },
+  "estimate": {
+    "tolerance": "Uvumilivu",
+    "toleranceHint": "0% = jibu sahihi tu, 20% = wigo mpana"
   }
 }

@@ -15,6 +15,11 @@ const calculatedVariableValidator = z.object({
   decimals: z.number().int().min(0).max(6),
 })
 
+const estimateVariableValidator = z.object({
+  name: z.string().min(1, "errors:quiz.variableNameEmpty").max(16),
+  value: z.number(),
+})
+
 const questionValidator = z.object({
   question: z.string().min(1, "errors:quiz.questionEmpty"),
   media: questionMediaValidator.optional(),
@@ -26,12 +31,14 @@ const questionValidator = z.object({
   textSolutions: z.array(z.string().min(1, "errors:quiz.answerEmpty")).optional(),
   cooldown: z.number().int().min(3).max(15),
   time: z.number().int().min(-1),
-  type: z.enum(["single", "multiple", "truefalse", "shortanswer", "wordcloud", "calculated", "dotmocracy"]).optional(),
+  type: z.enum(["single", "multiple", "truefalse", "shortanswer", "wordcloud", "calculated", "dotmocracy", "estimate"]).optional(),
   calculatedVariables: z.array(calculatedVariableValidator).optional(),
   formula: z.string().optional(),
   toleranceBase: z.number().min(0).max(100).optional(),
   tolerancePartial: z.number().min(0).max(100).optional(),
   answerDecimals: z.number().int().min(0).max(6).optional(),
+  estimateVariables: z.array(estimateVariableValidator).optional(),
+  estimateTolerancePercent: z.number().min(0).max(20).optional(),
   dotType: z.enum(["single", "multiple"]).optional(),
 }).superRefine((data, ctx) => {
   if (data.type === "calculated") {
@@ -46,6 +53,13 @@ const questionValidator = z.object({
           ctx.addIssue({ code: "custom", message: "errors:quiz.variableMinMax", path: ["calculatedVariables", i, "max"] })
         }
       })
+    }
+  } else if (data.type === "estimate") {
+    if (!data.formula || data.formula.trim().length === 0) {
+      ctx.addIssue({ code: "custom", message: "errors:quiz.noFormula", path: ["formula"] })
+    }
+    if (!data.estimateVariables || data.estimateVariables.length === 0) {
+      ctx.addIssue({ code: "custom", message: "errors:quiz.noVariables", path: ["estimateVariables"] })
     }
   } else if (data.type === "dotmocracy") {
     if (data.answers.length < 2) {

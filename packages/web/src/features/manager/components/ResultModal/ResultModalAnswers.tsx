@@ -5,6 +5,8 @@ import {
   ANSWERS_LABELS,
 } from "@questly/web/features/game/utils/constants"
 import { useResultModal } from "@questly/web/features/manager/contexts/result-modal-context"
+import EstimateResultPlot from "@questly/web/components/EstimateResultPlot"
+import type { EstimatePlayerGuess } from "@questly/common/types/game/status"
 import clsx from "clsx"
 import { Check, Clock, ImageOff, Music, Video, X } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -53,6 +55,7 @@ const MediaPreview = ({ media }: { media?: QuestionMedia }) => {
 
 const ResultModalAnswers = () => {
   const {
+    result,
     questionResult,
     totalPlayers,
     answeredCount,
@@ -63,6 +66,20 @@ const ResultModalAnswers = () => {
 
   const noAnswerCount = totalPlayers - answeredCount
   const isShortAnswer = questionResult.type === "shortanswer"
+  const isEstimate = questionResult.type === "estimate"
+
+  const mascotByName = new Map(result.players.map((p) => [p.username, p.mascot]))
+  const estimateGuesses: EstimatePlayerGuess[] = questionResult.playerAnswers.flatMap((pa) =>
+    pa.numericAnswer !== undefined && pa.offset !== undefined && pa.accuracyFraction !== undefined
+      ? [{
+          playerName: pa.playerName,
+          mascot: mascotByName.get(pa.playerName) ?? "❓",
+          numericAnswer: pa.numericAnswer,
+          offset: pa.offset,
+          accuracyFraction: pa.accuracyFraction,
+        }]
+      : [],
+  )
 
   const rows: AnswerRow[] = isShortAnswer
     ? [
@@ -124,51 +141,60 @@ const ResultModalAnswers = () => {
           {questionResult.question}
         </p>
 
-        {rows.map((row, i) => (
-          <div key={i} className="flex items-center gap-3">
-            {row.color && row.answerLabel ? (
-              <div
-                className={clsx(
-                  "flex size-6 shrink-0 items-center justify-center rounded-md text-xs font-bold text-white",
-                  row.color,
-                )}
-              >
-                {row.answerLabel}
-              </div>
-            ) : (
-              <div className="flex size-6 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-white">
-                <X className="size-3 text-gray-400" />
-              </div>
-            )}
-
-            <span
-              className={clsx("min-w-0 flex-1 truncate text-sm font-medium", {
-                "text-gray-400": !row.color,
-              })}
-            >
-              {row.label}
-            </span>
-
-            <div className="shrink-0">
-              {row.isCorrect ? (
-                <Check className="size-5 text-green-500" />
-              ) : (
-                <X
+        {isEstimate ? (
+          <EstimateResultPlot
+            guesses={estimateGuesses}
+            correctAnswer={questionResult.estimateCorrectAnswer ?? 0}
+            tolerancePercent={questionResult.estimateTolerancePercent ?? 5}
+            noAnswerCount={noAnswerCount}
+          />
+        ) : (
+          rows.map((row, i) => (
+            <div key={i} className="flex items-center gap-3">
+              {row.color && row.answerLabel ? (
+                <div
                   className={clsx(
-                    "size-5",
-                    row.color ? "text-red-500" : "text-red-400",
+                    "flex size-6 shrink-0 items-center justify-center rounded-md text-xs font-bold text-white",
+                    row.color,
                   )}
-                />
+                >
+                  {row.answerLabel}
+                </div>
+              ) : (
+                <div className="flex size-6 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-white">
+                  <X className="size-3 text-gray-400" />
+                </div>
               )}
-            </div>
 
-            <div className="flex shrink-0 items-center gap-2">
-              <span className="text-center text-sm font-semibold text-gray-600">
-                {row.count}
+              <span
+                className={clsx("min-w-0 flex-1 truncate text-sm font-medium", {
+                  "text-gray-400": !row.color,
+                })}
+              >
+                {row.label}
               </span>
+
+              <div className="shrink-0">
+                {row.isCorrect ? (
+                  <Check className="size-5 text-green-500" />
+                ) : (
+                  <X
+                    className={clsx(
+                      "size-5",
+                      row.color ? "text-red-500" : "text-red-400",
+                    )}
+                  />
+                )}
+              </div>
+
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="text-center text-sm font-semibold text-gray-600">
+                  {row.count}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   )

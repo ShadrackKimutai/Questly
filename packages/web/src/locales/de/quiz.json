@@ -16,7 +16,8 @@
       "timings": "Zeiten",
       "typeWordCloud": "Wortwolke",
       "typeCalculated": "Berechnet",
-      "typeDotmocracy": "Dot-Abstimmung"
+      "typeDotmocracy": "Dot-Abstimmung",
+      "typeEstimate": "Schätzung"
     },
     "deleteQuestion": "Frage löschen",
     "deleteQuestionConfirm": "Möchtest du diese Frage wirklich löschen?",
@@ -47,5 +48,9 @@
     "single": "Einzelner Punkt",
     "multiple": "Punktbudget",
     "totalDots": "Punkte pro Lernenden"
+  },
+  "estimate": {
+    "tolerance": "Toleranz",
+    "toleranceHint": "0 % = nur exakte Antwort, 20 % = großzügiger Spielraum"
   }
 }

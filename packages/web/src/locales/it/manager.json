@@ -49,7 +49,11 @@
     "playerCount": "{{count}} giocatore/i",
     "timeLimitSuffix": "s limite di tempo",
     "exportPdf": "Esporta come PDF",
-    "viewResults": "View Results"
+    "viewResults": "View Results",
+    "estimate": {
+      "correctAnswer": "Risposta corretta: {{answer}}",
+      "noAnswerCount": "{{count}} giocatore/i non hanno risposto"
+    }
   },
   "tabs": {
     "play": "Gioca",

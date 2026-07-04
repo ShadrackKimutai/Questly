@@ -30,8 +30,8 @@ interface ResultModalContextType {
   isWordCloud: boolean
   maxAnswerCount: number
   getAnswerCount: (_answerIndex: number) => number
-  isAnswerCorrect: (_answer: PlayerAnswerRecord["answerId"]) => boolean
-  getAnswerStatus: (_answer: PlayerAnswerRecord["answerId"], _qType?: string) => AnswerStatus
+  isAnswerCorrect: (_answer: PlayerAnswerRecord) => boolean
+  getAnswerStatus: (_answer: PlayerAnswerRecord, _qType?: string) => AnswerStatus
   getPlayerPoints: (_name: string) => number
   getPlayerRank: (_name: string) => number
   questionCorrectPct: (_qIndex: number) => number
@@ -68,9 +68,11 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
   ).length
 
   const isAnswerCorrectForQuestion = (
-    answer: PlayerAnswerRecord["answerId"],
+    pa: PlayerAnswerRecord,
     q: QuestionResult,
   ) => {
+    const answer = pa.answerId
+    if (q.type === "estimate") return (pa.accuracyFraction ?? 0) >= 0.8
     if (answer === null) return false
     if (q.type === "wordcloud" || q.type === "dotmocracy") return typeof answer === "string" && answer.trim().length > 0
     if (typeof answer === "string") {
@@ -84,26 +86,32 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
     return q.solutions.includes(answer)
   }
 
-  const isAnswerCorrect = (answer: PlayerAnswerRecord["answerId"]) =>
-    isAnswerCorrectForQuestion(answer, questionResult)
+  const isAnswerCorrect = (pa: PlayerAnswerRecord) =>
+    isAnswerCorrectForQuestion(pa, questionResult)
 
   const getAnswerStatus = (
-    answer: PlayerAnswerRecord["answerId"],
+    pa: PlayerAnswerRecord,
     qType?: string,
   ): AnswerStatus => {
     const type = qType ?? questionResult.type
+    if (type === "estimate") {
+      const fraction = pa.accuracyFraction ?? 0
+      if (fraction >= 0.8) return "correct"
+      if (fraction > 0) return "participated"
+      return "incorrect"
+    }
     if (type === "wordcloud" || type === "dotmocracy") {
-      return typeof answer === "string" && answer.trim().length > 0
+      return typeof pa.answerId === "string" && pa.answerId.trim().length > 0
         ? "participated"
         : "incorrect"
     }
-    return isAnswerCorrect(answer) ? "correct" : "incorrect"
+    return isAnswerCorrect(pa) ? "correct" : "incorrect"
   }
 
   const isWordCloud = questionResult.type === "wordcloud"
 
   const correctCount = questionResult.playerAnswers.filter((pa) =>
-    isAnswerCorrect(pa.answerId),
+    isAnswerCorrect(pa),
   ).length
 
   const correctPct =
@@ -130,7 +138,7 @@ export const ResultModalProvider = ({ children, result, onClose }: Props) => {
     const q = result.questions[qIndex]
     if (!q || totalPlayers === 0) return 0
     const correct = q.playerAnswers.filter((pa) =>
-      isAnswerCorrectForQuestion(pa.answerId, q),
+      isAnswerCorrectForQuestion(pa, q),
     ).length
     return Math.round((correct / totalPlayers) * 100)
   }

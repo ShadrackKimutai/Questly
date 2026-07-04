@@ -2,6 +2,7 @@ import { EVENTS, MEDIA_TYPES, NO_TIME_LIMIT } from "@questly/common/constants"
 import type { QuestionMediaType } from "@questly/common/types/game"
 import type { CommonStatusDataMap } from "@questly/common/types/game/status"
 import QuestionMedia from "@questly/web/components/QuestionMedia"
+import Slider from "@questly/web/components/Slider"
 import AnswerButton from "@questly/web/features/game/components/AnswerButton"
 import {
   useEvent,
@@ -23,7 +24,18 @@ interface Props {
 }
 
 const Answers = ({
-  data: { question, answers, media, time, totalPlayer, type, playerVariables, dotType },
+  data: {
+    question,
+    answers,
+    media,
+    time,
+    totalPlayer,
+    type,
+    playerVariables,
+    dotType,
+    answerRange,
+    answerDecimals,
+  },
 }: Props) => {
   const { socket } = useSocket()
   const { player, gameId } = usePlayerStore()
@@ -31,14 +43,23 @@ const Answers = ({
   const isShortAnswer = type === "shortanswer"
   const isWordCloud = type === "wordcloud"
   const isCalculated = type === "calculated"
+  const isEstimate = type === "estimate"
   const isDotmocracy = type === "dotmocracy"
 
   const renderedQuestion =
-    isCalculated && playerVariables
+    (isCalculated || isEstimate) && playerVariables
       ? question.replace(/\{(\w+)\}/g, (_, name) =>
           name in playerVariables ? String(playerVariables[name]) : `{${name}}`,
         )
       : question
+
+  // Random starting point, not the range midpoint — the midpoint is the correct
+  // answer (range is correctAnswer ± a fixed multiplier), so defaulting there
+  // would show the player the answer before they've touched the slider
+  const [sliderValue, setSliderValue] = useState<number>(() =>
+    answerRange ? answerRange.min + Math.random() * (answerRange.max - answerRange.min) : 0,
+  )
+  const sliderStep = answerDecimals ? 10 ** -answerDecimals : 1
 
   const [dots, setDots] = useState<number[]>(() => answers.map(() => 0))
   const dotsPlaced = dots.reduce((s, d) => s + d, 0)
@@ -120,6 +141,11 @@ const Answers = ({
         gameId,
         data: { answerText: textInput.trim() },
       })
+    } else if (isEstimate) {
+      socket.emit(EVENTS.PLAYER.TEXT_ANSWER, {
+        gameId,
+        data: { answerText: String(sliderValue) },
+      })
     } else if (isShortAnswer || isWordCloud) {
       if (!textInput.trim()) return
       socket.emit(EVENTS.PLAYER.TEXT_ANSWER, {
@@ -175,7 +201,7 @@ const Answers = ({
           {renderedQuestion}
         </h2>
 
-        {isCalculated && playerVariables && Object.keys(playerVariables).length > 0 && (
+        {(isCalculated || isEstimate) && playerVariables && Object.keys(playerVariables).length > 0 && (
           <div className="flex flex-wrap justify-center gap-2">
             {Object.entries(playerVariables).map(([name, val]) => (
               <span
@@ -291,6 +317,39 @@ const Answers = ({
             </button>
           </div>
         ) : isCalculated ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 font-semibold text-white/80">
+              {t("game:waitingForAnswers")}
+            </div>
+          </div>
+        ) : isEstimate && player ? (
+          <div className="mx-auto mb-3 w-full max-w-7xl px-2">
+            <p className="mb-2 text-center text-sm font-bold text-white/80">
+              {t("game:estimate.hint")}
+            </p>
+            <Slider
+              min={answerRange?.min ?? 0}
+              max={answerRange?.max ?? 100}
+              step={sliderStep}
+              value={sliderValue}
+              onChange={setSliderValue}
+              disabled={submitted}
+              formatValue={(v) => v.toFixed(answerDecimals ?? 2).replace(/\.?0+$/, "") || "0"}
+            />
+            <div className="mb-2 flex justify-between px-1 text-xs font-semibold text-white/60">
+              <span>{answerRange?.min}</span>
+              <span>{answerRange?.max}</span>
+            </div>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitted}
+              className="bg-primary w-full rounded-2xl py-3 text-base font-bold text-white shadow-lg transition-opacity disabled:opacity-40 md:py-4 md:text-lg"
+            >
+              {t("game:submitAnswer")}
+            </button>
+          </div>
+        ) : isEstimate ? (
           <div className="mx-auto mb-3 w-full max-w-7xl px-2">
             <div className="flex items-center justify-center rounded-2xl bg-black/30 py-6 font-semibold text-white/80">
               {t("game:waitingForAnswers")}

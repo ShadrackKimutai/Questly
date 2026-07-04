@@ -19,7 +19,7 @@ const FEATURE_ICONS = [Zap, ListChecks, Smartphone, Languages]
 const STEP_ICONS = [PenLine, Users, Trophy]
 
 const JOIN_WIGGLE_INITIAL_DELAY_MS = 4000
-const JOIN_WIGGLE_DURATION_MS = 3000
+const JOIN_WIGGLE_DURATION_MS = 1000
 const JOIN_WIGGLE_PAUSE_MS = 10000
 
 const Landing = () => {

@@ -12,6 +12,23 @@ export type AnswerFeedback =
       resultTier: "full" | "partial" | "wrong"
     }
   | { type: "dotmocracy"; votes: number[]; options: string[] }
+  | {
+      type: "estimate"
+      playerAnswer: number | null
+      correctAnswer: number
+      offset: number | null
+      accuracyFraction: number
+      playerVariables: Record<string, number>
+      resultTier: "full" | "partial" | "wrong"
+    }
+
+export interface EstimatePlayerGuess {
+  playerName: string
+  mascot: string
+  numericAnswer: number
+  offset: number
+  accuracyFraction: number
+}
 
 export const STATUS = {
   SHOW_ROOM: "SHOW_ROOM",
@@ -45,6 +62,8 @@ export interface CommonStatusDataMap {
     type?: QuestionType
     playerVariables?: Record<string, number>
     dotType?: 'single' | 'multiple'
+    answerRange?: { min: number; max: number }
+    answerDecimals?: number
   }
   SHOW_RESULT: {
     correct: boolean
@@ -71,6 +90,10 @@ interface ManagerExtraStatus {
     type?: QuestionType
     wordResponses?: Record<string, number>
     calculatedSummary?: { full: number; partial: number; wrong: number }
+    estimateSummary?: { full: number; partial: number; wrong: number }
+    estimateCorrectAnswer?: number
+    estimateTolerancePercent?: number
+    estimatePlayers?: EstimatePlayerGuess[]
     dotVotes?: Record<number, number>
   }
   SHOW_LEADERBOARD: { oldLeaderboard: Player[]; leaderboard: Player[] }

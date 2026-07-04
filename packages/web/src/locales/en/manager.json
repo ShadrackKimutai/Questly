@@ -65,6 +65,10 @@
       "accuracy": "Accuracy",
       "rank": "Rank & Points",
       "vsClass": "{{playerPct}}% correct vs {{overallPct}}% class average"
+    },
+    "estimate": {
+      "correctAnswer": "Correct answer: {{answer}}",
+      "noAnswerCount": "{{count}} player(s) didn't answer"
     }
   },
   "tabs": {

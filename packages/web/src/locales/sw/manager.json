@@ -49,7 +49,11 @@
     "playerCount": "wachezaji {{count}}",
     "timeLimitSuffix": "s kikomo cha muda",
     "exportPdf": "Hamisha kama PDF",
-    "viewResults": "View Results"
+    "viewResults": "View Results",
+    "estimate": {
+      "correctAnswer": "Jibu sahihi: {{answer}}",
+      "noAnswerCount": "Wachezaji {{count}} hawakujibu"
+    }
   },
   "tabs": {
     "play": "Cheza",

@@ -22,7 +22,8 @@
       "typeShortAnswer": "Short Answer",
       "typeWordCloud": "Word Cloud",
       "typeCalculated": "Calculated",
-      "typeDotmocracy": "Dot Vote"
+      "typeDotmocracy": "Dot Vote",
+      "typeEstimate": "Estimate"
     },
     "deleteQuestion": "Delete question",
     "deleteQuestionConfirm": "Are you sure you want to delete this question?",
@@ -53,5 +54,9 @@
     "single": "Single dot",
     "multiple": "Dot budget",
     "totalDots": "Dots per learner"
+  },
+  "estimate": {
+    "tolerance": "Tolerance",
+    "toleranceHint": "0% = exact match only, 20% = generous window"
   }
 }

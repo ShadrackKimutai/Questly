@@ -49,7 +49,11 @@
     "playerCount": "{{count}}人",
     "timeLimitSuffix": "秒制限",
     "exportPdf": "PDFとしてエクスポート",
-    "viewResults": "View Results"
+    "viewResults": "View Results",
+    "estimate": {
+      "correctAnswer": "正解: {{answer}}",
+      "noAnswerCount": "{{count}}人が未回答"
+    }
   },
   "tabs": {
     "play": "プレイ",

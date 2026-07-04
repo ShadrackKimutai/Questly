@@ -30,9 +30,16 @@ const ResultModalPlayerDetail = ({ playerName }: Props) => {
   type AnswerStatus = "correct" | "incorrect" | "participated"
 
   const getAnswerStatusForQuestion = (
-    answerId: number | number[] | string | null,
+    pa: (typeof result.questions)[0]["playerAnswers"][0],
     q: (typeof result.questions)[0],
   ): AnswerStatus => {
+    const answerId = pa.answerId
+    if (q.type === "estimate") {
+      const fraction = pa.accuracyFraction ?? 0
+      if (fraction >= 0.8) return "correct"
+      if (fraction > 0) return "participated"
+      return "incorrect"
+    }
     if (q.type === "wordcloud" || q.type === "dotmocracy") {
       return typeof answerId === "string" && answerId.trim().length > 0
         ? "participated"
@@ -54,13 +61,13 @@ const ResultModalPlayerDetail = ({ playerName }: Props) => {
   }
 
   const isAnswerCorrectForQuestion = (
-    answerId: number | number[] | string | null,
+    pa: (typeof result.questions)[0]["playerAnswers"][0],
     q: (typeof result.questions)[0],
-  ) => getAnswerStatusForQuestion(answerId, q) === "correct"
+  ) => getAnswerStatusForQuestion(pa, q) === "correct"
 
   const playerCorrect = result.questions.filter((q) => {
     const pa = q.playerAnswers.find((a) => a.playerName === playerName)
-    return pa ? isAnswerCorrectForQuestion(pa.answerId, q) : false
+    return pa ? isAnswerCorrectForQuestion(pa, q) : false
   }).length
 
   const playerPct =
@@ -118,7 +125,7 @@ const ResultModalPlayerDetail = ({ playerName }: Props) => {
           {result.questions.map((q, i) => {
             const pa = q.playerAnswers.find((a) => a.playerName === playerName)
             const answerId = pa?.answerId ?? null
-            const status = pa ? getAnswerStatusForQuestion(answerId, q) : "incorrect"
+            const status = pa ? getAnswerStatusForQuestion(pa, q) : "incorrect"
             const classPct = questionCorrectPct(i)
 
             const answerDisplay =

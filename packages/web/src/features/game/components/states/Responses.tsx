@@ -1,4 +1,5 @@
 import type { ManagerStatusDataMap } from "@questly/common/types/game/status"
+import EstimateResultPlot from "@questly/web/components/EstimateResultPlot"
 import AnswerButton from "@questly/web/features/game/components/AnswerButton"
 import {
   ANSWERS_COLORS,
@@ -45,8 +46,39 @@ const WordCloud = ({ wordResponses }: { wordResponses: Record<string, number> })
   )
 }
 
+const TierSummaryTiles = ({ full, partial, wrong }: { full: number; partial: number; wrong: number }) => (
+  <div className="mt-8 flex w-full max-w-xl flex-col gap-4 px-2">
+    <div className="grid grid-cols-3 gap-4">
+      <div className="flex flex-col items-center gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/20 p-5 backdrop-blur-sm">
+        <span className="text-4xl font-bold text-emerald-300">{full}</span>
+        <span className="text-sm font-semibold text-emerald-200/80">Full Credit</span>
+      </div>
+      <div className="flex flex-col items-center gap-2 rounded-2xl border border-amber-500/40 bg-amber-500/20 p-5 backdrop-blur-sm">
+        <span className="text-4xl font-bold text-amber-300">{partial}</span>
+        <span className="text-sm font-semibold text-amber-200/80">Partial</span>
+      </div>
+      <div className="flex flex-col items-center gap-2 rounded-2xl border border-red-500/40 bg-red-500/20 p-5 backdrop-blur-sm">
+        <span className="text-4xl font-bold text-red-300">{wrong}</span>
+        <span className="text-sm font-semibold text-red-200/80">Wrong</span>
+      </div>
+    </div>
+  </div>
+)
+
 const Responses = ({
-  data: { question, answers, responses, solutions, type, wordResponses, calculatedSummary, dotVotes },
+  data: {
+    question,
+    answers,
+    responses,
+    solutions,
+    type,
+    wordResponses,
+    calculatedSummary,
+    estimateCorrectAnswer,
+    estimateTolerancePercent,
+    estimatePlayers,
+    dotVotes,
+  },
 }: Props) => {
   const [percentages, setPercentages] = useState<Record<string, string>>({})
   const [isMusicPlaying, setIsMusicPlaying] = useState(false)
@@ -83,6 +115,7 @@ const Responses = ({
 
   const isWordCloud = type === "wordcloud"
   const isCalculated = type === "calculated"
+  const isEstimate = type === "estimate"
   const isDotmocracy = type === "dotmocracy"
 
   return (
@@ -108,27 +141,19 @@ const Responses = ({
             })}
           </div>
         ) : isCalculated ? (
-          <div className="mt-8 flex w-full max-w-xl flex-col gap-4 px-2">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="flex flex-col items-center gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/20 p-5 backdrop-blur-sm">
-                <span className="text-4xl font-bold text-emerald-300">
-                  {calculatedSummary?.full ?? 0}
-                </span>
-                <span className="text-sm font-semibold text-emerald-200/80">Full Credit</span>
-              </div>
-              <div className="flex flex-col items-center gap-2 rounded-2xl border border-amber-500/40 bg-amber-500/20 p-5 backdrop-blur-sm">
-                <span className="text-4xl font-bold text-amber-300">
-                  {calculatedSummary?.partial ?? 0}
-                </span>
-                <span className="text-sm font-semibold text-amber-200/80">Partial</span>
-              </div>
-              <div className="flex flex-col items-center gap-2 rounded-2xl border border-red-500/40 bg-red-500/20 p-5 backdrop-blur-sm">
-                <span className="text-4xl font-bold text-red-300">
-                  {calculatedSummary?.wrong ?? 0}
-                </span>
-                <span className="text-sm font-semibold text-red-200/80">Wrong</span>
-              </div>
-            </div>
+          <TierSummaryTiles
+            full={calculatedSummary?.full ?? 0}
+            partial={calculatedSummary?.partial ?? 0}
+            wrong={calculatedSummary?.wrong ?? 0}
+          />
+        ) : isEstimate ? (
+          <div className="mt-6 w-full max-w-3xl px-2">
+            <EstimateResultPlot
+              guesses={estimatePlayers ?? []}
+              correctAnswer={estimateCorrectAnswer ?? 0}
+              tolerancePercent={estimateTolerancePercent ?? 5}
+              dark
+            />
           </div>
         ) : isWordCloud ? (
           <WordCloud wordResponses={wordResponses ?? {}} />
@@ -155,7 +180,7 @@ const Responses = ({
         )}
       </div>
 
-      {!isWordCloud && !isCalculated && !isDotmocracy && (
+      {!isWordCloud && !isCalculated && !isEstimate && !isDotmocracy && (
         <div>
           <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 rounded-full px-2 text-lg font-bold text-white md:text-xl">
             {answers.map((answer, key) => (

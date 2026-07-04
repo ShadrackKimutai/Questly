@@ -27,7 +27,7 @@ const ResultModalTable = () => {
       </thead>
       <tbody className="divide-y divide-gray-100">
         {questionResult.playerAnswers.map((pa, i) => {
-          const status = getAnswerStatus(pa.answerId)
+          const status = getAnswerStatus(pa)
 
           const answer =
             typeof pa.answerId === "number"

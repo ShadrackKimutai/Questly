@@ -49,5 +49,11 @@
   "dotmocracy": {
     "dotsRemaining": "残り{{count}}/{{total}}ドット",
     "voteRecorded": "参加しました！"
+  },
+  "estimate": {
+    "hint": "ドラッグして予想し、送信してください",
+    "yourGuess": "あなたの予想",
+    "correctAnswer": "正解",
+    "offset": "誤差"
   }
 }

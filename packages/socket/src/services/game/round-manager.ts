@@ -11,6 +11,7 @@ import type {
 import type { Server, Socket } from "@questly/common/types/game/socket"
 import {
   type AnswerFeedback,
+  type EstimatePlayerGuess,
   type Status,
   STATUS,
   type StatusDataMap,
@@ -19,6 +20,8 @@ import { CooldownTimer } from "@questly/socket/services/game/cooldown-timer"
 import { PlayerManager } from "@questly/socket/services/game/player-manager"
 import {
   checkTolerance,
+  computeEstimateAnswerRange,
+  computeEstimateScore,
   evaluateFormula,
   randomizeVariables,
 } from "@questly/socket/utils/calculated"
@@ -64,6 +67,8 @@ export class RoundManager {
   private tempOldLeaderboard: Player[] | null = null
   private questionsHistory: QuestionResult[] = []
   private calculatedData = new Map<string, CalculatedPlayerData>()
+  private estimateCorrectAnswer: number | null = null
+  private estimateVariables: Record<string, number> | null = null
 
   constructor(opts: RoundManagerOptions) {
     this.opts = opts
@@ -119,8 +124,11 @@ export class RoundManager {
     const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
     const isCalculated = qType === "calculated"
     const isDotmocracy = qType === "dotmocracy"
+    const isEstimate = qType === "estimate"
 
     this.calculatedData.clear()
+    this.estimateCorrectAnswer = null
+    this.estimateVariables = null
     this.opts.onNewQuestion()
 
     this.opts.io.to(this.opts.gameId).emit(EVENTS.GAME.UPDATE_QUESTION, {
@@ -129,7 +137,7 @@ export class RoundManager {
     })
 
     this.opts.broadcast(STATUS.SHOW_PREPARED, {
-      totalAnswers: (isCalculated || isDotmocracy) ? 0 : question.answers.length,
+      totalAnswers: (isCalculated || isDotmocracy || isEstimate) ? 0 : question.answers.length,
       questionNumber: this.currentQuestion + 1,
       type: qType,
     })
@@ -188,6 +196,28 @@ export class RoundManager {
         totalPlayer: players.length,
         type: "calculated",
       })
+    } else if (isEstimate) {
+      // Variables are fixed values (author-set, not randomized) — every player estimates the same target
+      const vars = question.estimateVariables ?? []
+      const formula = question.formula ?? ""
+      const variables = Object.fromEntries(vars.map((v) => [v.name, v.value]))
+      const correctAnswer = evaluateFormula(formula, variables)
+      const range = computeEstimateAnswerRange(correctAnswer)
+
+      this.estimateCorrectAnswer = correctAnswer
+      this.estimateVariables = variables
+
+      this.opts.broadcast(STATUS.SELECT_ANSWER, {
+        question: question.question,
+        answers: [],
+        media: question.media,
+        time: question.time,
+        totalPlayer: this.opts.players.count(),
+        type: "estimate",
+        playerVariables: variables,
+        answerRange: range,
+        answerDecimals: question.answerDecimals ?? 2,
+      })
     } else if (isDotmocracy) {
       this.opts.broadcast(STATUS.SELECT_ANSWER, {
         question: question.question,
@@ -245,11 +275,13 @@ export class RoundManager {
     const qType = question.type ?? (question.solutions.length > 1 ? "multiple" : "single")
     const isCalculated = qType === "calculated"
     const isDotmocracy = qType === "dotmocracy"
+    const isEstimate = qType === "estimate"
 
     const toleranceBase = question.toleranceBase ?? 5
     const tolerancePartial = question.tolerancePartial ?? 15
+    const estimateTolerancePercent = question.estimateTolerancePercent ?? 5
 
-    // Track calculated summary for the manager
+    // Track calculated/estimate tier summary for the manager (question is one or the other, never both)
     const calcSummary = { full: 0, partial: 0, wrong: 0 }
 
     const sortedPlayers = currentPlayers
@@ -284,6 +316,29 @@ export class RoundManager {
             } else if (tier === "partial") {
               isPartial = true
               earnedPoints = Math.round((playerAnswer?.points ?? 0) * 0.5)
+              calcSummary.partial++
+            } else {
+              calcSummary.wrong++
+            }
+          } else {
+            calcSummary.wrong++
+          }
+        } else if (isEstimate) {
+          const rawText = typeof playerAnswer?.answerId === "string" ? playerAnswer.answerId : null
+          const playerNum = rawText !== null ? parseFloat(rawText) : NaN
+
+          if (this.estimateCorrectAnswer !== null && !isNaN(playerNum)) {
+            const { fraction, tier } = computeEstimateScore(
+              playerNum,
+              this.estimateCorrectAnswer,
+              estimateTolerancePercent,
+            )
+            earnedPoints = Math.round((playerAnswer?.points ?? 0) * fraction)
+            if (tier === "full") {
+              isCorrect = true
+              calcSummary.full++
+            } else if (tier === "partial") {
+              isPartial = true
               calcSummary.partial++
             } else {
               calcSummary.wrong++
@@ -364,6 +419,25 @@ export class RoundManager {
           playerVariables: stored?.variables ?? {},
           resultTier,
         }
+      } else if (isEstimate) {
+        const rawText = typeof answerId === "string" ? answerId : null
+        const playerNum = rawText !== null ? parseFloat(rawText) : null
+        const correctAnswer = this.estimateCorrectAnswer ?? 0
+
+        const score =
+          playerNum !== null && !isNaN(playerNum)
+            ? computeEstimateScore(playerNum, correctAnswer, estimateTolerancePercent)
+            : { fraction: 0, tier: "wrong" as const }
+
+        answerFeedback = {
+          type: "estimate",
+          playerAnswer: playerNum !== null && !isNaN(playerNum) ? playerNum : null,
+          correctAnswer,
+          offset: playerNum !== null && !isNaN(playerNum) ? playerNum - correctAnswer : null,
+          accuracyFraction: score.fraction,
+          playerVariables: this.estimateVariables ?? {},
+          resultTier: score.tier,
+        }
       } else if (qType === "wordcloud") {
         answerFeedback = {
           type: "wordcloud",
@@ -439,23 +513,69 @@ export class RoundManager {
         }, {})
       : undefined
 
+    const estimatePlayers: EstimatePlayerGuess[] | undefined =
+      isEstimate && this.estimateCorrectAnswer !== null
+        ? currentPlayers.flatMap((player) => {
+            const raw = this.playersAnswers.find((a) => a.playerId === player.id)?.answerId ?? null
+            const rawText = typeof raw === "string" ? raw : null
+            const numericAnswer = rawText !== null ? parseFloat(rawText) : NaN
+            if (isNaN(numericAnswer)) return []
+
+            const { fraction } = computeEstimateScore(
+              numericAnswer,
+              this.estimateCorrectAnswer!,
+              estimateTolerancePercent,
+            )
+
+            return [{
+              playerName: player.username,
+              mascot: player.mascot,
+              numericAnswer,
+              offset: numericAnswer - this.estimateCorrectAnswer!,
+              accuracyFraction: fraction,
+            }]
+          })
+        : undefined
+
     this.opts.send(this.opts.getManagerId(), STATUS.SHOW_RESPONSES, {
       ...question,
       responses: totalType,
       type: qType,
       wordResponses,
       calculatedSummary: isCalculated ? calcSummary : undefined,
+      estimateSummary: isEstimate ? calcSummary : undefined,
+      estimateCorrectAnswer: isEstimate ? (this.estimateCorrectAnswer ?? undefined) : undefined,
+      estimateTolerancePercent: isEstimate ? estimateTolerancePercent : undefined,
+      estimatePlayers,
       dotVotes,
     })
 
     this.questionsHistory.push({
       ...question,
-      playerAnswers: currentPlayers.map((player) => ({
-        playerName: player.username,
-        answerId:
-          this.playersAnswers.find((a) => a.playerId === player.id)?.answerId ??
-          null,
-      })),
+      estimateCorrectAnswer: isEstimate ? (this.estimateCorrectAnswer ?? undefined) : undefined,
+      playerAnswers: currentPlayers.map((player) => {
+        const raw = this.playersAnswers.find((a) => a.playerId === player.id)?.answerId ?? null
+        const base = { playerName: player.username, answerId: raw }
+
+        if (!isEstimate || this.estimateCorrectAnswer === null) return base
+
+        const rawText = typeof raw === "string" ? raw : null
+        const numericAnswer = rawText !== null ? parseFloat(rawText) : NaN
+        if (isNaN(numericAnswer)) return base
+
+        const { fraction } = computeEstimateScore(
+          numericAnswer,
+          this.estimateCorrectAnswer,
+          estimateTolerancePercent,
+        )
+
+        return {
+          ...base,
+          numericAnswer,
+          offset: numericAnswer - this.estimateCorrectAnswer,
+          accuracyFraction: fraction,
+        }
+      }),
     })
 
     this.leaderboard = sortedPlayers
@@ -621,6 +741,7 @@ export class RoundManager {
           username: player.username,
           points: player.points,
           rank: index + 1,
+          mascot: player.mascot,
         })),
         questions: this.questionsHistory,
       }
