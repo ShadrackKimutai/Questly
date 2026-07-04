@@ -131,12 +131,12 @@ You can have multiple quiz files and select which one to use when starting a gam
 
 #### Question Types
 
-| Type | `type` value | Description |
-|---|---|---|
-| Single choice | `"single"` (default) | One correct answer from 2–4 options |
-| Multiple choice | `"multiple"` | One or more correct answers from 2–4 options |
-| True / False | `"truefalse"` | Two-option true/false question |
-| Short answer | `"shortanswer"` | Players type a free-text answer matched against accepted answers |
+| Type            | `type` value         | Description                                                      |
+| --------------- | -------------------- | ---------------------------------------------------------------- |
+| Single choice   | `"single"` (default) | One correct answer from 2–4 options                              |
+| Multiple choice | `"multiple"`         | One or more correct answers from 2–4 options                     |
+| True / False    | `"truefalse"`        | Two-option true/false question                                   |
+| Short answer    | `"shortanswer"`      | Players type a free-text answer matched against accepted answers |
 
 #### Example quiz (`config/quizz/example.json`)
 
@@ -209,14 +209,14 @@ You can have multiple quiz files and select which one to use when starting a gam
 The interface is available in the following languages, selectable from the settings menu:
 
 | Language | Code |
-|---|---|
-| English | `en` |
-| German | `de` |
-| Spanish | `es` |
-| French | `fr` |
-| Italian | `it` |
+| -------- | ---- |
+| English  | `en` |
+| German   | `de` |
+| Spanish  | `es` |
+| French   | `fr` |
+| Italian  | `it` |
 | Japanese | `ja` |
-| Swahili | `sw` |
+| Swahili  | `sw` |
 
 ## 🎮 How to Play
 

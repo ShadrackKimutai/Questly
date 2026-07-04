@@ -14,6 +14,8 @@ const DEFAULT_TIME = 20
 
 const TRUE_FALSE_ANSWERS = ["True", "False"]
 
+const DEFAULT_ESTIMATE_MEDIA = { type: "image", url: "/defaults/estimate.gif" } as const
+
 const QUESTION_TYPES: { value: QuestionType; labelKey: string; icon: ReactNode }[] = [
   { value: "single", labelKey: "quiz:question.config.typeSingle", icon: <Square className="size-4" /> },
   { value: "multiple", labelKey: "quiz:question.config.typeMultiple", icon: <CheckSquare className="size-4" /> },
@@ -74,6 +76,7 @@ const QuestionEditorConfig = () => {
         estimateTolerancePercent: 5,
         toleranceBase: undefined,
         tolerancePartial: undefined,
+        media: currentQuestion.media ?? DEFAULT_ESTIMATE_MEDIA,
       })
     } else if (value === "dotmocracy") {
       updateQuestion(currentIndex, {
