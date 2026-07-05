@@ -23,7 +23,7 @@
   "devDependencies": {
     "@types/node": "^26.0.0",
     "esbuild": "^0.28.1",
-    "prettier": "^3.8.4",
+    "prettier": "^3.9.1",
     "tsx": "^4.22.4"
   }
 }
