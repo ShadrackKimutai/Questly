@@ -1,5 +1,6 @@
 import type { CalculatedVariable } from "@questly/common/types/game"
 import { AlertCircle, Calculator, Minus, Plus } from "lucide-react"
+import { evaluate } from "mathjs"
 import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -8,22 +9,23 @@ const previewFormula = (
   variables: CalculatedVariable[],
 ): string => {
   if (!formula.trim() || variables.length === 0) return "—"
+
+  const scope: Record<string, number> = {}
+  for (const v of variables) {
+    const raw = v.min + Math.random() * (v.max - v.min)
+    scope[v.name] = parseFloat(raw.toFixed(v.decimals))
+  }
+
   try {
-    const scope: Record<string, number> = {}
-    for (const v of variables) {
-      scope[v.name] = v.min + Math.random() * (v.max - v.min)
-      scope[v.name] = parseFloat(scope[v.name].toFixed(v.decimals))
-    }
-    let expr = formula
-    const names = Object.keys(scope).sort((a, b) => b.length - a.length)
-    for (const name of names) {
-      expr = expr.replace(new RegExp(`\\b${name}\\b`, "g"), String(scope[name]))
-    }
-    if (/[^0-9+\-*/^().% ]/.test(expr)) return "?"
-    // eslint-disable-next-line no-new-func
-    const result = Function(`"use strict"; return (${expr})`)() as number
-    const varStr = names.map((n) => `${n}=${scope[n]}`).join(", ")
-    return `${varStr} → ${isFinite(result) ? result.toFixed(4).replace(/\.?0+$/, "") : "error"}`
+    const result: unknown = evaluate(formula, scope)
+    const varStr = Object.entries(scope)
+      .map(([name, value]) => `${name}=${value}`)
+      .join(", ")
+    const resultStr =
+      typeof result === "number" && isFinite(result)
+        ? result.toFixed(4).replace(/\.?0+$/, "")
+        : "error"
+    return `${varStr} → ${resultStr}`
   } catch {
     return "?"
   }
